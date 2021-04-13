@@ -1,4 +1,4 @@
-package kr.klokov.bal
+package kr.rockybalboa.bal
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
