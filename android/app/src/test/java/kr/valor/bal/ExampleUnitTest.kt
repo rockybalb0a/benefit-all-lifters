@@ -1,4 +1,4 @@
-package kr.rockybalboa.bal
+package kr.valor.bal
 
 import org.junit.Test
 

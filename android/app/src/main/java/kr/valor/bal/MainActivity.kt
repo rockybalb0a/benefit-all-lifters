@@ -1,4 +1,4 @@
-package kr.rockybalboa.bal
+package kr.valor.bal
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
