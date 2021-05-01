@@ -3,9 +3,8 @@ package kr.valor.bal.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import java.time.LocalDateTime
-import java.util.*
+import java.time.LocalDate
+import java.util.UUID
 
 @Entity(tableName = "routines")
 data class Routine (
@@ -14,5 +13,9 @@ data class Routine (
     val id: String = UUID.randomUUID().toString(),
 
     @ColumnInfo(name = "date")
-    var date: String = ""
+    var date: LocalDate = LocalDate.now()
 )
+
+
+
+
