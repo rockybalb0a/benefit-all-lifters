@@ -1,8 +1,8 @@
 package kr.valor.bal
 
 import kotlinx.serialization.json.Json
-import kr.valor.bal.data.Converter
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.Converters
+import kr.valor.bal.data.WorkoutSet
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Test
@@ -26,7 +26,7 @@ class SerializationTest {
     @Test
     fun workoutSets_converter_test() {
         // GIVEN
-        val converter = Converter()
+        val converter = Converters()
         val sets = listOf(
             WorkoutSet(100,3),
             WorkoutSet(100,3),
