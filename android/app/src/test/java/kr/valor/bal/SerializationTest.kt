@@ -1,9 +1,8 @@
 package kr.valor.bal
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kr.valor.bal.data.Converter
-import kr.valor.bal.data.source.entities.WorkoutSet
+import kr.valor.bal.data.entities.WorkoutSet
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Test
@@ -15,6 +14,7 @@ class SerializationTest {
         val setJson = "{\"weight\":100,\"reps\":3}"
         assertThat(Json.encodeToString(WorkoutSet.serializer(), set), `is`(setJson))
     }
+
 
     @Test
     fun workoutSet_deserialization() {
