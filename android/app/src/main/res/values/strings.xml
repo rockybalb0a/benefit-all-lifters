@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Benefit All Lifters</string>
+    <string name="overview_title">Overview</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_overview">Overview</string>
+    <string name="new_workout_text">Пойдем !!</string>
+    <string name="rest_today_text">I will rest today..</string>
 </resources>
