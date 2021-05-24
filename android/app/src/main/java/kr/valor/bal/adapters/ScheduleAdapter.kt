@@ -1,7 +1,6 @@
 package kr.valor.bal.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +9,9 @@ import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.databinding.ListItemScheduleCardviewBinding
 
 
-class ScheduleAdapter: ListAdapter<WorkoutDetail, ScheduleAdapter.ViewHolder>(DIFF_CALLBACK) {
+class ScheduleAdapter(
+    val clickListener: ScheduleItemListener
+): ListAdapter<WorkoutDetail, ScheduleAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -18,13 +19,15 @@ class ScheduleAdapter: ListAdapter<WorkoutDetail, ScheduleAdapter.ViewHolder>(DI
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
-    class ViewHolder private constructor(private val binding: ListItemScheduleCardviewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(workoutDetail: WorkoutDetail) {
+    class ViewHolder private constructor(
+        private val binding: ListItemScheduleCardviewBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(workoutDetail: WorkoutDetail, clickListener: ScheduleItemListener) {
             binding.item = workoutDetail
             // TODO :  click listener setup
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 

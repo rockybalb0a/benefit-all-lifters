@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ScheduleAdapter
+import kr.valor.bal.adapters.ScheduleItemListener
 import kr.valor.bal.databinding.FragmentScheduleBinding
 
 @AndroidEntryPoint
@@ -30,7 +32,12 @@ class ScheduleFragment : Fragment() {
     ): View {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
-        adapter = ScheduleAdapter()
+        adapter = ScheduleAdapter(
+            // TODO : Defining proper click listener
+            ScheduleItemListener { workoutDetail ->
+                Toast.makeText(requireContext(), workoutDetail.workoutName, Toast.LENGTH_SHORT).show()
+            }
+        )
         recyclerView = binding.scheduleRecyclerView
         recyclerView.adapter = adapter
 
