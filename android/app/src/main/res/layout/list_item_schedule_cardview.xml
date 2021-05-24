@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="kr.valor.bal.data.entities.WorkoutDetail" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp"
+        app:cardBackgroundColor="@color/cardview_light_background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/workout_title"
+                android:padding="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:workoutName="@{item}"
+                tools:text="Barbell Back Squat" />
+
+            <LinearLayout
+                android:id="@+id/sets_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:text="Placeholder" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:text="Placeholder" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:text="Placeholder" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/empty_add_set_button"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add set"
+                app:icon="@drawable/ic_baseline_add_24"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

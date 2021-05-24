@@ -11,16 +11,29 @@ import java.time.LocalDate
 @Dao
 interface WorkoutDao {
     @Insert
-    suspend fun initWorkoutOverview(workoutOverview: WorkoutOverview)
+    suspend fun insertWorkoutOverview(workoutOverview: WorkoutOverview)
 
     @Insert
-    suspend fun insertWorkoutDetails(vararg workoutDetails: WorkoutDetail)
-
-    @Insert
-    suspend fun insertAll(workoutOverviewList: List<WorkoutOverview>)
+    suspend fun insertWorkoutDetail(workoutDetail: WorkoutDetail)
 
     @Query("SELECT * FROM workout_overview")
     fun getAllWorkouts(): LiveData<List<WorkoutOverview>>
+
+    @Query("SELECT * FROM workout_detail")
+    fun getAllWorkoutDetails(): LiveData<List<WorkoutDetail>>
+
+    @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC LIMIT 1")
+    suspend fun getLatestWorkoutOverview(): WorkoutOverview?
+
+
+
+
+
+
+
+
+
+
 
     @VisibleForTesting
     @Transaction

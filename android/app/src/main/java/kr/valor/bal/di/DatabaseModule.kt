@@ -11,7 +11,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.AppDatabase
 import kr.valor.bal.data.WorkoutDao
@@ -32,16 +31,16 @@ class DatabaseModule {
             AppDatabase::class.java,
             DATABASE_NAME
         )
-            .addCallback(object : RoomDatabase.Callback() {
-                override fun onCreate(db: SupportSQLiteDatabase) {
-                    super.onCreate(db)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        randomGenerator().forEach {
-                            provider.get().initWorkoutOverview(it)
-                        }
-                    }
-                }
-            })
+//            .addCallback(object : RoomDatabase.Callback() {
+//                override fun onCreate(db: SupportSQLiteDatabase) {
+//                    super.onCreate(db)
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        randomGenerator().forEach {
+//                            provider.get().insertWorkoutOverview(it)
+//                        }
+//                    }
+//                }
+//            })
             .build()
     }
 

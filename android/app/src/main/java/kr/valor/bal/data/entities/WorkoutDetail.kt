@@ -16,18 +16,18 @@ import java.util.*
     indices = [Index("container_id")]
 )
 data class WorkoutDetail(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "detail_id")
-    val detailId: String = UUID.randomUUID().toString(),
+    val detailId: Long = 0L,
 
     @ColumnInfo(name = "container_id")
-    val containerId: String,
+    val containerId: Long,
 
     @ColumnInfo(name = "workout_name")
     val workoutName: String,
 
     @ColumnInfo(name = "sets_detail")
-    val setsDetail: List<WorkoutSet>
+    val setsDetail: MutableList<WorkoutSet> = mutableListOf()
 )
 
 

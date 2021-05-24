@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="kr.valor.bal.viewmodels.HomeViewModel" />
+            type="kr.valor.bal.ui.home.HomeViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".HomeFragment">
+        tools:context=".ui.home.HomeFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_workout_view"
@@ -68,6 +68,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
+            android:visibility="visible"
             app:cardCornerRadius="16dp">
 
             <TextView

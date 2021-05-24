@@ -13,9 +13,9 @@ import java.util.*
 
 @Entity(tableName = "workout_overview")
 data class WorkoutOverview(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "overview_id")
-    val overviewId: String = UUID.randomUUID().toString(),
+    val overviewId: Long = 0L,
 
     @ColumnInfo(name = "date")
     var date: LocalDate = LocalDate.now(),

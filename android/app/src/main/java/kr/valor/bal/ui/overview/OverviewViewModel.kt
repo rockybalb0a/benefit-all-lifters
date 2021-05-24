@@ -1,12 +1,8 @@
-package kr.valor.bal.viewmodels
+package kr.valor.bal.ui.overview
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.utilities.randomGenerator
 import javax.inject.Inject
 
 @HiltViewModel

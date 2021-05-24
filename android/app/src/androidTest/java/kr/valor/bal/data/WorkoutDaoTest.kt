@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -16,6 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.LocalDate
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -41,25 +41,15 @@ class WorkoutDaoTest {
     fun cleanUp() = appDatabase.close()
 
     @Test
-    fun insertWorkoutInfo_andGetById_equals() = runBlockingTest {
-        val today = WorkoutOverview()
-        val chestWorkout = WorkoutDetail(
-            containerId = today.overviewId,
-            workoutName = "Bench press",
-            setsDetail = listOf(
-                WorkoutSet(140, 5),
-                WorkoutSet(140, 5),
-                WorkoutSet(140, 5)
-            )
-        )
-        workoutDao.initWorkoutOverview(today)
-        workoutDao.insertWorkoutDetails(chestWorkout)
+    fun insertWorkoutOverview_andGetByLocalDate_isEqual() = runBlockingTest {
+        val workoutOverview = WorkoutOverview(startTimeMilli = 100L, endTimeMilli = 300L)
 
-        val loaded =
-            workoutDao.getWorkoutOverviewAndDetails(today.overviewId)
+        workoutDao.insertWorkoutOverview(workoutOverview)
+        val loaded = workoutDao.getLatestWorkoutOverview() as WorkoutOverview
 
-        assertThat(loaded.workoutOverview, `is`(today))
-        assertThat(loaded.workoutDetails, `is`(listOf(chestWorkout)))
+        assertThat(loaded.startTimeMilli, `is`(100L))
+        assertThat(loaded.endTimeMilli, `is`(300L))
+
     }
 
 }

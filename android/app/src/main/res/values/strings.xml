@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">Benefit All Lifters</string>
+
+
     <string name="overview_title">Overview</string>
+    <string name="schedule_title">Today\'s plan</string>
+
+
     <string name="menu_item_home">Home</string>
     <string name="menu_item_overview">Overview</string>
+    <string name="menu_item_schedule">Today</string>
+
+
     <string name="new_workout_text">Пойдем !!</string>
     <string name="rest_today_text">I will rest today..</string>
+
+    <string name="add_new_workout_popup_title">Choose your lift</string>
+
+    <string-array name="exercise_list">
+        <item name="back_squat">Back Squat</item>
+        <item name="front_squat">Front Squat</item>
+        <item name="deadlift">Conventional Deadlift</item>
+        <item name="overhead_press">Overhead press</item>
+        <item name="bench_press">Bench press</item>
+    </string-array>
 </resources>

@@ -8,7 +8,6 @@ fun randomGenerator(): List<WorkoutOverview> {
     val list = mutableListOf<WorkoutOverview>()
     for (i in 0..10) {
         val elem = WorkoutOverview(
-            overviewId = i.toString(),
             date = LocalDate.now().minusDays(i.toLong()),
             startTimeMilli = Random.nextLong(3000_000L, 4000_000L),
             endTimeMilli = Random.nextLong(8000_000L, 10_000_000L)

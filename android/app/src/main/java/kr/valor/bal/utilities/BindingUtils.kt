@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import kr.valor.bal.R
+import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import kotlin.random.Random
 
@@ -28,4 +29,9 @@ fun ImageView.setThumbnailImage(item: WorkoutOverview) {
         4L -> R.drawable.thumbnail_background_5
         else -> R.drawable.thumbnail_background_6
     })
+}
+
+@BindingAdapter("workoutName")
+fun TextView.setWorkoutName(item: WorkoutDetail) {
+    text = item.workoutName
 }

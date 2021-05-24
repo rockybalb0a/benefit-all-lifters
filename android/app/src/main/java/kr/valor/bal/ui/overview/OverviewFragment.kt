@@ -1,4 +1,4 @@
-package kr.valor.bal
+package kr.valor.bal.ui.overview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,15 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kr.valor.bal.R
 import kr.valor.bal.adapters.WorkoutOverviewAdapter
-import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.databinding.FragmentOverviewBinding
-import kr.valor.bal.utilities.randomGenerator
-import kr.valor.bal.viewmodels.OverviewViewModel
-import java.time.LocalDate
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
