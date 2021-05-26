@@ -1,8 +1,6 @@
 package kr.valor.bal.data.entities
 
 import androidx.room.*
-import kr.valor.bal.data.WorkoutSet
-import java.util.*
 
 @Entity(
     tableName = "workout_detail",
@@ -21,13 +19,13 @@ data class WorkoutDetail(
     val detailId: Long = 0L,
 
     @ColumnInfo(name = "container_id")
-    val containerId: Long,
+    var containerId: Long,
 
     @ColumnInfo(name = "workout_name")
-    val workoutName: String,
+    val workoutName: String
 
-    @ColumnInfo(name = "sets_detail")
-    val setsDetail: MutableList<WorkoutSet> = mutableListOf()
+//    @ColumnInfo(name = "sets_detail")
+//    val setsDetail: MutableList<WorkoutSet> = mutableListOf()
 )
 
 

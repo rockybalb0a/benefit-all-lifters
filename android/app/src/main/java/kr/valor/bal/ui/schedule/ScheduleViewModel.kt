@@ -6,6 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.valor.bal.data.WorkoutDao
+import kr.valor.bal.data.WorkoutDetailAndSets
+import kr.valor.bal.data.WorkoutOverviewAndDetails
+import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import java.time.LocalDate
@@ -16,53 +19,37 @@ class ScheduleViewModel @Inject constructor(
     private val workoutDao: WorkoutDao
 ) : ViewModel() {
 
-    private val currentWorkoutOverview = MutableLiveData<WorkoutOverview>()
-
-    private val _workoutDetails = workoutDao.getAllWorkoutDetails()
-    val workoutDetails: LiveData<List<WorkoutDetail>>
-        get() = _workoutDetails
-
-
-    init {
-        setupCurrentWorkoutOverview()
+    private val _currentWorkoutOverview = liveData {
+        val loadedWorkoutOverview = workoutDao.getLatestWorkoutOverview()
+        if (loadedWorkoutOverview == null) {
+            val newWorkoutOverview = WorkoutOverview()
+            workoutDao.insert(newWorkoutOverview)
+        } else {
+            if (loadedWorkoutOverview.date != LocalDate.now()) {
+                val newWorkoutOverview = WorkoutOverview()
+                workoutDao.insert(newWorkoutOverview)
+            }
+        }
+        emit(workoutDao.getLatestWorkoutOverview()!!)
     }
+
+    private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
+        workoutDao.getWorkoutSchedule(it.overviewId)
+    }
+
+    val currentWorkoutSchedule: LiveData<WorkoutSchedule>
+        get() = _currentWorkoutSchedule
 
 
     fun onDialogItemSelected(newWorkoutName: String) {
-        currentWorkoutOverview.value?.let {
+        _currentWorkoutOverview.value?.let {
             val newWorkoutDetail = WorkoutDetail(
                 containerId = it.overviewId,
                 workoutName = newWorkoutName
             )
-            insertWorkoutDetailToCurrentWorkoutOverview(newWorkoutDetail)
-        }
-    }
-
-    private fun insertWorkoutDetailToCurrentWorkoutOverview(workoutDetail: WorkoutDetail) {
-        viewModelScope.launch {
-            workoutDao.insertWorkoutDetail(workoutDetail)
-        }
-    }
-
-
-    private fun setupCurrentWorkoutOverview() {
-        viewModelScope.launch {
-            val loadedWorkoutOverview = getCurrentWorkoutOverviewFromLocalStorage()
-            if (loadedWorkoutOverview == null) {
-                val newWorkoutOverview = WorkoutOverview()
-                workoutDao.insertWorkoutOverview(newWorkoutOverview)
+            viewModelScope.launch {
+                workoutDao.insert(newWorkoutDetail)
             }
-            currentWorkoutOverview.value = getCurrentWorkoutOverviewFromLocalStorage()
-        }
-    }
-
-    private suspend fun getCurrentWorkoutOverviewFromLocalStorage(): WorkoutOverview? {
-        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
-            var loadedWorkoutOverview = workoutDao.getLatestWorkoutOverview()
-            if (loadedWorkoutOverview?.date != LocalDate.now()) {
-                loadedWorkoutOverview = null
-            }
-            loadedWorkoutOverview
         }
     }
 

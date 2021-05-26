@@ -22,5 +22,7 @@
         <item name="deadlift">Conventional Deadlift</item>
         <item name="overhead_press">Overhead press</item>
         <item name="bench_press">Bench press</item>
+        <item name="barbell_row">Barbell Row</item>
+        <item name="pull_up">Pull up</item>
     </string-array>
 </resources>

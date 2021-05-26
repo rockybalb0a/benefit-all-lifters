@@ -24,4 +24,6 @@
         android:name="kr.valor.bal.ui.schedule.ScheduleFragment"
         android:label="@string/schedule_title"
         tools:layout="@layout/fragment_schedule" />
+
+
 </navigation>

@@ -6,9 +6,14 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
+import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.getOrAwaitValue
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -35,20 +40,73 @@ class WorkoutDaoTest {
             AppDatabase::class.java
         ).build()
         workoutDao = appDatabase.workoutDao()
+
+        initData()
+    }
+
+    private fun initData() = runBlocking {
+        val workoutOverview = WorkoutOverview()
+        val workoutOverviewId = workoutDao.insert(workoutOverview)
+        val workoutDetails = listOf(
+            WorkoutDetail(containerId = workoutOverviewId, workoutName = "Bench press"),
+            WorkoutDetail(containerId = workoutOverviewId, workoutName = "Overhead press"),
+            WorkoutDetail(containerId = workoutOverviewId, workoutName = "Squat")
+        )
+        val workoutDetailIds = mutableListOf<Long>()
+        workoutDetails.forEach {
+            val workoutDetailId = workoutDao.insert(it)
+            workoutDetailIds.add(workoutDetailId)
+        }
+        workoutDetailIds.forEach { id ->
+            val workoutSets = listOf(
+                WorkoutSet(containerId = id, reps = 5, weights = 120),
+                WorkoutSet(containerId = id, reps = 5, weights = 120),
+                WorkoutSet(containerId = id, reps = 5, weights = 120)
+            )
+            workoutSets.forEach { workoutSet ->
+                workoutDao.insert(workoutSet)
+            }
+        }
     }
 
     @After
     fun cleanUp() = appDatabase.close()
 
+
     @Test
-    fun insertWorkoutOverview_andGetByLocalDate_isEqual() = runBlockingTest {
-        val workoutOverview = WorkoutOverview(startTimeMilli = 100L, endTimeMilli = 300L)
+    fun workoutScheduleTransaction_works_asExpected() = runBlockingTest {
+        val loaded = workoutDao.getLatestWorkoutOverview()!!
 
-        workoutDao.insertWorkoutOverview(workoutOverview)
-        val loaded = workoutDao.getLatestWorkoutOverview() as WorkoutOverview
+        val entireSchedule = workoutDao.getWorkoutSchedule(loaded.overviewId)
 
-        assertThat(loaded.startTimeMilli, `is`(100L))
-        assertThat(loaded.endTimeMilli, `is`(300L))
+        assertThat(entireSchedule.getOrAwaitValue().workoutOverview, `is`(loaded))
+        val workoutDetails = entireSchedule.getOrAwaitValue().workoutDetails
+        assertThat(workoutDetails.size, `is`(3))
+        assertThat(workoutDetails[0].workoutDetail.workoutName, `is`("Bench press"))
+        assertThat(workoutDetails[0].workoutSets[0].reps, `is`(5))
+        assertThat(workoutDetails[0].workoutSets[0].weights, `is`(120))
+        assertThat(workoutDetails[0].workoutSets[1].reps, `is`(5))
+        assertThat(workoutDetails[0].workoutSets[1].weights, `is`(120))
+        assertThat(workoutDetails[0].workoutSets[2].reps, `is`(5))
+        assertThat(workoutDetails[0].workoutSets[2].weights, `is`(120))
+
+
+        assertThat(workoutDetails[1].workoutDetail.workoutName, `is`("Overhead press"))
+        assertThat(workoutDetails[1].workoutSets[0].reps, `is`(5))
+        assertThat(workoutDetails[1].workoutSets[0].weights, `is`(120))
+        assertThat(workoutDetails[1].workoutSets[1].reps, `is`(5))
+        assertThat(workoutDetails[1].workoutSets[1].weights, `is`(120))
+        assertThat(workoutDetails[1].workoutSets[2].reps, `is`(5))
+        assertThat(workoutDetails[1].workoutSets[2].weights, `is`(120))
+
+        assertThat(workoutDetails[2].workoutDetail.workoutName, `is`("Squat"))
+        assertThat(workoutDetails[2].workoutSets[0].reps, `is`(5))
+        assertThat(workoutDetails[2].workoutSets[0].weights, `is`(120))
+        assertThat(workoutDetails[2].workoutSets[1].reps, `is`(5))
+        assertThat(workoutDetails[2].workoutSets[1].weights, `is`(120))
+        assertThat(workoutDetails[2].workoutSets[2].reps, `is`(5))
+        assertThat(workoutDetails[2].workoutSets[2].weights, `is`(120))
+
 
     }
 

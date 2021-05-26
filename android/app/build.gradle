@@ -72,8 +72,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$archLifecycleVersion"
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"

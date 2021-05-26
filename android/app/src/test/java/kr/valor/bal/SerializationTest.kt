@@ -2,7 +2,7 @@ package kr.valor.bal
 
 import kotlinx.serialization.json.Json
 import kr.valor.bal.data.Converters
-import kr.valor.bal.data.WorkoutSet
+import kr.valor.bal.data.entities.WorkoutSet
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Test

@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kr.valor.bal.data.entities.WorkoutSet
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -19,16 +20,15 @@ class Converters {
         return date?.format(DateTimeFormatter.ISO_DATE)
     }
 
-    @TypeConverter
-    fun workoutSetsToColumn(setsList: List<WorkoutSet>?): String? {
-        return setsList?.let { Json.encodeToString(it) }
-    }
-
-    @TypeConverter
-    fun columnToWorkoutSets(json: String?): List<WorkoutSet>? {
-        return json?.let { Json.decodeFromString(it) }
-    }
-
+//    @TypeConverter
+//    fun workoutSetsToColumn(setsList: List<WorkoutSet>?): String? {
+//        return setsList?.let { Json.encodeToString(it) }
+//    }
+//
+//    @TypeConverter
+//    fun columnToWorkoutSets(json: String?): List<WorkoutSet>? {
+//        return json?.let { Json.decodeFromString(it) }
+//    }
 
 }
 

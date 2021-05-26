@@ -23,14 +23,14 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
 
-    @Singleton
-    @Provides
-    fun provideAppDatabase(@ApplicationContext appContext: Context, provider: Provider<WorkoutDao>): AppDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            AppDatabase::class.java,
-            DATABASE_NAME
-        )
+//    @Singleton
+//    @Provides
+//    fun provideAppDatabase(@ApplicationContext appContext: Context, provider: Provider<WorkoutDao>): AppDatabase {
+//        return Room.databaseBuilder(
+//            appContext,
+//            AppDatabase::class.java,
+//            DATABASE_NAME
+//        )
 //            .addCallback(object : RoomDatabase.Callback() {
 //                override fun onCreate(db: SupportSQLiteDatabase) {
 //                    super.onCreate(db)
@@ -41,6 +41,17 @@ class DatabaseModule {
 //                    }
 //                }
 //            })
+//            .build()
+//    }
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            DATABASE_NAME
+        )
             .build()
     }
 

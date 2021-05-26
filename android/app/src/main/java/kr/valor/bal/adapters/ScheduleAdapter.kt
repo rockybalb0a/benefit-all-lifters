@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.databinding.ListItemScheduleCardviewBinding
 
 
 class ScheduleAdapter(
     val clickListener: ScheduleItemListener
-): ListAdapter<WorkoutDetail, ScheduleAdapter.ViewHolder>(DIFF_CALLBACK) {
+): ListAdapter<WorkoutDetailAndSets, ScheduleAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -24,8 +25,8 @@ class ScheduleAdapter(
 
     class ViewHolder private constructor(
         private val binding: ListItemScheduleCardviewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(workoutDetail: WorkoutDetail, clickListener: ScheduleItemListener) {
-            binding.item = workoutDetail
+        fun bind(item: WorkoutDetailAndSets, clickListener: ScheduleItemListener) {
+            binding.item = item
             // TODO :  click listener setup
             binding.clickListener = clickListener
             binding.executePendingBindings()
@@ -42,17 +43,21 @@ class ScheduleAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutDetail>() {
-            override fun areItemsTheSame(oldItem: WorkoutDetail, newItem: WorkoutDetail): Boolean {
-                return oldItem.detailId == newItem.detailId
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutDetailAndSets>() {
+            override fun areItemsTheSame(
+                oldItem: WorkoutDetailAndSets,
+                newItem: WorkoutDetailAndSets
+            ): Boolean {
+                return oldItem.workoutDetail.detailId == newItem.workoutDetail.detailId
             }
 
             override fun areContentsTheSame(
-                oldItem: WorkoutDetail,
-                newItem: WorkoutDetail
+                oldItem: WorkoutDetailAndSets,
+                newItem: WorkoutDetailAndSets
             ): Boolean {
                 return oldItem == newItem
             }
+
         }
     }
 
