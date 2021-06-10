@@ -13,7 +13,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ScheduleAdapter
-import kr.valor.bal.adapters.ScheduleItemListener
+import kr.valor.bal.adapters.listeners.ScheduleButtonListener
+import kr.valor.bal.adapters.listeners.ScheduleSetListener
+import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.FragmentScheduleBinding
 
 @AndroidEntryPoint
@@ -35,8 +37,17 @@ class ScheduleFragment : Fragment() {
 
         adapter = ScheduleAdapter(
             // TODO : Defining proper click listener
-            ScheduleItemListener { item ->
-                Toast.makeText(requireContext(), item.workoutDetail.workoutName, Toast.LENGTH_SHORT).show()
+            addClickListener = ScheduleButtonListener { item ->
+                viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
+            },
+            deleteClickListener = ScheduleButtonListener { item ->
+                viewModel.onDeleteSetButtonClicked(item.workoutDetail.detailId)
+            },
+            closeClickListener = ScheduleButtonListener { item ->
+                viewModel.onCloseButtonClicked(item.workoutDetail)
+            },
+            setClickListener = ScheduleSetListener { item ->
+                findNavController().navigate(ScheduleFragmentDirections.actionScheduleDestToScheduleSetDialogFragment(item.setId))
             }
         )
         recyclerView = binding.scheduleRecyclerView
@@ -53,6 +64,7 @@ class ScheduleFragment : Fragment() {
         // TODO : Using proper fragment and viewmodel with safe args
         // TODO : How to hide bottom navigation view?
         // TODO : Refer this : https://developer.android.com/guide/navigation/navigation-ui#listen_for_navigation_events
+        // TODO : How to add workout set? https://stackoverflow.com/questions/31446779/android-databinding-dynamic-addview/36107367
         binding.addWorkoutButton.setOnClickListener {
             MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.add_new_workout_popup_title)
@@ -63,13 +75,26 @@ class ScheduleFragment : Fragment() {
 //            findNavController().navigate(R.id.action_schedule_dest_to_schedule_dialog_dest)
         }
 
+        setupObserver()
+    }
+
+    private fun setupObserver() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
-            if (it.workoutDetails.isNotEmpty()) {
-                binding.scheduleRecyclerView.visibility = View.VISIBLE
-                binding.scheduleEmptyPlaceholder.visibility = View.GONE
-                adapter.submitList(it.workoutDetails)
+            setupUi(it.workoutDetails)
+        }
+    }
+
+    private fun setupUi(workoutDetails: List<WorkoutDetailAndSets>) {
+        when(workoutDetails.isEmpty()) {
+            true -> with(binding) {
+                scheduleEmptyPlaceholder.visibility = View.VISIBLE
+                scheduleRecyclerView.visibility = View.GONE
+            }
+            false -> with(binding) {
+                scheduleEmptyPlaceholder.visibility = View.GONE
+                scheduleRecyclerView.visibility = View.VISIBLE
             }
         }
-
+        adapter.submitList(workoutDetails)
     }
 }

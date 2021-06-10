@@ -2,15 +2,12 @@ package kr.valor.bal.ui.schedule
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kr.valor.bal.data.WorkoutDao
-import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.WorkoutOverviewAndDetails
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.entities.WorkoutSet
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -20,17 +17,14 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _currentWorkoutOverview = liveData {
-        val loadedWorkoutOverview = workoutDao.getLatestWorkoutOverview()
-        if (loadedWorkoutOverview == null) {
-            val newWorkoutOverview = WorkoutOverview()
-            workoutDao.insert(newWorkoutOverview)
-        } else {
-            if (loadedWorkoutOverview.date != LocalDate.now()) {
+        val currentDate = LocalDate.now()
+        val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(currentDate)
+            ?: run {
                 val newWorkoutOverview = WorkoutOverview()
                 workoutDao.insert(newWorkoutOverview)
+                workoutDao.getLatestWorkoutOverview()
             }
-        }
-        emit(workoutDao.getLatestWorkoutOverview()!!)
+        emit(currentWorkoutOverview)
     }
 
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
@@ -40,6 +34,18 @@ class ScheduleViewModel @Inject constructor(
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
         get() = _currentWorkoutSchedule
 
+    fun onAddNewSetButtonClicked(detailId: Long) {
+        val newWorkoutSet = WorkoutSet(containerId = detailId)
+        insertWorkoutSet(newWorkoutSet)
+    }
+
+    fun onDeleteSetButtonClicked(detailId: Long) {
+        deleteWorkoutSet(detailId)
+    }
+
+    fun onCloseButtonClicked(workoutDetail: WorkoutDetail) {
+        deleteWorkoutDetail(workoutDetail)
+    }
 
     fun onDialogItemSelected(newWorkoutName: String) {
         _currentWorkoutOverview.value?.let {
@@ -47,9 +53,31 @@ class ScheduleViewModel @Inject constructor(
                 containerId = it.overviewId,
                 workoutName = newWorkoutName
             )
-            viewModelScope.launch {
-                workoutDao.insert(newWorkoutDetail)
-            }
+            insertWorkoutDetail(newWorkoutDetail)
+        }
+    }
+
+    private fun insertWorkoutSet(workoutSet: WorkoutSet) {
+        viewModelScope.launch {
+            workoutDao.insert(workoutSet)
+        }
+    }
+
+    private fun deleteWorkoutSet(detailId: Long) {
+        viewModelScope.launch {
+            workoutDao.deleteWorkoutSetAssociatedWithWorkoutDetail(detailId)
+        }
+    }
+
+    private fun insertWorkoutDetail(workoutDetail: WorkoutDetail) {
+        viewModelScope.launch {
+            workoutDao.insert(workoutDetail)
+        }
+    }
+
+    private fun deleteWorkoutDetail(workoutDetail: WorkoutDetail) {
+        viewModelScope.launch {
+            workoutDao.delete(workoutDetail)
         }
     }
 

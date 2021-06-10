@@ -1,14 +1,19 @@
 package kr.valor.bal.utilities
 
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import androidx.lifecycle.LiveData
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import kotlin.random.Random
+import kr.valor.bal.adapters.listeners.ScheduleSetListener
+import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.databinding.ListItemSetBinding
 
 @BindingAdapter("dateString")
 fun TextView.setDateFormatted(item: WorkoutOverview) {
@@ -35,4 +40,24 @@ fun ImageView.setThumbnailImage(item: WorkoutOverview) {
 @BindingAdapter("workoutName")
 fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
     text = item.workoutDetail.workoutName
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("workoutSets", "setListener")
+fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListener: ScheduleSetListener) {
+
+    if (item.workoutSets.isNotEmpty()) {
+        val layoutInflater = LayoutInflater.from(context)
+
+        item.workoutSets.forEachIndexed { index, workoutSet ->
+
+            val setsView = ListItemSetBinding.inflate(layoutInflater)
+            setsView.set = workoutSet
+            setsView.workoutSetNumber.text = "Set ${index+1}"
+            setsView.workoutSetReps.text = "${workoutSet.reps}reps"
+            setsView.workoutSetWeights.text = "${workoutSet.weights}kg"
+            setsView.clickListener = clickListener
+            addView(setsView.root)
+        }
+    }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plates_view_ratio">90:83</string>
+    <string name="plates_view_barbell_ratio">415:50</string>
+
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+
+    <dimen name="cardview_corner_radius_default">16dp</dimen>
+    <dimen name="cardview_elevation_default">16dp</dimen>
+
+</resources>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="setInfo"
+            type="kr.valor.bal.data.entities.WorkoutSet" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/plates_view_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="?attr/colorSecondary"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toTopOf="@id/top_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/container_bottom_guideline">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <kr.valor.bal.ui.schedule.view.PlatesView
+                    android:id="@+id/plates_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_small"
+                    app:layout_constraintDimensionRatio="@string/plates_view_ratio"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/red_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="25kg"
+            app:iconTint="@color/plateColor25"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintEnd_toStartOf="@id/blue_plates_button"
+            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintBottom_toTopOf="@id/green_plates_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/green_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:text="10kg"
+            app:iconTint="@color/plateColor10"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintEnd_toStartOf="@id/white_plates_button"
+            app:layout_constraintTop_toBottomOf="@id/red_plates_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/blue_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:text="20kg"
+            android:layout_marginTop="@dimen/margin_small"
+            app:iconTint="@color/plateColor20"
+            app:layout_constraintStart_toEndOf="@id/red_plates_button"
+            app:layout_constraintEnd_toStartOf="@id/yellow_plates_button"
+            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintBottom_toTopOf="@id/white_plates_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/white_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:text="5kg"
+            app:iconTint="@color/plateColor5"
+            app:layout_constraintEnd_toEndOf="@+id/blue_plates_button"
+            app:layout_constraintStart_toEndOf="@id/green_plates_button"
+            app:layout_constraintTop_toBottomOf="@id/blue_plates_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/yellow_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="15kg"
+            app:iconTint="@color/plateColor15"
+            app:layout_constraintStart_toEndOf="@id/blue_plates_button"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintBottom_toTopOf="@id/pop_plates_button"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pop_plates_button"
+            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            android:text="pop"
+            app:icon="@drawable/ic_baseline_pop_24"
+            app:layout_constraintTop_toBottomOf="@id/yellow_plates_button"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toEndOf="@id/white_plates_button" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline"            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/container_bottom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="120dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

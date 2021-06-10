@@ -20,12 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:layout_marginTop="24dp"
-            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:clickable="true"
             android:focusable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="16dp">
+            app:cardCornerRadius="@dimen/cardview_corner_radius_default"
+            app:cardElevation="@dimen/cardview_elevation_default">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -62,14 +62,14 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/rest_today_view"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
             android:visibility="visible"
-            app:cardCornerRadius="16dp">
+            app:cardCornerRadius="@dimen/cardview_corner_radius_default">
 
             <TextView
                 android:layout_width="match_parent"

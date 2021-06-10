@@ -26,5 +26,5 @@ data class WorkoutSet(
     var reps: Byte = 0,
 
     @ColumnInfo
-    var weights: Short = 0,
+    var weights: Double = 20.0,
 )

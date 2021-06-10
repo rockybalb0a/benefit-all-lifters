@@ -59,9 +59,9 @@ class WorkoutDaoTest {
         }
         workoutDetailIds.forEach { id ->
             val workoutSets = listOf(
-                WorkoutSet(containerId = id, reps = 5, weights = 120),
-                WorkoutSet(containerId = id, reps = 5, weights = 120),
-                WorkoutSet(containerId = id, reps = 5, weights = 120)
+                WorkoutSet(containerId = id, reps = 5, weights = 120.0),
+                WorkoutSet(containerId = id, reps = 5, weights = 120.0),
+                WorkoutSet(containerId = id, reps = 5, weights = 120.0)
             )
             workoutSets.forEach { workoutSet ->
                 workoutDao.insert(workoutSet)

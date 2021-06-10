@@ -1,17 +1,23 @@
 package kr.valor.bal.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.bal.adapters.listeners.ScheduleButtonListener
+import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.databinding.ListItemScheduleCardviewBinding
 
 
 class ScheduleAdapter(
-    val clickListener: ScheduleItemListener
+    val addClickListener: ScheduleButtonListener,
+    val deleteClickListener: ScheduleButtonListener,
+    val closeClickListener: ScheduleButtonListener,
+    val setClickListener: ScheduleSetListener
 ): ListAdapter<WorkoutDetailAndSets, ScheduleAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,16 +26,48 @@ class ScheduleAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, addClickListener, deleteClickListener, closeClickListener, setClickListener)
     }
 
     class ViewHolder private constructor(
         private val binding: ListItemScheduleCardviewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: WorkoutDetailAndSets, clickListener: ScheduleItemListener) {
-            binding.item = item
-            // TODO :  click listener setup
-            binding.clickListener = clickListener
-            binding.executePendingBindings()
+
+        fun bind(
+            workoutDetail: WorkoutDetailAndSets,
+            addClickListener: ScheduleButtonListener,
+            deleteClickListener: ScheduleButtonListener,
+            closeClickListener: ScheduleButtonListener,
+            setClickListener: ScheduleSetListener) {
+
+            with(binding) {
+                refresh(View.VISIBLE)
+                item = workoutDetail
+                addSetListener = addClickListener
+                deleteSetListener = deleteClickListener
+                closeListener = closeClickListener
+                setListener = setClickListener
+                setsDetail.removeAllViews()
+                if (workoutDetail.workoutSets.isNotEmpty()) {
+                    refresh(View.GONE)
+                }
+                executePendingBindings()
+            }
+        }
+
+
+        @SuppressLint("SwitchIntDef")
+        private fun ListItemScheduleCardviewBinding.refresh(visibility: Int) {
+            emptyAddSetButton.visibility = visibility
+            when(emptyAddSetButton.visibility) {
+                View.VISIBLE -> {
+                    existAddSetButton.visibility = View.GONE
+                    existDeleteSetButton.visibility = View.GONE
+                }
+                View.GONE -> {
+                    existDeleteSetButton.visibility = View.VISIBLE
+                    existAddSetButton.visibility = View.VISIBLE
+                }
+            }
         }
 
         companion object {

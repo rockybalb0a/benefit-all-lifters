@@ -23,7 +23,20 @@
         android:id="@+id/schedule_dest"
         android:name="kr.valor.bal.ui.schedule.ScheduleFragment"
         android:label="@string/schedule_title"
-        tools:layout="@layout/fragment_schedule" />
+        tools:layout="@layout/fragment_schedule" >
+        <action
+            android:id="@+id/action_schedule_dest_to_scheduleSetDialogFragment"
+            app:destination="@id/scheduleSet_dest" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/scheduleSet_dest"
+        android:name="kr.valor.bal.ui.schedule.dialog.ScheduleSetDialogFragment"
+        android:label="ScheduleSetDialogFragment" >
+        <argument
+            android:name="setId"
+            app:argType="long" />
+    </dialog>
 
 
 </navigation>
