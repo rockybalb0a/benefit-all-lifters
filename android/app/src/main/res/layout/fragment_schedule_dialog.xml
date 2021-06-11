@@ -45,12 +45,12 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/red_plates_button"
             style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:layout_marginTop="@dimen/margin_small"
             android:text="25kg"
+            android:layout_marginTop="@dimen/margin_small"
             app:iconTint="@color/plateColor25"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toStartOf="@id/blue_plates_button"
-            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintTop_toBottomOf="@id/plates_type_toggle_group"
             app:layout_constraintBottom_toTopOf="@id/green_plates_button" />
 
         <com.google.android.material.button.MaterialButton
@@ -66,11 +66,10 @@
             android:id="@+id/blue_plates_button"
             style="@style/Widget.BenefitAllLifters.PlatesButton"
             android:text="20kg"
-            android:layout_marginTop="@dimen/margin_small"
             app:iconTint="@color/plateColor20"
             app:layout_constraintStart_toEndOf="@id/red_plates_button"
             app:layout_constraintEnd_toStartOf="@id/yellow_plates_button"
-            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintTop_toTopOf="@id/red_plates_button"
             app:layout_constraintBottom_toTopOf="@id/white_plates_button" />
 
         <com.google.android.material.button.MaterialButton
@@ -85,12 +84,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/yellow_plates_button"
             style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:layout_marginTop="@dimen/margin_small"
             android:text="15kg"
             app:iconTint="@color/plateColor15"
             app:layout_constraintStart_toEndOf="@id/blue_plates_button"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintTop_toTopOf="@id/container_bottom_guideline"
+            app:layout_constraintTop_toTopOf="@id/red_plates_button"
             app:layout_constraintBottom_toTopOf="@id/pop_plates_button"/>
 
         <com.google.android.material.button.MaterialButton
@@ -102,9 +100,105 @@
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toEndOf="@id/white_plates_button" />
 
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/plates_type_toggle_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintEnd_toStartOf="@+id/toggle_group_separator"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/button_group_guideline"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <Button
+                android:id="@+id/plates_type_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="10"
+                style="@style/Widget.App.ToggleButton" />
+            <Button
+                android:id="@+id/plates_type_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="0.1"
+                style="@style/Widget.App.ToggleButton" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/reps_toggle_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintStart_toStartOf="@id/toggle_group_separator"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintTop_toBottomOf="@id/button_group_guideline"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <Button
+                android:id="@+id/reps_single"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1"
+                style="@style/Widget.App.ToggleButton" />
+
+            <Button
+                android:id="@+id/reps_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5"
+                style="@style/Widget.App.ToggleButton" />
+
+            <Button
+                android:id="@+id/reps_ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="10"
+                style="@style/Widget.App.ToggleButton" />
+
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/minus_reps_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="reps"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_baseline_remove_24"
+            app:iconGravity="textStart"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/green_plates_button"
+            app:layout_constraintEnd_toStartOf="@id/plus_reps_button"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/plus_reps_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="reps"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconGravity="textStart"
+            app:layout_constraintStart_toEndOf="@id/minus_reps_button"
+            app:layout_constraintTop_toTopOf="@id/minus_reps_button"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            />
+
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/start_guideline"            android:layout_width="wrap_content"
+            android:id="@+id/start_guideline"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
@@ -129,6 +223,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="120dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/button_group_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="128dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/toggle_group_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

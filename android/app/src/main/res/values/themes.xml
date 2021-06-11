@@ -21,6 +21,18 @@
     <style name="Theme.BenefitAllLifters.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.BenefitAllLifters.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Widget.BenefitAllLifters.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
+        <item name="rippleColor">?attr/colorSecondaryVariant</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
     <style name="Widget.BenefitAllLifters.Button" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -45,6 +57,16 @@
         <item name="cornerRadius">0dp</item>
         <item name="icon">@drawable/ic_plates_default</item>
         <item name="iconGravity">textTop</item>
+    </style>
+
+    <style name="Widget.App.ToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:backgroundTint">@drawable/toggle_btn_bg_color_selector</item>
+        <item name="strokeColor">@drawable/toggle_btn_strk_color_selector</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
