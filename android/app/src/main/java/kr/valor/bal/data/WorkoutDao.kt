@@ -50,6 +50,6 @@ interface WorkoutDao {
 
     @VisibleForTesting
     @Query("SELECT * FROM workout_set WHERE set_id is :workoutSetId")
-    suspend fun getWorkoutSet(workoutSetId: Long): WorkoutSet
+    fun getWorkoutSet(workoutSetId: Long): WorkoutSet
 
 }

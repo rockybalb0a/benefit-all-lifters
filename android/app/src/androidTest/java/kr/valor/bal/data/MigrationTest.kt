@@ -16,6 +16,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.utilities.DATABASE_NAME
@@ -59,10 +61,11 @@ class MigrationTest {
 
     @Test
     fun beforeMigrating_containsCorrectData() {
+        val workoutSet = WorkoutSet(containerId = 100L)
         val values = ContentValues()
-        values.put("container_id", 10L)
-        values.put("reps", 10)
-        values.put("weights", 100)
+        values.put("container_id", workoutSet.containerId)
+        values.put("reps", workoutSet.reps)
+        values.put("weights", workoutSet.weights)
 
         val id = db.insert("workout_set", SQLiteDatabase.CONFLICT_REPLACE, values)
 
@@ -105,6 +108,47 @@ class MigrationTest {
         val weightsColumnType = cursor.getType(WEIGHTS_COLUMN_INDEX)
         assertThat(weightsColumnType, `is`(Cursor.FIELD_TYPE_FLOAT))
 
+    }
+
+    @Test
+    fun migrate1To2_usingDao() {
+        val previousWorkoutSet = previousVersion_workoutSetBuilder()
+        var id = 0L
+        helper.createDatabase(TEST_DB_NAME, 1).apply {
+            id = insert("workout_set", SQLiteDatabase.CONFLICT_REPLACE, previousWorkoutSet)
+            close()
+        }
+
+        helper.runMigrationsAndValidate(TEST_DB_NAME, 2, true, MIGRATION_1_2)
+
+        val migratedDatabase = getMigratedRoomDatabase()
+        val migratedWorkoutSet = migratedDatabase.workoutDao().getWorkoutSet(id)
+        assertThat(migratedWorkoutSet.weights, `is`(100.0))
+
+
+    }
+
+    private fun getMigratedRoomDatabase(): AppDatabase {
+        return Room.databaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            AppDatabase::class.java,
+            TEST_DB_NAME
+        )
+            .allowMainThreadQueries()
+            .addMigrations(
+            MIGRATION_1_2
+        ).build().apply {
+            openHelper.writableDatabase
+            close()
+        }
+    }
+
+    private fun previousVersion_workoutSetBuilder(): ContentValues {
+        val workoutSet = ContentValues()
+        workoutSet.put("container_id", 10L)
+        workoutSet.put("reps", 10)
+        workoutSet.put("weights", 100)
+        return workoutSet
     }
 
 }

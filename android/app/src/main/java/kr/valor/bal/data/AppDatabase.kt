@@ -19,13 +19,15 @@ abstract class AppDatabase: RoomDatabase() {
 val MIGRATION_1_2 = object : Migration(1,2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL(
-            "CREATE TABLE workout_set_new (" +
+            "CREATE TABLE workout_set_new " +
+                    "(" +
                     "set_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     "container_id INTEGER NOT NULL, " +
                     "reps INTEGER NOT NULL, " +
                     "weights REAL NOT NULL, " +
                     "FOREIGN KEY(container_id) REFERENCES " +
-                    "workout_detail(detail_id) ON UPDATE NO ACTION ON DELETE CASCADE)"
+                    "workout_detail(detail_id) ON UPDATE NO ACTION ON DELETE CASCADE" +
+                    ")"
         )
 
         database.execSQL(
