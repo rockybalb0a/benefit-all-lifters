@@ -7,6 +7,10 @@
         <variable
             name="setInfo"
             type="kr.valor.bal.data.entities.WorkoutSet" />
+
+        <variable
+            name="viewModel"
+            type="kr.valor.bal.ui.schedule.dialog.ScheduleSetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,8 +48,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/red_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:text="25kg"
+            style="@style/Widget.App.PlatesButton"
+            android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/red_plates_weights_default : @string/red_plates_weights_small}"
             android:layout_marginTop="@dimen/margin_small"
             app:iconTint="@color/plateColor25"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -55,8 +59,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/green_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:text="10kg"
+            style="@style/Widget.App.PlatesButton"
+            android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/green_plates_weights_default : @string/green_plates_weights_small}"
             app:iconTint="@color/plateColor10"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toStartOf="@id/white_plates_button"
@@ -64,8 +68,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/blue_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:text="20kg"
+            style="@style/Widget.App.PlatesButton"
+            android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/blue_plates_weights_default : @string/blue_plates_weights_small}"
             app:iconTint="@color/plateColor20"
             app:layout_constraintStart_toEndOf="@id/red_plates_button"
             app:layout_constraintEnd_toStartOf="@id/yellow_plates_button"
@@ -74,8 +78,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/white_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:text="5kg"
+            style="@style/Widget.App.PlatesButton"
+            android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/white_plates_weights_default : @string/white_plates_weights_small}"
             app:iconTint="@color/plateColor5"
             app:layout_constraintEnd_toEndOf="@+id/blue_plates_button"
             app:layout_constraintStart_toEndOf="@id/green_plates_button"
@@ -83,8 +87,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/yellow_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
-            android:text="15kg"
+            style="@style/Widget.App.PlatesButton"
+            android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/yellow_plates_weights_default : @string/yellow_plates_weights_small}"
             app:iconTint="@color/plateColor15"
             app:layout_constraintStart_toEndOf="@id/blue_plates_button"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -93,7 +97,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pop_plates_button"
-            style="@style/Widget.BenefitAllLifters.PlatesButton"
+            style="@style/Widget.App.PlatesButton"
             android:text="pop"
             app:icon="@drawable/ic_baseline_pop_24"
             app:layout_constraintTop_toBottomOf="@id/yellow_plates_button"
@@ -108,21 +112,23 @@
             app:layout_constraintEnd_toStartOf="@+id/toggle_group_separator"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/button_group_guideline"
+            app:checkedToggleBtnIndex="@={viewModel.checkedPlatesTypeBtnIndex}"
             app:singleSelection="true"
             app:selectionRequired="true">
 
             <Button
                 android:id="@+id/plates_type_regular"
+                style="@style/Widget.App.ToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="10"
-                style="@style/Widget.App.ToggleButton" />
+                android:layout_weight="1"
+                android:text="10" />
+
             <Button
                 android:id="@+id/plates_type_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="0.1"
                 style="@style/Widget.App.ToggleButton" />
 
@@ -136,6 +142,7 @@
             app:layout_constraintStart_toStartOf="@id/toggle_group_separator"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintTop_toBottomOf="@id/button_group_guideline"
+            app:checkedToggleBtnIndex="@{viewModel.checkedRepsUnitBtnIndex}"
             app:singleSelection="true"
             app:selectionRequired="true">
 
@@ -162,7 +169,6 @@
                 android:layout_weight="1"
                 android:text="10"
                 style="@style/Widget.App.ToggleButton" />
-
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 

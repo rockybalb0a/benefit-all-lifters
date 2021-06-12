@@ -2,11 +2,17 @@ package kr.valor.bal.utilities
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.LiveData
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutOverview
@@ -61,3 +67,23 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListene
         }
     }
 }
+
+// Two-way binding
+
+@BindingAdapter("checkedToggleBtnIndex")
+fun MaterialButtonToggleGroup.setChecked(checkedIndex: Int) {
+    getChildAt(checkedIndex)?.let {
+        if (checkedButtonId != it.id) {
+            (it as MaterialButton).isChecked = true
+        }
+    }
+}
+
+@InverseBindingAdapter(attribute = "checkedToggleBtnIndex")
+fun MaterialButtonToggleGroup.getChecked(): Int = indexOfChild(findViewById(checkedButtonId))
+
+@BindingAdapter("checkedToggleBtnIndexAttrChanged")
+fun MaterialButtonToggleGroup.setToggleGroupChangedListener(listener: InverseBindingListener) {
+    addOnButtonCheckedListener { _, _, _ -> listener.onChange()}
+}
+

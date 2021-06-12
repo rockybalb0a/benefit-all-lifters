@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -28,6 +29,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val args: ScheduleSetDialogFragmentArgs by navArgs()
         setupClickListener()
+
     }
 
 
@@ -37,9 +39,13 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScheduleDialogBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
         platesView = binding.platesView
         return binding.root
     }
+
 
     private fun setupClickListener() {
         with(binding) {
@@ -61,6 +67,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
             popPlatesButton.setOnClickListener {
                 platesView.popPlates()
             }
+
 
 //            topCloseButton.setOnClickListener {
 //                dismiss()

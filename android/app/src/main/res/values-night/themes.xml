@@ -30,7 +30,7 @@
         <item name="android:alpha">0.6</item>
     </style>
 
-    <style name="Widget.BenefitAllLifters.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.App.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:alpha">0.6</item>
         <item name="iconTint">?attr/colorOnPrimary</item>

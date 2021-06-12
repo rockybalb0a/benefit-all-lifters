@@ -28,17 +28,17 @@
         <item name="pull_up">Pull up</item>
     </string-array>
 
-    <string name="red_plates_weights_default">25</string>
-    <string name="blue_plates_weights_default">20</string>
-    <string name="yellow_plates_weights_default">15</string>
-    <string name="green_plates_weights_default">10</string>
-    <string name="white_plates_weights_default">5</string>
+    <string name="red_plates_weights_default">25kg</string>
+    <string name="blue_plates_weights_default">20kg</string>
+    <string name="yellow_plates_weights_default">15kg</string>
+    <string name="green_plates_weights_default">10kg</string>
+    <string name="white_plates_weights_default">5kg</string>
 
-    <string name="red_plates_weights_small">2.5</string>
-    <string name="blue_plates_weights_small">2.0</string>
-    <string name="yellow_plates_weights_small">1.5</string>
-    <string name="green_plates_weights_small">1.0</string>
-    <string name="white_plates_weights_small">0.5</string>
+    <string name="red_plates_weights_small">2.5kg</string>
+    <string name="blue_plates_weights_small">2kg</string>
+    <string name="yellow_plates_weights_small">1.5kg</string>
+    <string name="green_plates_weights_small">1kg</string>
+    <string name="white_plates_weights_small">0.5kg</string>
 
 
 </resources>
