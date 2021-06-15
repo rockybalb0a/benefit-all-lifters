@@ -10,7 +10,7 @@ import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import javax.inject.Singleton
 
-@Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class], version = 2, exportSchema = true)
+@Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class], version = 3, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun workoutDao(): WorkoutDao
@@ -41,3 +41,12 @@ val MIGRATION_1_2 = object : Migration(1,2) {
         database.execSQL("CREATE INDEX index_workout_set_container_id ON workout_set (container_id)")
     }
 }
+
+val MIGRATION_2_3 = object : Migration(2,3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "ALTER TABLE workout_set ADD COLUMN inserted_plates_info TEXT NOT NULL DEFAULT '' "
+        )
+    }
+}
+

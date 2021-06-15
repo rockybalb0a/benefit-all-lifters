@@ -48,11 +48,6 @@ class MigrationTest {
         FrameworkSQLiteOpenHelperFactory()
     )
 
-    @Before
-    fun setUp() {
-        db = helper.createDatabase(TEST_DB_NAME, 1)
-    }
-
     @After
     fun closeDb() {
         helper.closeWhenFinished(db)
@@ -61,6 +56,7 @@ class MigrationTest {
 
     @Test
     fun beforeMigrating_containsCorrectData() {
+        db = helper.createDatabase(TEST_DB_NAME, 1)
         val workoutSet = WorkoutSet(containerId = 100L)
         val values = ContentValues()
         values.put("container_id", workoutSet.containerId)
@@ -85,7 +81,7 @@ class MigrationTest {
     // https://stackoverflow.com/questions/54269102/how-to-properly-add-indices-in-database-migration-for-room
     @Test
     fun migrate1To2_containsCorrectData() {
-
+        db = helper.createDatabase(TEST_DB_NAME, 1)
         val values = ContentValues()
         values.put("container_id", 10L)
         values.put("reps", 10)
@@ -112,6 +108,7 @@ class MigrationTest {
 
     @Test
     fun migrate1To2_usingDao() {
+        db = helper.createDatabase(TEST_DB_NAME, 1)
         val previousWorkoutSet = previousVersion_workoutSetBuilder()
         var id = 0L
         helper.createDatabase(TEST_DB_NAME, 1).apply {
@@ -127,6 +124,7 @@ class MigrationTest {
 
 
     }
+
 
     private fun getMigratedRoomDatabase(): AppDatabase {
         return Room.databaseBuilder(

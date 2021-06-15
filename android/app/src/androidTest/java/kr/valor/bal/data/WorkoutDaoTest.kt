@@ -110,4 +110,26 @@ class WorkoutDaoTest {
 
     }
 
+    @Test
+    fun workoutSet_contains_properSetsInfo() = runBlockingTest {
+
+        val platesStack = mutableListOf(25.0, 25.0)
+        val workoutOverview = WorkoutOverview()
+        val workoutOverviewId = workoutDao.insert(workoutOverview)
+        val workoutDetail = WorkoutDetail(containerId = workoutOverviewId, workoutName = "Bench press")
+        val workoutDetailId = workoutDao.insert(workoutDetail)
+
+        val workoutSet = WorkoutSet(containerId = workoutDetailId, reps = 10, weights = 120.0, platesStack = platesStack)
+
+        val id = workoutDao.insert(workoutSet)
+
+        val loaded = workoutDao.getWorkoutSet(id)
+
+        assertThat(loaded.containerId, `is`(workoutSet.containerId))
+        assertThat(loaded.setId, `is`(id))
+        assertThat(loaded.weights, `is`(workoutSet.weights))
+        assertThat(loaded.reps, `is`(workoutSet.reps))
+        assertThat(loaded.platesStack, `is`(workoutSet.platesStack))
+    }
+
 }

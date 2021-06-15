@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.AppDatabase
 import kr.valor.bal.data.MIGRATION_1_2
+import kr.valor.bal.data.MIGRATION_2_3
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.utilities.DATABASE_NAME
 import kr.valor.bal.utilities.randomGenerator
@@ -53,7 +54,7 @@ class DatabaseModule {
             AppDatabase::class.java,
             DATABASE_NAME
         )
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
     }
 

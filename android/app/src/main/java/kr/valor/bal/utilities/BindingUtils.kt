@@ -20,6 +20,8 @@ import kotlin.random.Random
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ListItemSetBinding
+import kr.valor.bal.ui.schedule.view.Plates
+import kr.valor.bal.ui.schedule.view.PlatesView
 
 @BindingAdapter("dateString")
 fun TextView.setDateFormatted(item: WorkoutOverview) {
@@ -59,9 +61,11 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListene
 
             val setsView = ListItemSetBinding.inflate(layoutInflater)
             setsView.set = workoutSet
-            setsView.workoutSetNumber.text = "Set ${index+1}"
-            setsView.workoutSetReps.text = "${workoutSet.reps}reps"
-            setsView.workoutSetWeights.text = "${workoutSet.weights}kg"
+            setsView.workoutSetNumber.text = "# ${index+1}"
+            setsView.workoutSetReps.text = "${workoutSet.reps}"
+            setsView.workoutSetRepsUnit.text = if (workoutSet.reps > 1) "reps" else "rep"
+            setsView.workoutSetWeights.text = "${workoutSet.weights.toInt()}"
+            setsView.workoutSetWeightsUnit.text = "kg"
             setsView.clickListener = clickListener
             addView(setsView.root)
         }
@@ -86,4 +90,3 @@ fun MaterialButtonToggleGroup.getChecked(): Int = indexOfChild(findViewById(chec
 fun MaterialButtonToggleGroup.setToggleGroupChangedListener(listener: InverseBindingListener) {
     addOnButtonCheckedListener { _, _, _ -> listener.onChange()}
 }
-

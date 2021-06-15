@@ -23,8 +23,11 @@ data class WorkoutSet(
     val containerId: Long,
 
     @ColumnInfo
-    var reps: Byte = 0,
+    var reps: Int = 0,
 
     @ColumnInfo
     var weights: Double = 20.0,
+
+    @ColumnInfo(name = "inserted_plates_info")
+    var platesStack: MutableList<Double> = mutableListOf()
 )

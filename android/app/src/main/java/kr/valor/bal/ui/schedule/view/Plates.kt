@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 import kr.valor.bal.R
-import kr.valor.bal.utilities.NO_SUCH_PLATES_MSG
 
 
 class Plates: ShapeableImageView {
@@ -17,7 +16,7 @@ class Plates: ShapeableImageView {
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet)
     constructor(context: Context, attributeSet: AttributeSet, defStyle: Int): super(context, attributeSet, defStyle)
 
-    var platesInfo: PlatesInfo = PlatesInfo.PLATES_DEFAULT
+    var platesInfo: PlatesInfo = PlatesInfo.PLATES25
 
     init {
         this.id = generateViewId()
@@ -28,7 +27,7 @@ class Plates: ShapeableImageView {
         platesStack.forEach {
             totalPlatesWidth += it.width
         }
-        totalPlatesWidth += (platesInfo.thickness.ratio * container.width).toInt()
+        totalPlatesWidth += (platesInfo.width.ratio * container.width).toInt()
         return totalPlatesWidth < container.width
     }
 
@@ -51,20 +50,24 @@ class Plates: ShapeableImageView {
     fun setAppearance() {
         this.shapeAppearanceModel = shapeAppearanceModel
             .toBuilder()
-            .setAllCorners(CornerFamily.ROUNDED, 5f)
+//            .setAllCorners(CornerFamily.ROUNDED, 5f)
             .build()
         setBackgroundColor(ContextCompat.getColor(context, platesInfo.color.colorCode))
     }
 
 }
 
-enum class PlatesInfo(val color: PlatesColor, val thickness: PlatesThickness, val radius: PlatesRadius?) {
-    PLATES25(PlatesColor.RED, PlatesThickness.XXL, null),
-    PLATES20(PlatesColor.BLUE ,PlatesThickness.XL, null),
-    PLATES15(PlatesColor.YELLOW ,PlatesThickness.L, null),
-    PLATES10(PlatesColor.GREEN, PlatesThickness.M, null),
-    PLATES5(PlatesColor.WHITE, PlatesThickness.S, PlatesRadius.M),
-    PLATES_DEFAULT(PlatesColor.RED, PlatesThickness.XXL, null)
+enum class PlatesInfo(val color: PlatesColor, val width: PlatesWidth, val diameter: PlatesDiameter?) {
+    PLATES25(PlatesColor.RED, PlatesWidth.P25, null),
+    PLATES20(PlatesColor.BLUE ,PlatesWidth.P20, null),
+    PLATES15(PlatesColor.YELLOW ,PlatesWidth.P15, null),
+    PLATES10(PlatesColor.GREEN, PlatesWidth.P10, null),
+    PLATES5(PlatesColor.WHITE, PlatesWidth.P5, PlatesDiameter.P5),
+    PLATES2_5(PlatesColor.RED, PlatesWidth.P2_5, PlatesDiameter.P2_5),
+    PLATES2(PlatesColor.BLUE, PlatesWidth.P2, PlatesDiameter.P2),
+    PLATES1_5(PlatesColor.YELLOW, PlatesWidth.P1_5, PlatesDiameter.P1_5),
+    PLATES1(PlatesColor.GREEN, PlatesWidth.P1, PlatesDiameter.P1),
+    PLATES0_5(PlatesColor.WHITE, PlatesWidth.P0_5, PlatesDiameter.P0_5)
 }
 
 enum class PlatesColor(val colorCode: Int) {
@@ -75,27 +78,27 @@ enum class PlatesColor(val colorCode: Int) {
     WHITE(R.color.plateColor5)
 }
 
-enum class PlatesThickness(val ratio: Double) {
-    XXL(64.0 / 415),    // 25
-    XL(54.0 / 415),     // 20
-    L(42.0 / 415),      // 15
-    M(34.0 / 415),      // 10
-    S(26.0 / 415),      // 5
-    XS(19.0 / 415),     // 2.5, 1.5
-    XXS(15.0 / 415)     // 1
+enum class PlatesWidth(val ratio: Double) {
+    P25(64.0 / 415),
+    P20(54.0 / 415),
+    P15(42.0 / 415),
+    P10(34.0 / 415),
+    P5(27.0 / 415),
+    P2_5(19.0 / 415),
+    P2(19.0 / 415),
+    P1_5(18.0 / 415),
+    P1(15.0 / 415),
+    P0_5(13.0 / 415)
 }
 
-enum class PlatesRadius(val ratio: Double) {
-    M(230.0 / 450),     // 5
-    S(210.0 / 450),     // 2.5
-    XS(175.0 / 415),    // 1.5
-    XXS(160.0 / 450)    // 1.0
+enum class PlatesDiameter(val ratio: Double) {
+    P5(230.0 / 450),
+    P2_5(210.0 / 450),
+    P2(190.0 / 450),
+    P1_5(175.0 / 450),
+    P1(160.0 / 450),
+    P0_5(135.0 / 450)
 }
 
-enum class BarbellState {
-    EMPTY,
-    LOADED,
-    FULL
-}
 
 class NoSuchPlatesException(msg: String = "No plates"): Exception(msg)

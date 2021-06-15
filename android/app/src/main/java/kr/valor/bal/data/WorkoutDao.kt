@@ -36,7 +36,7 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_overview WHERE date is :date")
     suspend fun getWorkoutOverviewByDate(date: LocalDate): WorkoutOverview?
 
-    @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY container_id DESC LIMIT 1")
+    @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY set_id DESC LIMIT 1")
     suspend fun getWorkoutSetAssociatedWithWorkoutDetail(detailId: Long): WorkoutSet
 
     @Delete
@@ -48,8 +48,10 @@ interface WorkoutDao {
         deleteWorkoutSet(target)
     }
 
-    @VisibleForTesting
     @Query("SELECT * FROM workout_set WHERE set_id is :workoutSetId")
-    fun getWorkoutSet(workoutSetId: Long): WorkoutSet
+    fun getWorkoutSet(workoutSetId: Long): LiveData<WorkoutSet>
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateWorkoutSet(workoutSet: WorkoutSet)
 
 }

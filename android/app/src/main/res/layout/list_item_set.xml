@@ -20,47 +20,95 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> clickListener.onClick(set)}"
-        android:padding="@dimen/padding_large">
+        android:padding="@dimen/padding_medium">
 
         <TextView
             android:id="@+id/workoutSet_number"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/workoutSet_weights"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintEnd_toEndOf="@id/set_number_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Set #1" />
+            tools:text="# 11" />
 
         <TextView
             android:id="@+id/workoutSet_weights"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:textAlignment="viewEnd"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/workoutSet_reps"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/workoutSet_number"
+            app:layout_constraintEnd_toStartOf="@+id/workoutSet_weights_unit"
+            app:layout_constraintStart_toStartOf="@id/set_number_guideline"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="120kg" />
+            app:layout_constraintHorizontal_weight="0.7"
+            tools:text="120" />
+
+        <TextView
+            android:id="@+id/workoutSet_weights_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/workoutSet_weights"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/set_weights_reps_separator"
+            app:layout_constraintHorizontal_weight="0.3"
+            tools:text="kg"/>
 
         <TextView
             android:id="@+id/workoutSet_reps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:textStyle="bold"
+            android:textAlignment="viewEnd"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/workoutSet_reps_unit"
+            app:layout_constraintStart_toStartOf="@id/set_weights_reps_separator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_weight="0.6"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/workoutSet_reps_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/workoutSet_reps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.4"
+            tools:text="reps"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/set_number_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/workoutSet_weights"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="5 reps" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/set_weights_reps_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
