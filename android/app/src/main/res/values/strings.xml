@@ -40,5 +40,8 @@
     <string name="green_plates_weights_small">1kg</string>
     <string name="white_plates_weights_small">0.5kg</string>
 
+    <string name="main_lifting_one">Main | %s</string>
+    <string name="main_lifting_more">Main | %s, %s</string>
+
 
 </resources>

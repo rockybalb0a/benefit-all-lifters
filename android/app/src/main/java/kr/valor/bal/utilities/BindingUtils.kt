@@ -15,28 +15,52 @@ import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutOverview
 import kotlin.random.Random
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
+import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.databinding.SetInfoItemBinding
+import java.lang.IndexOutOfBoundsException
 
 @BindingAdapter("dateString")
-fun TextView.setDateFormatted(item: WorkoutOverview) {
-    text = item.localDateFormatter()
+fun TextView.setDateFormatted(item: WorkoutSchedule) {
+    text = item.workoutOverview.localDateFormatter()
 }
 
 @BindingAdapter("elapsedTimeString")
-fun TextView.setElapsedTimeFormatted(item: WorkoutOverview) {
-    text = item.elapsedTimeFormatter()
+fun TextView.setElapsedTimeFormatted(item: WorkoutSchedule) {
+    text = item.workoutOverview.elapsedTimeFormatter()
 }
 
 @BindingAdapter("thumbnailImage")
-fun ImageView.setThumbnailImage(item: WorkoutOverview) {
-    setImageResource(when (Random.nextLong(0L, 6L)) {
-        0L -> R.drawable.thumbnail_background_1
-        1L -> R.drawable.thumbnail_background_2
-        2L -> R.drawable.thumbnail_background_3
-        3L -> R.drawable.thumbnail_background_4
-        4L -> R.drawable.thumbnail_background_5
-        else -> R.drawable.thumbnail_background_6
+fun ImageView.setThumbnailImage(item: WorkoutSchedule) {
+    setImageResource(when (item.workoutOverview.overviewId.toInt() % 7) {
+        0 -> R.drawable.thumbnail_background_1
+        1 -> R.drawable.thumbnail_background_2
+        2 -> R.drawable.thumbnail_background_3
+        3 -> R.drawable.thumbnail_background_4
+        4 -> R.drawable.thumbnail_background_5
+        5 -> R.drawable.thumbnail_background_6
+        else -> R.drawable.thumbnail_background_7
     })
+}
+
+@BindingAdapter("mainLifting")
+fun TextView.setMainLiftingCategoryText(item: WorkoutSchedule) {
+    val workouts = item.workoutDetails
+    if (workouts.size >= 2) {
+        text = context.getString(
+            R.string.main_lifting_more,
+            workouts.component1().workoutDetail.workoutName,
+            workouts.component2().workoutDetail.workoutName
+        )
+    } else {
+        text = try {
+            context.getString(
+                R.string.main_lifting_one,
+                workouts.component1().workoutDetail.workoutName
+            )
+        } catch (e: IndexOutOfBoundsException) {
+            "No lift"
+        }
+    }
 }
 
 @BindingAdapter("workoutName")

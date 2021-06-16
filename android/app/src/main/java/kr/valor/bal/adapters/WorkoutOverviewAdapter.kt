@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kr.valor.bal.adapters.listeners.OverviewListener
-import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.adapters.listeners.OverviewItemListener
+import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.databinding.OverviewCardviewItemBinding
 
-class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<WorkoutOverview, WorkoutOverviewAdapter.ViewHolder>(DIFF_CALLBACK) {
+class WorkoutOverviewAdapter(val clickListener: OverviewItemListener): ListAdapter<WorkoutSchedule, WorkoutOverviewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -22,9 +22,9 @@ class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<W
 
     class ViewHolder private constructor(private val binding: OverviewCardviewItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(workoutOverview: WorkoutOverview, clickListener: OverviewListener) {
-            binding.item = workoutOverview
-            binding.clickListener = clickListener
+        fun bind(workoutSchedule: WorkoutSchedule, scheduleClickListener: OverviewItemListener) {
+            binding.item = workoutSchedule
+            binding.clickListener = scheduleClickListener
             binding.executePendingBindings()
         }
 
@@ -39,17 +39,17 @@ class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<W
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutOverview>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutSchedule>() {
             override fun areItemsTheSame(
-                oldItem: WorkoutOverview,
-                newItem: WorkoutOverview
+                oldItem: WorkoutSchedule,
+                newItem: WorkoutSchedule
             ): Boolean {
-                return oldItem.overviewId == newItem.overviewId
+                return oldItem.workoutOverview.overviewId == newItem.workoutOverview.overviewId
             }
 
             override fun areContentsTheSame(
-                oldItem: WorkoutOverview,
-                newItem: WorkoutOverview
+                oldItem: WorkoutSchedule,
+                newItem: WorkoutSchedule
             ): Boolean {
                 return oldItem == newItem
             }

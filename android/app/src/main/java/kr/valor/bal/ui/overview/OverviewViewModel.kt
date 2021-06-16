@@ -10,6 +10,7 @@ import javax.inject.Inject
 class OverviewViewModel @Inject constructor(
     workoutDao: WorkoutDao
 ): ViewModel() {
-    val workouts = workoutDao.getAllWorkouts()
+
+    val workoutSchedules = workoutDao.getAllWorkoutSchedule()
 
 }

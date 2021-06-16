@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.WorkoutOverviewAdapter
-import kr.valor.bal.adapters.listeners.OverviewListener
+import kr.valor.bal.adapters.listeners.OverviewItemListener
 import kr.valor.bal.databinding.OverviewFragmentBinding
 
 @AndroidEntryPoint
@@ -31,8 +31,8 @@ class OverviewFragment : Fragment() {
         )
 
         adapter = WorkoutOverviewAdapter(
-            OverviewListener {
-                Toast.makeText(context, "${it.date}, ${it.overviewId}", Toast.LENGTH_SHORT).show()
+            OverviewItemListener {
+                Toast.makeText(context, "${it.workoutOverview.date}, ${it.workoutOverview.overviewId}", Toast.LENGTH_SHORT).show()
             }
         )
         recyclerView = binding.recyclerView
@@ -44,7 +44,7 @@ class OverviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.workouts.observe(viewLifecycleOwner) {
+        viewModel.workoutSchedules.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
             }

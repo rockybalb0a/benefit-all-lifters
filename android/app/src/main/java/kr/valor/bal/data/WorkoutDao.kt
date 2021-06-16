@@ -27,6 +27,10 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_overview WHERE overview_id is :workoutOverviewId")
     fun getWorkoutSchedule(workoutOverviewId: Long): LiveData<WorkoutSchedule>
 
+    @Transaction
+    @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC")
+    fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>>
+
     @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC")
     fun getAllWorkouts(): LiveData<List<WorkoutOverview>>
 
