@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.WorkoutOverviewAdapter
+import kr.valor.bal.adapters.listeners.OverviewListener
 import kr.valor.bal.databinding.FragmentOverviewBinding
 
 @AndroidEntryPoint
@@ -28,7 +30,11 @@ class OverviewFragment : Fragment() {
             inflater, container, false
         )
 
-        adapter = WorkoutOverviewAdapter()
+        adapter = WorkoutOverviewAdapter(
+            OverviewListener {
+                Toast.makeText(context, "${it.date}, ${it.overviewId}", Toast.LENGTH_SHORT).show()
+            }
+        )
         recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
 

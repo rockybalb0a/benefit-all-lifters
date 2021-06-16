@@ -36,11 +36,11 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_overview WHERE date is :date")
     suspend fun getWorkoutOverviewByDate(date: LocalDate): WorkoutOverview?
 
-    @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY set_id DESC LIMIT 1")
-    suspend fun getWorkoutSetAssociatedWithWorkoutDetail(detailId: Long): WorkoutSet
-
     @Delete
     suspend fun deleteWorkoutSet(workoutSet: WorkoutSet)
+
+    @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY set_id DESC LIMIT 1")
+    suspend fun getWorkoutSetAssociatedWithWorkoutDetail(detailId: Long): WorkoutSet
 
     @Transaction
     suspend fun deleteWorkoutSetAssociatedWithWorkoutDetail(detailId: Long) {

@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
+import kr.valor.bal.adapters.listeners.OverviewListener
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.databinding.ListItemOverviewCardviewBinding
 import kr.valor.bal.utilities.elapsedTimeFormatter
 import kr.valor.bal.utilities.localDateFormatter
 import kotlin.random.Random
 
-class WorkoutOverviewAdapter: ListAdapter<WorkoutOverview, WorkoutOverviewAdapter.ViewHolder>(DIFF_CALLBACK) {
+class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<WorkoutOverview, WorkoutOverviewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -23,13 +24,14 @@ class WorkoutOverviewAdapter: ListAdapter<WorkoutOverview, WorkoutOverviewAdapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     class ViewHolder private constructor(private val binding: ListItemOverviewCardviewBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(workoutOverview: WorkoutOverview) {
+        fun bind(workoutOverview: WorkoutOverview, clickListener: OverviewListener) {
             binding.item = workoutOverview
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 

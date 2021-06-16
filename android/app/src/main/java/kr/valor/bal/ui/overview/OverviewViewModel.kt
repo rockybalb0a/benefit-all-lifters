@@ -11,4 +11,5 @@ class OverviewViewModel @Inject constructor(
     workoutDao: WorkoutDao
 ): ViewModel() {
     val workouts = workoutDao.getAllWorkouts()
+
 }

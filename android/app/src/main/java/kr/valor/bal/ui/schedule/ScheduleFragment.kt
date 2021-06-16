@@ -36,7 +36,6 @@ class ScheduleFragment : Fragment() {
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
         adapter = ScheduleAdapter(
-            // TODO : Defining proper click listener
             addClickListener = ScheduleButtonListener { item ->
                 viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
             },
