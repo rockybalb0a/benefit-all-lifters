@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +15,14 @@ import kr.valor.bal.adapters.ScheduleAdapter
 import kr.valor.bal.adapters.listeners.ScheduleButtonListener
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.databinding.FragmentScheduleBinding
+import kr.valor.bal.databinding.ScheduleFragmentBinding
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
-    private lateinit var binding: FragmentScheduleBinding
+    private lateinit var binding: ScheduleFragmentBinding
 
     private lateinit var adapter: ScheduleAdapter
 
@@ -33,7 +32,7 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentScheduleBinding.inflate(inflater, container, false)
+        binding = ScheduleFragmentBinding.inflate(inflater, container, false)
 
         adapter = ScheduleAdapter(
             addClickListener = ScheduleButtonListener { item ->

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.WorkoutOverviewAdapter
 import kr.valor.bal.adapters.listeners.OverviewListener
-import kr.valor.bal.databinding.FragmentOverviewBinding
+import kr.valor.bal.databinding.OverviewFragmentBinding
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
@@ -26,7 +26,7 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentOverviewBinding.inflate(
+        val binding = OverviewFragmentBinding.inflate(
             inflater, container, false
         )
 

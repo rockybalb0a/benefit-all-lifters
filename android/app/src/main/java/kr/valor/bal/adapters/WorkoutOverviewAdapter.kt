@@ -1,20 +1,13 @@
 package kr.valor.bal.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kr.valor.bal.R
 import kr.valor.bal.adapters.listeners.OverviewListener
 import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.databinding.ListItemOverviewCardviewBinding
-import kr.valor.bal.utilities.elapsedTimeFormatter
-import kr.valor.bal.utilities.localDateFormatter
-import kotlin.random.Random
+import kr.valor.bal.databinding.OverviewCardviewItemBinding
 
 class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<WorkoutOverview, WorkoutOverviewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
@@ -27,7 +20,7 @@ class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<W
         holder.bind(item, clickListener)
     }
 
-    class ViewHolder private constructor(private val binding: ListItemOverviewCardviewBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: OverviewCardviewItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(workoutOverview: WorkoutOverview, clickListener: OverviewListener) {
             binding.item = workoutOverview
@@ -39,7 +32,7 @@ class WorkoutOverviewAdapter(val clickListener: OverviewListener): ListAdapter<W
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding =
-                    ListItemOverviewCardviewBinding.inflate(layoutInflater, parent, false)
+                    OverviewCardviewItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

@@ -2,15 +2,12 @@ package kr.valor.bal.utilities
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.lifecycle.LiveData
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
@@ -18,10 +15,7 @@ import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutOverview
 import kotlin.random.Random
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
-import kr.valor.bal.data.entities.WorkoutSet
-import kr.valor.bal.databinding.ListItemSetBinding
-import kr.valor.bal.ui.schedule.view.Plates
-import kr.valor.bal.ui.schedule.view.PlatesView
+import kr.valor.bal.databinding.SetInfoItemBinding
 
 @BindingAdapter("dateString")
 fun TextView.setDateFormatted(item: WorkoutOverview) {
@@ -59,7 +53,7 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListene
 
         item.workoutSets.forEachIndexed { index, workoutSet ->
 
-            val setsView = ListItemSetBinding.inflate(layoutInflater)
+            val setsView = SetInfoItemBinding.inflate(layoutInflater)
             setsView.set = workoutSet
             setsView.workoutSetNumber.text = "# ${index+1}"
             setsView.workoutSetReps.text = "${workoutSet.reps}"

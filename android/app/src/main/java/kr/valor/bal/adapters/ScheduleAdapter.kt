@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.adapters.listeners.ScheduleButtonListener
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.databinding.ListItemScheduleCardviewBinding
+import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 
 
 class ScheduleAdapter(
@@ -30,7 +30,7 @@ class ScheduleAdapter(
     }
 
     class ViewHolder private constructor(
-        private val binding: ListItemScheduleCardviewBinding): RecyclerView.ViewHolder(binding.root) {
+        private val binding: ScheduleCardviewItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             workoutDetail: WorkoutDetailAndSets,
@@ -56,7 +56,7 @@ class ScheduleAdapter(
 
 
         @SuppressLint("SwitchIntDef")
-        private fun ListItemScheduleCardviewBinding.refresh(visibility: Int) {
+        private fun ScheduleCardviewItemBinding.refresh(visibility: Int) {
             emptyAddSetButton.visibility = visibility
             when(emptyAddSetButton.visibility) {
                 View.VISIBLE -> {
@@ -74,7 +74,7 @@ class ScheduleAdapter(
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding =
-                    ListItemScheduleCardviewBinding.inflate(layoutInflater, parent, false)
+                    ScheduleCardviewItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

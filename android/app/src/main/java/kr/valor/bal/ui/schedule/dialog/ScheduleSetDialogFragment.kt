@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.bal.databinding.FragmentScheduleDialogBinding
+import kr.valor.bal.databinding.ScheduleDialogBinding
 import kr.valor.bal.ui.schedule.view.BarbellState
 import kr.valor.bal.ui.schedule.view.PlatesView
 
@@ -19,7 +19,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
 
     private lateinit var platesView: PlatesView
 
-    private lateinit var binding: FragmentScheduleDialogBinding
+    private lateinit var binding: ScheduleDialogBinding
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentScheduleDialogBinding.inflate(inflater, container, false)
+        binding = ScheduleDialogBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
