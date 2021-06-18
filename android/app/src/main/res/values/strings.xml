@@ -28,6 +28,8 @@
         <item name="pull_up">Pull up</item>
     </string-array>
 
+    <string name="default_weights_unit">Kg</string>
+
     <string name="red_plates_weights_default">25kg</string>
     <string name="blue_plates_weights_default">20kg</string>
     <string name="yellow_plates_weights_default">15kg</string>

@@ -25,25 +25,20 @@ class ScheduleSetViewModel @Inject constructor(
         }
     }
 
-    private val _currentWorkoutSetStack = _currentWorkoutSet.map {
-        it.platesStack.toList()
+    val currentWorkoutSet: LiveData<WorkoutSet>
+        get() = _currentWorkoutSet
+
+    val popButtonEnabled: LiveData<Boolean> = _currentWorkoutSet.map {
+        it.platesStack.isNotEmpty()
     }
 
-    val currentWorkoutSetStack: LiveData<List<Double>>
-        get() = _currentWorkoutSetStack
-
-    val popButtonEnabled: LiveData<Boolean> = _currentWorkoutSetStack.map {
-        it.isNotEmpty()
-    }
-
-    private var _candidatePlates: Double? = null
     private val _candidatePlatesLiveData = MutableLiveData<Double?>()
     val candidatePlatesLiveData: LiveData<Double?>
         get() = _candidatePlatesLiveData
 
     fun applyChange() {
         _currentWorkoutSet.value?.let { workoutSet ->
-            _candidatePlates?.let { weight ->
+            _candidatePlatesLiveData.value?.let { weight ->
                 workoutSet.platesStack.add(weight)
                 workoutSet.weights += calculateTotalWeights(weight)
                 update(workoutSet)
@@ -94,17 +89,15 @@ class ScheduleSetViewModel @Inject constructor(
     private fun update(workoutSet: WorkoutSet) {
         viewModelScope.launch {
             workoutDao.updateWorkoutSet(workoutSet)
-            _candidatePlates?.let { dequeuePlates() }
+            _candidatePlatesLiveData.value?.let { dequeuePlates() }
         }
     }
 
     private fun enqueuePlates(weight: Double) {
-        _candidatePlates = weight
-        _candidatePlatesLiveData.value = _candidatePlates
+        _candidatePlatesLiveData.value = weight
     }
 
     private fun dequeuePlates() {
-        _candidatePlates = null
         _candidatePlatesLiveData.value = null
     }
 

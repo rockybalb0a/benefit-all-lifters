@@ -42,6 +42,90 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
+                <TextView
+                    android:id="@+id/platesview_weight_unit"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="@string/default_weights_unit"
+                    android:textStyle="bold"
+                    android:textAlignment="viewStart"
+                    android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.6"
+                    android:layout_margin="@dimen/margin_small"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_separator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/platesview_rep_unit"
+                    tools:text="Kg" />
+
+                <TextView
+                    android:id="@+id/platesview_rep_unit"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.6"
+                    android:textAlignment="viewStart"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text='@{viewModel.currentWorkoutSet.reps > 1 ? "Reps" : "Rep"}'
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_separator"
+                    app:layout_constraintTop_toBottomOf="@id/platesview_weight_unit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Reps"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/platesview_inner_vertical_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/platesview_inner_vertical_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/platesview_weights"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="45dp"
+                    android:layout_margin="@dimen/margin_small"
+                    android:textAlignment="viewEnd"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.6"
+                    app:weights="@{viewModel.currentWorkoutSet}"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@+id/platesview_reps"
+                    app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_guideline"
+                    app:layout_constraintEnd_toStartOf="@+id/platesview_inner_vertical_separator"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="120"/>
+
+                <TextView
+                    android:id="@+id/platesview_reps"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text="@{String.valueOf(viewModel.currentWorkoutSet.reps)}"
+                    android:textAlignment="viewEnd"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.6"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_guideline"
+                    app:layout_constraintEnd_toStartOf="@+id/platesview_inner_vertical_separator"
+                    app:layout_constraintTop_toBottomOf="@id/platesview_weights"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="5"/>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

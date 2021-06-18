@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.bal.R
 import kr.valor.bal.adapters.WorkoutOverviewAdapter
 import kr.valor.bal.adapters.listeners.OverviewItemListener
 import kr.valor.bal.databinding.OverviewFragmentBinding
@@ -32,7 +34,7 @@ class OverviewFragment : Fragment() {
 
         adapter = WorkoutOverviewAdapter(
             OverviewItemListener {
-                Toast.makeText(context, "${it.workoutOverview.date}, ${it.workoutOverview.overviewId}", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(OverviewFragmentDirections.actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
             }
         )
         recyclerView = binding.recyclerView

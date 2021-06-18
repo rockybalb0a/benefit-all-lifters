@@ -12,10 +12,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.entities.WorkoutOverview
-import kotlin.random.Random
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutSchedule
+import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemBinding
 import java.lang.IndexOutOfBoundsException
 
@@ -66,6 +65,11 @@ fun TextView.setMainLiftingCategoryText(item: WorkoutSchedule) {
 @BindingAdapter("workoutName")
 fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
     text = item.workoutDetail.workoutName
+}
+
+@BindingAdapter("weights")
+fun TextView.setWeights(item: WorkoutSet?) {
+    text = item?.weights?.toInt().toString()
 }
 
 @SuppressLint("SetTextI18n")

@@ -9,7 +9,11 @@
         android:id="@+id/overview_dest"
         android:name="kr.valor.bal.ui.overview.OverviewFragment"
         android:label="@string/overview_title"
-        tools:layout="@layout/overview_fragment" />
+        tools:layout="@layout/overview_fragment" >
+        <action
+            android:id="@+id/action_overview_dest_to_detailFragment"
+            app:destination="@id/detail_dest" />
+    </fragment>
     <fragment
         android:id="@+id/home_dest"
         android:name="kr.valor.bal.ui.home.HomeFragment"
@@ -32,11 +36,20 @@
     <dialog
         android:id="@+id/scheduleSet_dest"
         android:name="kr.valor.bal.ui.schedule.dialog.ScheduleSetDialogFragment"
-        android:label="ScheduleSetDialogFragment" >
+        tools:layout="@layout/schedule_dialog">
         <argument
             android:name="setId"
             app:argType="long" />
     </dialog>
+
+    <fragment
+        android:id="@+id/detail_dest"
+        android:name="kr.valor.bal.ui.overview.detail.DetailFragment"
+        tools:layout="@layout/detail_fragment" >
+        <argument
+            android:name="overviewId"
+            app:argType="long" />
+    </fragment>
 
 
 </navigation>

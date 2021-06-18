@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ScheduleDialogBinding
 import kr.valor.bal.ui.schedule.view.BarbellState
 import kr.valor.bal.ui.schedule.view.PlatesView
@@ -24,8 +25,8 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.currentWorkoutSetStack.observe(viewLifecycleOwner) {
-            platesView.synchronizePlatesInfo(it)
+        viewModel.currentWorkoutSet.observe(viewLifecycleOwner) {
+            platesView.synchronizePlatesInfo(it.platesStack)
         }
 
         viewModel.candidatePlatesLiveData.observe(viewLifecycleOwner) {

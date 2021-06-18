@@ -1,32 +1,36 @@
 package kr.valor.bal.ui.overview.detail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kr.valor.bal.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.bal.databinding.DetailFragmentBinding
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailFragment()
-    }
+    private val viewModel: DetailViewModel by viewModels()
 
-    private lateinit var viewModel: DetailViewModel
+    private lateinit var binding: DetailFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.detail_fragment, container, false)
+    ): View {
+        binding = DetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel.workoutSchedule.observe(viewLifecycleOwner) {
+            (activity as AppCompatActivity).supportActionBar?.title = it.workoutOverview.date.toString()
+        }
     }
+
 
 }
