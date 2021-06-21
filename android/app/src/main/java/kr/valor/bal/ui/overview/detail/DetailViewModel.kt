@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.valor.bal.data.WorkoutDao
+import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.WorkoutSchedule
 import javax.inject.Inject
 
@@ -24,4 +25,5 @@ class DetailViewModel @Inject constructor(
     }
     val workoutSchedule: LiveData<WorkoutSchedule>
         get() = _workoutSchedule
+
 }

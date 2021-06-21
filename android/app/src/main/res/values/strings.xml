@@ -44,6 +44,15 @@
 
     <string name="main_lifting_one">Main | %s</string>
     <string name="main_lifting_more">Main | %s, %s</string>
+    <string name="main_lifting_empty">No Lift</string>
+
+    <string name="weights_text">%d kg</string>
+
+    <string name="sets_text_template"># %d</string>
+    <string name="rep_text">rep</string>
+    <string name="rep_text_with">%d rep</string>
+    <string name="reps_text">reps</string>
+    <string name="reps_text_with">%d reps</string>
 
 
 </resources>

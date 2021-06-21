@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
+import kr.valor.bal.adapters.WorkoutDetailChildAdapter
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutSchedule
@@ -57,7 +59,7 @@ fun TextView.setMainLiftingCategoryText(item: WorkoutSchedule) {
                 workouts.component1().workoutDetail.workoutName
             )
         } catch (e: IndexOutOfBoundsException) {
-            "No lift"
+            resources.getString(R.string.main_lifting_empty)
         }
     }
 }
@@ -69,10 +71,17 @@ fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
 
 @BindingAdapter("weights")
 fun TextView.setWeights(item: WorkoutSet?) {
-    text = item?.weights?.toInt().toString()
+    val weights = item?.weights?.toInt() ?: 20
+    text = resources.getString(R.string.weights_text, weights)
 }
 
-@SuppressLint("SetTextI18n")
+@BindingAdapter("reps")
+fun TextView.setReps(item: WorkoutSet?) {
+    val reps = item?.reps ?: 0
+    text = if (reps > 1) resources.getString(R.string.reps_text_with, reps) else resources.getString(R.string.rep_text_with, reps)
+}
+
+
 @BindingAdapter("workoutSets", "setListener")
 fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListener: ScheduleSetListener) {
 
@@ -83,11 +92,11 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListene
 
             val setsView = SetInfoItemBinding.inflate(layoutInflater)
             setsView.set = workoutSet
-            setsView.workoutSetNumber.text = "# ${index+1}"
+            setsView.workoutSetNumber.text = resources.getString(R.string.sets_text_template, index + 1)
             setsView.workoutSetReps.text = "${workoutSet.reps}"
-            setsView.workoutSetRepsUnit.text = if (workoutSet.reps > 1) "reps" else "rep"
+            setsView.workoutSetRepsUnit.text = if (workoutSet.reps > 1) resources.getString(R.string.reps_text) else resources.getString(R.string.rep_text)
             setsView.workoutSetWeights.text = "${workoutSet.weights.toInt()}"
-            setsView.workoutSetWeightsUnit.text = "kg"
+            setsView.workoutSetWeightsUnit.text = resources.getString(R.string.default_weights_unit)
             setsView.clickListener = clickListener
             addView(setsView.root)
         }
