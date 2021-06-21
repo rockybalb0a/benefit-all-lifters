@@ -15,8 +15,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/schedule_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
             android:id="@+id/schedule_empty_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No lift"
+            android:text="@string/main_lifting_empty"
             android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="visible"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
-            android:text="add workout"
+            android:text="@string/add_new_workout"
             app:icon="@drawable/ic_baseline_note_add_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

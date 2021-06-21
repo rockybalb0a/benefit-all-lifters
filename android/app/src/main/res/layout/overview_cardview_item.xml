@@ -43,6 +43,16 @@
                 tools:src="@drawable/thumbnail_background_2"
                 tools:ignore="ContentDescription" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#AA000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"

@@ -30,17 +30,33 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/title_contents_separator"
                 app:workoutName="@{item}"
                 tools:text="Squat" />
+
+            <View
+                android:id="@+id/title_contents_separator"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?attr/colorPrimaryVariant"
+                android:alpha="0.6"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/workout_title_text"
+                app:layout_constraintBottom_toTopOf="@id/sets_info_recyclerview"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sets_info_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_default"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/workout_title_text"
+                app:layout_constraintTop_toBottomOf="@id/title_contents_separator"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

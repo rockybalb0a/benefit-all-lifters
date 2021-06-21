@@ -1,6 +1,5 @@
 package kr.valor.bal.utilities
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -8,11 +7,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
-import kr.valor.bal.adapters.WorkoutDetailChildAdapter
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutSchedule
@@ -47,14 +44,14 @@ fun ImageView.setThumbnailImage(item: WorkoutSchedule) {
 fun TextView.setMainLiftingCategoryText(item: WorkoutSchedule) {
     val workouts = item.workoutDetails
     if (workouts.size >= 2) {
-        text = context.getString(
+        text = resources.getString(
             R.string.main_lifting_more,
             workouts.component1().workoutDetail.workoutName,
             workouts.component2().workoutDetail.workoutName
         )
     } else {
         text = try {
-            context.getString(
+            resources.getString(
                 R.string.main_lifting_one,
                 workouts.component1().workoutDetail.workoutName
             )
@@ -69,8 +66,19 @@ fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
     text = item.workoutDetail.workoutName
 }
 
+@BindingAdapter("sets")
+fun TextView.setCurrentSets(setItemIndex: Int) {
+    text = resources.getString(R.string.sets_text_full_template, setItemIndex + 1)
+}
+
 @BindingAdapter("weights")
 fun TextView.setWeights(item: WorkoutSet?) {
+    val weights = item?.weights?.toInt() ?: 20
+    text = weights.toString()
+}
+
+@BindingAdapter("weightsWithWeightUnit")
+fun TextView.setWeightsWithWeightUnit(item: WorkoutSet?) {
     val weights = item?.weights?.toInt() ?: 20
     text = resources.getString(R.string.weights_text, weights)
 }
@@ -83,7 +91,7 @@ fun TextView.setReps(item: WorkoutSet?) {
 
 
 @BindingAdapter("workoutSets", "setListener")
-fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListener: ScheduleSetListener) {
+fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: ScheduleSetListener) {
 
     if (item.workoutSets.isNotEmpty()) {
         val layoutInflater = LayoutInflater.from(context)
@@ -91,14 +99,16 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, clickListene
         item.workoutSets.forEachIndexed { index, workoutSet ->
 
             val setsView = SetInfoItemBinding.inflate(layoutInflater)
-            setsView.set = workoutSet
-            setsView.workoutSetNumber.text = resources.getString(R.string.sets_text_template, index + 1)
-            setsView.workoutSetReps.text = "${workoutSet.reps}"
-            setsView.workoutSetRepsUnit.text = if (workoutSet.reps > 1) resources.getString(R.string.reps_text) else resources.getString(R.string.rep_text)
-            setsView.workoutSetWeights.text = "${workoutSet.weights.toInt()}"
-            setsView.workoutSetWeightsUnit.text = resources.getString(R.string.default_weights_unit)
-            setsView.clickListener = clickListener
-            addView(setsView.root)
+            with(setsView) {
+                set = workoutSet
+                workoutSetNumber.text = resources.getString(R.string.sets_text_simplified_template, index + 1)
+                workoutSetReps.text = "${workoutSet.reps}"
+                workoutSetRepsUnit.text = if (workoutSet.reps > 1) resources.getString(R.string.reps_text) else resources.getString(R.string.rep_text)
+                workoutSetWeights.text = "${workoutSet.weights.toInt()}"
+                workoutSetWeightsUnit.text = resources.getString(R.string.default_weights_unit)
+                clickListener = itemClickListener
+                addView(this.root)
+            }
         }
     }
 }

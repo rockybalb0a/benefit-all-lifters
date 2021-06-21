@@ -46,9 +46,12 @@
     <string name="main_lifting_more">Main | %s, %s</string>
     <string name="main_lifting_empty">No Lift</string>
 
+    <string name="add_new_workout">add workout</string>
+
     <string name="weights_text">%d kg</string>
 
-    <string name="sets_text_template"># %d</string>
+    <string name="sets_text_simplified_template"># %d</string>
+    <string name="sets_text_full_template">Set #%d</string>
     <string name="rep_text">rep</string>
     <string name="rep_text_with">%d rep</string>
     <string name="reps_text">reps</string>

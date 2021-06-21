@@ -1,12 +1,17 @@
 package kr.valor.bal.adapters
 
+import android.content.Context
+import android.graphics.Rect
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemGridBinding
+import kotlin.math.round
 
 class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, WorkoutDetailChildAdapter.ViewHolder>(DIFF_CALLBACK) {
 
@@ -16,12 +21,13 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, WorkoutDetailChildAdapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, position)
     }
 
     class ViewHolder(private val binding: SetInfoItemGridBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(workoutSet: WorkoutSet) {
+        fun bind(workoutSet: WorkoutSet, position: Int) {
             binding.item = workoutSet
+            binding.index = position
             binding.executePendingBindings()
         }
 
@@ -35,6 +41,7 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, WorkoutDetailChildAdapt
     }
 
     companion object {
+
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutSet>() {
             override fun areItemsTheSame(oldItem: WorkoutSet, newItem: WorkoutSet): Boolean {
                 return oldItem.setId == newItem.setId
@@ -45,6 +52,20 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, WorkoutDetailChildAdapt
             }
 
         }
+
     }
 
+}
+
+class ItemOffsetDecoration(context : Context, itemOffsetId : Int) : RecyclerView.ItemDecoration() {
+    private val itemOffset = context.resources.getDimensionPixelSize(itemOffsetId)
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.getItemOffsets(outRect, view, parent, state)
+        outRect.set(itemOffset, 0, itemOffset, itemOffset)
+    }
 }

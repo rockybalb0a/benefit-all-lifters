@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.DetailCardviewItemBinding
@@ -39,10 +40,13 @@ class WorkoutDetailAdapter: ListAdapter<WorkoutDetailAndSets, WorkoutDetailAdapt
 
             val childAdapter = WorkoutDetailChildAdapter()
 
+
+
             setsInfoRecyclerview.apply {
                 layoutManager = childLayoutManager
                 adapter = childAdapter
                 setRecycledViewPool(viewPool)
+                addItemDecoration(ItemOffsetDecoration(context, R.dimen.padding_default))
             }
             childAdapter.submitList(item)
 
