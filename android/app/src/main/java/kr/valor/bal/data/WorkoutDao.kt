@@ -46,6 +46,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY set_id DESC LIMIT 1")
     suspend fun getWorkoutSetAssociatedWithWorkoutDetail(detailId: Long): WorkoutSet
 
+    @Query("SELECT * FROM workout_set WHERE container_id is :detailId ORDER BY set_id DESC LIMIT 1")
+    suspend fun getLatestWorkoutSetByWorkoutDetailId(detailId: Long): WorkoutSet?
+
     @Transaction
     suspend fun deleteWorkoutSetAssociatedWithWorkoutDetail(detailId: Long) {
         val target = getWorkoutSetAssociatedWithWorkoutDetail(detailId)

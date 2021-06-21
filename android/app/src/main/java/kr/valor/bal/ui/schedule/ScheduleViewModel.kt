@@ -2,7 +2,10 @@ package kr.valor.bal.ui.schedule
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
@@ -34,6 +37,7 @@ class ScheduleViewModel @Inject constructor(
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
         get() = _currentWorkoutSchedule
 
+
     fun onAddNewSetButtonClicked(detailId: Long) {
         val newWorkoutSet = WorkoutSet(containerId = detailId)
         insertWorkoutSet(newWorkoutSet)
@@ -59,9 +63,16 @@ class ScheduleViewModel @Inject constructor(
 
     private fun insertWorkoutSet(workoutSet: WorkoutSet) {
         viewModelScope.launch {
+            val latestWorkoutSet = workoutDao.getLatestWorkoutSetByWorkoutDetailId(workoutSet.containerId)
+            latestWorkoutSet?.let {
+                workoutSet.weights = it.weights
+                workoutSet.reps = it.reps
+                workoutSet.platesStack = it.platesStack
+            }
             workoutDao.insert(workoutSet)
         }
     }
+
 
     private fun deleteWorkoutSet(detailId: Long) {
         viewModelScope.launch {
