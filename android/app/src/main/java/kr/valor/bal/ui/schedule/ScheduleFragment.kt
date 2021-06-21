@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ScheduleAdapter
@@ -48,8 +49,20 @@ class ScheduleFragment : Fragment() {
                 findNavController().navigate(ScheduleFragmentDirections.actionScheduleDestToScheduleSetDialogFragment(item.setId))
             }
         )
+
         recyclerView = binding.scheduleRecyclerView
         recyclerView.adapter = adapter
+
+        // TODO : Considering use Coordinator layout or Motion layout
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    binding.addWorkoutButton.hide()
+                } else {
+                    binding.addWorkoutButton.show()
+                }
+            }
+        })
 
         return binding.root
     }
