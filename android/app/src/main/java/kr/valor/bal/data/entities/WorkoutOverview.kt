@@ -3,12 +3,8 @@ package kr.valor.bal.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kr.valor.bal.utilities.localDateFormatter
+import kr.valor.bal.utilities.TrackingStatus
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.time.format.TextStyle
-import java.util.*
 
 
 @Entity(tableName = "workout_overview")
@@ -21,8 +17,14 @@ data class WorkoutOverview(
     var date: LocalDate = LocalDate.now(),
 
     @ColumnInfo(name = "start_time_milli")
-    val startTimeMilli: Long = System.currentTimeMillis(),
+    var startTimeMilli: Long = 0L,
 
     @ColumnInfo(name = "end_time_milli")
-    var endTimeMilli: Long = startTimeMilli
+    var endTimeMilli: Long = 0L,
+
+    @ColumnInfo(name ="elapsed_time_milli")
+    var elapsedTimeMilli: Long = 0L,
+
+    @ColumnInfo(name = "tracking_status")
+    var trackingStatus: TrackingStatus = TrackingStatus.NONE
 )

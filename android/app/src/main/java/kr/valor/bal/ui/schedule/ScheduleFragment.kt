@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import kr.valor.bal.adapters.listeners.ScheduleButtonListener
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleFragmentBinding
+import kr.valor.bal.utilities.elapsedTimeFormatter
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
@@ -34,6 +36,8 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ScheduleFragmentBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = ScheduleAdapter(
             addClickListener = ScheduleButtonListener { item ->
@@ -86,6 +90,7 @@ class ScheduleFragment : Fragment() {
 //            findNavController().navigate(R.id.action_schedule_dest_to_schedule_dialog_dest)
         }
 
+
         setupObserver()
     }
 
@@ -93,6 +98,7 @@ class ScheduleFragment : Fragment() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
             setupUi(it.workoutDetails)
         }
+
     }
 
     private fun setupUi(workoutDetails: List<WorkoutDetailAndSets>) {
@@ -100,10 +106,12 @@ class ScheduleFragment : Fragment() {
             true -> with(binding) {
                 scheduleEmptyPlaceholder.visibility = View.VISIBLE
                 scheduleRecyclerView.visibility = View.GONE
+//                timerStartButton.visibility = View.GONE
             }
             false -> with(binding) {
                 scheduleEmptyPlaceholder.visibility = View.GONE
                 scheduleRecyclerView.visibility = View.VISIBLE
+//                timerStartButton.visibility = View.VISIBLE
             }
         }
         adapter.submitList(workoutDetails)

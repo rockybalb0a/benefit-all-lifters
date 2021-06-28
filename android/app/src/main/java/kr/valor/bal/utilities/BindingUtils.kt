@@ -1,43 +1,92 @@
 package kr.valor.bal.utilities
 
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.navigation.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutSchedule
+import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemBinding
 import java.lang.IndexOutOfBoundsException
+import kotlin.reflect.KClass
 
 @BindingAdapter("dateString")
 fun TextView.setDateFormatted(item: WorkoutSchedule) {
     text = item.workoutOverview.localDateFormatter()
 }
 
-@BindingAdapter("elapsedTimeString")
-fun TextView.setElapsedTimeFormatted(item: WorkoutSchedule) {
-    text = item.workoutOverview.elapsedTimeFormatter()
+@BindingAdapter("elapsedTime")
+fun setElapsedTimeFormatted(view: View, item: WorkoutSchedule?) {
+    when(view) {
+        is TextView -> {
+            view.text = getElapsedTimeFormatted(
+                view.resources.getString(R.string.empty_elapsed_time),
+                item
+            )
+        }
+        is Button -> {
+            view.text = getElapsedTimeFormatted(
+                view.resources.getString(R.string.timer_start_button_text),
+                item
+            )
+
+        }
+    }
+}
+@BindingAdapter("elapsedTimeOnTracking")
+fun TextView.setTrackingTimeText(elapsedTime: Long?) {
+    text = elapsedTime?.run {
+        elapsedTime.elapsedTimeFormatter()
+    } ?: resources.getString(R.string.empty_elapsed_time)
 }
 
+//@BindingAdapter("elapsedTimeOnTracking")
+//fun TextView.setTrackingTimeText(workoutOverview: WorkoutOverview?) {
+//    text = workoutOverview?.run {
+//        elapsedTimeMilli.elapsedTimeFormatter()
+//    } ?: resources.getString(R.string.empty_elapsed_time)
+//}
+
+//@BindingAdapter("elapsedTimeOnTracking")
+//fun TextView.setCurrentTrackingTimeText(item: WorkoutSchedule?) {
+//    text = item?.run {
+//        this.workoutOverview.elapsedTimeMilli.elapsedTimeFormatter()
+//    } ?: resources.getString(R.string.empty_elapsed_time)
+//}
+
+
+private fun getElapsedTimeFormatted(default: String ,item: WorkoutSchedule?): String {
+    return item?.run {
+        this.workoutOverview.elapsedTimeFormatter()
+    } ?: default
+}
+
+
 @BindingAdapter("thumbnailImage")
-fun ImageView.setThumbnailImage(item: WorkoutSchedule) {
-    setImageResource(when (item.workoutOverview.overviewId.toInt() % 7) {
-        0 -> R.drawable.thumbnail_background_1
-        1 -> R.drawable.thumbnail_background_2
-        2 -> R.drawable.thumbnail_background_3
-        3 -> R.drawable.thumbnail_background_4
-        4 -> R.drawable.thumbnail_background_5
-        5 -> R.drawable.thumbnail_background_6
-        else -> R.drawable.thumbnail_background_7
-    })
+fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
+    item?.let {
+        setImageResource(when (it.workoutOverview.overviewId.toInt() % 7) {
+            0 -> R.drawable.thumbnail_background_1
+            1 -> R.drawable.thumbnail_background_2
+            2 -> R.drawable.thumbnail_background_3
+            3 -> R.drawable.thumbnail_background_4
+            4 -> R.drawable.thumbnail_background_5
+            5 -> R.drawable.thumbnail_background_6
+            else -> R.drawable.thumbnail_background_7
+        })
+    } ?: setImageResource(R.drawable.thumbnail_background_7)
 }
 
 @BindingAdapter("mainLifting")

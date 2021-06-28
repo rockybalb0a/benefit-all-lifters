@@ -1,6 +1,7 @@
 package kr.valor.bal.data
 
 import androidx.room.TypeConverter
+import kr.valor.bal.utilities.TrackingStatus
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -47,21 +48,30 @@ class Converters {
         }
     }
 
+    @TypeConverter
+    fun columnToTrackingStatus(data: Int): TrackingStatus {
+        return when(data) {
+            1 -> TrackingStatus.TRACKING
+            2 -> TrackingStatus.PAUSE
+            3 -> TrackingStatus.DONE
+            else -> TrackingStatus.NONE
+        }
+    }
+
+    @TypeConverter
+    fun trackingStatusToColumn(status: TrackingStatus): Int {
+        return when (status) {
+            TrackingStatus.NONE -> 0
+            TrackingStatus.TRACKING -> 1
+            TrackingStatus.PAUSE -> 2
+            TrackingStatus.DONE -> 3
+        }
+    }
+
     companion object {
         private const val DELIMITER = " "
     }
 
-
-
-//    @TypeConverter
-//    fun workoutSetsToColumn(setsList: List<WorkoutSet>?): String? {
-//        return setsList?.let { Json.encodeToString(it) }
-//    }
-//
-//    @TypeConverter
-//    fun columnToWorkoutSets(json: String?): List<WorkoutSet>? {
-//        return json?.let { Json.decodeFromString(it) }
-//    }
 
 }
 

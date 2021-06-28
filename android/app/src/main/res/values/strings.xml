@@ -58,4 +58,9 @@
     <string name="reps_text_with">%d reps</string>
 
 
+    <string name="empty_elapsed_time">Not recorded</string>
+    <string name="timer_start_button_text">start timer</string>
+    <string name="timer_stop_button_text">stop timer</string>
+    <string name="timer_reset_button_text">reset timer</string>
+
 </resources>

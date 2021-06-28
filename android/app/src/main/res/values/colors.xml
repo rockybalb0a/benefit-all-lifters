@@ -19,4 +19,6 @@
     <color name="plateColor20">#2D4A73</color>
     <color name="plateColor25">#652A2C</color>
     <color name="barbellColor">#B4B4B4</color>
+
+    <color name="backgroundShadow">#AA000000</color>
 </resources>

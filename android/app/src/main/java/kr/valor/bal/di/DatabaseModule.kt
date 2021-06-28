@@ -2,23 +2,14 @@ package kr.valor.bal.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kr.valor.bal.data.AppDatabase
-import kr.valor.bal.data.MIGRATION_1_2
-import kr.valor.bal.data.MIGRATION_2_3
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.utilities.DATABASE_NAME
-import kr.valor.bal.utilities.randomGenerator
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -54,7 +45,6 @@ class DatabaseModule {
             AppDatabase::class.java,
             DATABASE_NAME
         )
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
     }
 
