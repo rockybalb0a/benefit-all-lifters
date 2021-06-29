@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ScheduleAdapter
 import kr.valor.bal.adapters.listeners.ScheduleButtonListener
+import kr.valor.bal.adapters.listeners.ScheduleFinishListener
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
+import kr.valor.bal.adapters.listeners.WorkoutDetailItem
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleFragmentBinding
 import kr.valor.bal.utilities.elapsedTimeFormatter
@@ -51,6 +53,9 @@ class ScheduleFragment : Fragment() {
             },
             setClickListener = ScheduleSetListener { item ->
                 findNavController().navigate(ScheduleFragmentDirections.actionScheduleDestToScheduleSetDialogFragment(item.setId))
+            },
+            finishedClickListener = ScheduleFinishListener {
+                viewModel.onWorkoutFinished()
             }
         )
 
@@ -87,33 +92,16 @@ class ScheduleFragment : Fragment() {
                     viewModel.onDialogItemSelected(exercises[idx])
                 }
                 .show()
-//            findNavController().navigate(R.id.action_schedule_dest_to_schedule_dialog_dest)
         }
 
-
-        setupObserver()
-    }
-
-    private fun setupObserver() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
-            setupUi(it.workoutDetails)
+            val items =
+                it.workoutDetails.map { item ->
+                    WorkoutDetailItem.WorkoutDetailAndSetsItem(item)
+                } + listOf(WorkoutDetailItem.Footer)
+            adapter.submitList(items)
         }
 
     }
 
-    private fun setupUi(workoutDetails: List<WorkoutDetailAndSets>) {
-        when(workoutDetails.isEmpty()) {
-            true -> with(binding) {
-                scheduleEmptyPlaceholder.visibility = View.VISIBLE
-                scheduleRecyclerView.visibility = View.GONE
-//                timerStartButton.visibility = View.GONE
-            }
-            false -> with(binding) {
-                scheduleEmptyPlaceholder.visibility = View.GONE
-                scheduleRecyclerView.visibility = View.VISIBLE
-//                timerStartButton.visibility = View.VISIBLE
-            }
-        }
-        adapter.submitList(workoutDetails)
-    }
 }

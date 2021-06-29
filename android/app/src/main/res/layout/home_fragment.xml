@@ -78,7 +78,7 @@
                 android:background="#AAFF0000"
                 android:gravity="center"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:text="@string/rest_today_text" />
         </com.google.android.material.card.MaterialCardView>

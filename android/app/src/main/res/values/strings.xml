@@ -13,6 +13,7 @@
 
     <string name="new_workout_text">Пойдем !!</string>
     <string name="rest_today_text">I will rest today..</string>
+    <string name="finish_today_text">Done for today</string>
 
     <string name="add_new_workout_popup_title">Choose your lift</string>
     <string name="light_mode">Light Mode</string>

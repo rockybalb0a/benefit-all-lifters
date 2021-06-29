@@ -28,14 +28,7 @@ class ScheduleViewModel @Inject constructor(
                 workoutDao.insert(newWorkoutOverview)
                 workoutDao.getLatestWorkoutOverview()
             }
-
-        if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
-            with(currentWorkoutOverview) {
-                elapsedTimeMilli = System.currentTimeMillis() - startTimeMilli
-            }
-            _trackingJob.value?.let { deactivateTimer() } ?: activateTimer()
-        }
-        _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
+        syncElapsedTimeWithDatabase(currentWorkoutOverview)
         emit(currentWorkoutOverview)
     }
 
@@ -53,15 +46,15 @@ class ScheduleViewModel @Inject constructor(
         it != null
     }
 
-    val trackingButtonVisibility = _currentWorkoutSchedule.map {
-        it.workoutDetails.isNotEmpty()
-    }
-
     private val _elapsedTimeMilli = MutableLiveData<Long>()
 
     val elapsedTimeMilli: LiveData<Long>
         get() = _elapsedTimeMilli
 
+
+    val layoutViewVisibility = _currentWorkoutSchedule.map {
+        it.workoutDetails.isNotEmpty()
+    }
 
     private val timer = flow {
         while (true) {
@@ -86,6 +79,16 @@ class ScheduleViewModel @Inject constructor(
     private fun deactivateTimer() {
         _trackingJob.value?.cancel()
         _trackingJob.value = null
+    }
+
+    private fun syncElapsedTimeWithDatabase(currentWorkoutOverview: WorkoutOverview) {
+        if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
+            with(currentWorkoutOverview) {
+                elapsedTimeMilli = System.currentTimeMillis() - startTimeMilli
+            }
+            _trackingJob.value?.let { deactivateTimer() } ?: activateTimer()
+        }
+        _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
     }
 
     private fun onStart() {
@@ -152,6 +155,10 @@ class ScheduleViewModel @Inject constructor(
             }
             updateWorkoutOverview(it)
         }
+    }
+
+    fun onWorkoutFinished() {
+        onStop()
     }
 
     fun onAddNewSetButtonClicked(detailId: Long) {

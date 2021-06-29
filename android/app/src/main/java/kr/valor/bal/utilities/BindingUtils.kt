@@ -27,44 +27,23 @@ fun TextView.setDateFormatted(item: WorkoutSchedule) {
     text = item.workoutOverview.localDateFormatter()
 }
 
-@BindingAdapter("elapsedTime")
-fun setElapsedTimeFormatted(view: View, item: WorkoutSchedule?) {
-    when(view) {
-        is TextView -> {
-            view.text = getElapsedTimeFormatted(
-                view.resources.getString(R.string.empty_elapsed_time),
-                item
-            )
-        }
-        is Button -> {
-            view.text = getElapsedTimeFormatted(
-                view.resources.getString(R.string.timer_start_button_text),
-                item
-            )
 
+@BindingAdapter("elapsedTime")
+fun TextView.setElapsedTimeFormatted(item: WorkoutSchedule?) {
+    item?.let {
+        text = when(it.workoutOverview.trackingStatus) {
+            TrackingStatus.DONE -> getElapsedTimeFormatted(resources.getString(R.string.empty_elapsed_time), item)
+            else -> resources.getString(R.string.empty_elapsed_time)
         }
-    }
+    } ?: resources.getString(R.string.empty_elapsed_time)
 }
+
 @BindingAdapter("elapsedTimeOnTracking")
 fun TextView.setTrackingTimeText(elapsedTime: Long?) {
     text = elapsedTime?.run {
         elapsedTime.elapsedTimeFormatter()
     } ?: resources.getString(R.string.empty_elapsed_time)
 }
-
-//@BindingAdapter("elapsedTimeOnTracking")
-//fun TextView.setTrackingTimeText(workoutOverview: WorkoutOverview?) {
-//    text = workoutOverview?.run {
-//        elapsedTimeMilli.elapsedTimeFormatter()
-//    } ?: resources.getString(R.string.empty_elapsed_time)
-//}
-
-//@BindingAdapter("elapsedTimeOnTracking")
-//fun TextView.setCurrentTrackingTimeText(item: WorkoutSchedule?) {
-//    text = item?.run {
-//        this.workoutOverview.elapsedTimeMilli.elapsedTimeFormatter()
-//    } ?: resources.getString(R.string.empty_elapsed_time)
-//}
 
 
 private fun getElapsedTimeFormatted(default: String ,item: WorkoutSchedule?): String {
