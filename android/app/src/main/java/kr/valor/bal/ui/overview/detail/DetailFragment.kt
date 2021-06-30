@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.bal.adapters.WorkoutDetailAdapter
+import kr.valor.bal.adapters.overview.detail.DetailAdapter
 import kr.valor.bal.databinding.DetailFragmentBinding
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class DetailFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var adapter: WorkoutDetailAdapter
+    private lateinit var adapter: DetailAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +29,7 @@ class DetailFragment : Fragment() {
     ): View {
         binding = DetailFragmentBinding.inflate(inflater, container, false)
 
-        adapter = WorkoutDetailAdapter()
+        adapter = DetailAdapter()
 
         recyclerView = binding.recyclerView
 

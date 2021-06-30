@@ -5,22 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
-import kr.valor.bal.adapters.ScheduleAdapter
+import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.adapters.listeners.ScheduleButtonListener
 import kr.valor.bal.adapters.listeners.ScheduleFinishListener
 import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.adapters.listeners.WorkoutDetailItem
-import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleFragmentBinding
-import kr.valor.bal.utilities.elapsedTimeFormatter
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
@@ -97,7 +93,7 @@ class ScheduleFragment : Fragment() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
             val items =
                 it.workoutDetails.map { item ->
-                    WorkoutDetailItem.WorkoutDetailAndSetsItem(item)
+                    WorkoutDetailItem.Item(item)
                 } + listOf(WorkoutDetailItem.Footer)
             adapter.submitList(items)
         }

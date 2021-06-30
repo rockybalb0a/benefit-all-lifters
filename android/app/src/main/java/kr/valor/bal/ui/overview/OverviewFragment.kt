@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.bal.R
-import kr.valor.bal.adapters.WorkoutOverviewAdapter
+import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.listeners.OverviewItemListener
 import kr.valor.bal.databinding.OverviewFragmentBinding
 
@@ -20,7 +18,7 @@ class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
 
-    private lateinit var adapter: WorkoutOverviewAdapter
+    private lateinit var adapter: OverviewAdapter
 
     private lateinit var recyclerView: RecyclerView
 
@@ -32,7 +30,7 @@ class OverviewFragment : Fragment() {
             inflater, container, false
         )
 
-        adapter = WorkoutOverviewAdapter(
+        adapter = OverviewAdapter(
             OverviewItemListener {
                 findNavController().navigate(OverviewFragmentDirections.actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
             }

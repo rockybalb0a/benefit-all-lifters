@@ -10,7 +10,7 @@ sealed class WorkoutDetailItem {
 
     abstract val id: Long
 
-    data class WorkoutDetailAndSetsItem(val workoutDetailAndSets: WorkoutDetailAndSets): WorkoutDetailItem() {
+    data class Item(val workoutDetailAndSets: WorkoutDetailAndSets): WorkoutDetailItem() {
         override val id = workoutDetailAndSets.workoutDetail.detailId
     }
 
