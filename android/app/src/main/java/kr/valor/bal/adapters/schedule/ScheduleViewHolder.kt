@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.adapters.listeners.ScheduleButtonListener
-import kr.valor.bal.adapters.listeners.ScheduleFinishListener
-import kr.valor.bal.adapters.listeners.ScheduleSetListener
+import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
@@ -21,19 +18,20 @@ class ItemViewHolder private constructor(
 
     fun bind(
         workoutDetail: WorkoutDetailAndSets,
-        addClickListener: ScheduleButtonListener,
-        deleteClickListener: ScheduleButtonListener,
-        closeClickListener: ScheduleButtonListener,
-        setClickListener: ScheduleSetListener
+        listeners: List<RecyclerviewItemClickListener<*>>
     ) {
 
         with(binding) {
             refresh(View.VISIBLE)
             item = workoutDetail
-            addSetListener = addClickListener
-            deleteSetListener = deleteClickListener
-            closeListener = closeClickListener
-            setListener = setClickListener
+            listeners.forEach { clickListener ->
+                when (clickListener) {
+                    is AddWorkoutSetListener -> addSetListener = clickListener
+                    is RemoveWorkoutSetListener -> deleteSetListener = clickListener
+                    is DropWorkoutListener -> closeListener = clickListener
+                    is UpdateWorkoutSetListener -> modifyListener = clickListener
+                }
+            }
             setsDetail.removeAllViews()
             if (workoutDetail.workoutSets.isNotEmpty()) {
                 refresh(View.GONE)
@@ -72,8 +70,8 @@ class FooterViewHolder private constructor(
     private val binding: ScheduleFooterItemBinding
 ): ScheduleViewHolder(binding) {
 
-    fun bind(finishedClickListener: ScheduleFinishListener) {
-        binding.clickListener = finishedClickListener
+    fun bind(finishedClickListener: RecyclerviewItemClickListener<*>) {
+        binding.clickListener = finishedClickListener as CompleteWorkoutScheduleListener
         binding.executePendingBindings()
     }
 

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.overview.OverviewAdapter
-import kr.valor.bal.adapters.listeners.OverviewItemListener
+import kr.valor.bal.adapters.OverviewItemListener
 import kr.valor.bal.databinding.OverviewFragmentBinding
 
 @AndroidEntryPoint

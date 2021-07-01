@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.bal.R
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ScheduleDialogBinding
 import kr.valor.bal.ui.schedule.view.BarbellState
@@ -33,7 +34,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
             it?.let {
                 if (platesView.getBarbellStatus(it) == BarbellState.FULL) {
                     viewModel.discardChange()
-                    Toast.makeText(context, "Full", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, resources.getString(R.string.platesview_full_text), Toast.LENGTH_SHORT).show()
                     return@let
                 }
                 viewModel.applyChange()

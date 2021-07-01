@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
+import kr.valor.bal.adapters.*
+import kr.valor.bal.adapters.listeners.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
-import kr.valor.bal.adapters.listeners.ScheduleButtonListener
-import kr.valor.bal.adapters.listeners.ScheduleFinishListener
-import kr.valor.bal.adapters.listeners.ScheduleSetListener
-import kr.valor.bal.adapters.listeners.WorkoutDetailItem
 import kr.valor.bal.databinding.ScheduleFragmentBinding
 
 @AndroidEntryPoint
@@ -33,26 +31,13 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = ScheduleFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = ScheduleAdapter(
-            addClickListener = ScheduleButtonListener { item ->
-                viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
-            },
-            deleteClickListener = ScheduleButtonListener { item ->
-                viewModel.onDeleteSetButtonClicked(item.workoutDetail.detailId)
-            },
-            closeClickListener = ScheduleButtonListener { item ->
-                viewModel.onCloseButtonClicked(item.workoutDetail)
-            },
-            setClickListener = ScheduleSetListener { item ->
-                findNavController().navigate(ScheduleFragmentDirections.actionScheduleDestToScheduleSetDialogFragment(item.setId))
-            },
-            finishedClickListener = ScheduleFinishListener {
-                viewModel.onWorkoutFinished()
-            }
+            initializeRecyclerviewClickListeners()
         )
 
         recyclerView = binding.scheduleRecyclerView
@@ -77,10 +62,6 @@ class ScheduleFragment : Fragment() {
 
         val exercises = resources.getStringArray(R.array.exercise_list)
 
-        // TODO : Using proper fragment and viewmodel with safe args
-        // TODO : How to hide bottom navigation view?
-        // TODO : Refer this : https://developer.android.com/guide/navigation/navigation-ui#listen_for_navigation_events
-        // TODO : How to add workout set? https://stackoverflow.com/questions/31446779/android-databinding-dynamic-addview/36107367
         binding.addWorkoutButton.setOnClickListener {
             MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.add_new_workout_popup_title)
@@ -99,5 +80,30 @@ class ScheduleFragment : Fragment() {
         }
 
     }
+
+    private fun initializeRecyclerviewClickListeners(): List<RecyclerviewItemClickListener<*>> =
+        listOf(
+            AddWorkoutSetListener { item ->
+                viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
+            },
+            RemoveWorkoutSetListener { item ->
+                viewModel.onDeleteSetButtonClicked(item.workoutDetail.detailId)
+            },
+
+            DropWorkoutListener { item ->
+                viewModel.onCloseButtonClicked(item.workoutDetail)
+            },
+
+            UpdateWorkoutSetListener { item ->
+                findNavController()
+                    .navigate(ScheduleFragmentDirections
+                        .actionScheduleDestToScheduleSetDialogFragment(item.setId)
+                    )
+            },
+
+            CompleteWorkoutScheduleListener {
+                viewModel.onWorkoutFinish()
+            }
+        )
 
 }

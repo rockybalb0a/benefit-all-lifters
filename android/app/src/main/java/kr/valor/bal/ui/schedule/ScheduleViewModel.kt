@@ -157,7 +157,7 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun onWorkoutFinished() {
+    fun onWorkoutFinish() {
         onStop()
     }
 

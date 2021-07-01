@@ -1,26 +1,21 @@
 package kr.valor.bal.utilities
 
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.navigation.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
+import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.adapters.listeners.ScheduleSetListener
 import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemBinding
 import java.lang.IndexOutOfBoundsException
-import kotlin.reflect.KClass
 
 @BindingAdapter("dateString")
 fun TextView.setDateFormatted(item: WorkoutSchedule) {
@@ -118,8 +113,8 @@ fun TextView.setReps(item: WorkoutSet?) {
 }
 
 
-@BindingAdapter("workoutSets", "setListener")
-fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: ScheduleSetListener) {
+@BindingAdapter("workoutSets", "modifyListener")
+fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: RecyclerviewItemClickListener<*>) {
 
     if (item.workoutSets.isNotEmpty()) {
         val layoutInflater = LayoutInflater.from(context)

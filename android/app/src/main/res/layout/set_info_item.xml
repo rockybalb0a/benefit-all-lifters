@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleSetListener" />
+            type="kr.valor.bal.adapters.RecyclerviewItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

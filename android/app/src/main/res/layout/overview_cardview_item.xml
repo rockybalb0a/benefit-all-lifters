@@ -9,7 +9,7 @@
             type="kr.valor.bal.data.WorkoutSchedule" />
         <variable
             name="clickListener"
-            type="kr.valor.bal.adapters.listeners.OverviewItemListener" />
+            type="kr.valor.bal.adapters.OverviewItemListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

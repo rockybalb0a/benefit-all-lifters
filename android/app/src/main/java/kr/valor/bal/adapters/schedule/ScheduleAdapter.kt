@@ -3,18 +3,12 @@ package kr.valor.bal.adapters.schedule
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.adapters.listeners.ScheduleButtonListener
-import kr.valor.bal.adapters.listeners.ScheduleFinishListener
-import kr.valor.bal.adapters.listeners.ScheduleSetListener
-import kr.valor.bal.adapters.listeners.WorkoutDetailItem
+import kr.valor.bal.adapters.CompleteWorkoutScheduleListener
+import kr.valor.bal.adapters.RecyclerviewItemClickListener
+import kr.valor.bal.adapters.WorkoutDetailItem
 
 class ScheduleAdapter(
-    val addClickListener: ScheduleButtonListener,
-    val deleteClickListener: ScheduleButtonListener,
-    val closeClickListener: ScheduleButtonListener,
-    val setClickListener: ScheduleSetListener,
-    val finishedClickListener: ScheduleFinishListener
+    val listeners: List<RecyclerviewItemClickListener<*>>
 ): ListAdapter<WorkoutDetailItem, ScheduleViewHolder>(DIFF_CALLBACK) {
 
 
@@ -27,13 +21,20 @@ class ScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
+
+        val footerViewListener =
+            listeners.filterIsInstance<CompleteWorkoutScheduleListener>()[0]
+
+        val itemViewListener =
+            listeners.filter { it !is CompleteWorkoutScheduleListener }
+
         when(holder) {
             is ItemViewHolder -> {
                 val item = getItem(position) as WorkoutDetailItem.Item
-                holder.bind(item.workoutDetailAndSets, addClickListener, deleteClickListener, closeClickListener, setClickListener)
+                holder.bind(item.workoutDetailAndSets, itemViewListener)
             }
             is FooterViewHolder -> {
-                holder.bind(finishedClickListener)
+                holder.bind(footerViewListener)
             }
         }
     }

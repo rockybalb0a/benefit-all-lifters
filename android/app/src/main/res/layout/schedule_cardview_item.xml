@@ -10,19 +10,19 @@
         
         <variable
             name="addSetListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleButtonListener" />
+            type="kr.valor.bal.adapters.AddWorkoutSetListener" />
 
         <variable
             name="deleteSetListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleButtonListener" />
+            type="kr.valor.bal.adapters.RemoveWorkoutSetListener" />
 
         <variable
             name="closeListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleButtonListener" />
+            type="kr.valor.bal.adapters.DropWorkoutListener" />
 
         <variable
-            name="setListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleSetListener" />
+            name="modifyListener"
+            type="kr.valor.bal.adapters.UpdateWorkoutSetListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -73,7 +73,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/workout_title"
                 app:workoutSets="@{item}"
-                app:setListener="@{setListener}"/>
+                app:modifyListener="@{modifyListener}"/>
 
             <Button
                 android:id="@+id/empty_add_set_button"

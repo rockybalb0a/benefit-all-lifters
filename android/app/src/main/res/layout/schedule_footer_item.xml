@@ -6,7 +6,8 @@
     <data>
         <variable
             name="clickListener"
-            type="kr.valor.bal.adapters.listeners.ScheduleFinishListener" />
+            type="kr.valor.bal.adapters.CompleteWorkoutScheduleListener" />
+        <import type="kotlin.Unit" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -15,7 +16,7 @@
         android:layout_height="140dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> clickListener.onclick()}"
+        android:onClick="@{() -> clickListener.onClick(Unit.INSTANCE)}"
         app:cardCornerRadius="@dimen/cardview_corner_radius_default"
         app:cardElevation="@dimen/cardview_elevation_default">
 
