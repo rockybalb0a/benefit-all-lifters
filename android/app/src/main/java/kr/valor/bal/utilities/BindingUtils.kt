@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
+import kr.valor.bal.adapters.UpdateWorkoutSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutSet
@@ -113,7 +114,7 @@ fun TextView.setReps(item: WorkoutSet?) {
 }
 
 
-@BindingAdapter("workoutSets", "modifyListener")
+@BindingAdapter("workoutSets", "updateListener")
 fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: RecyclerviewItemClickListener<*>) {
 
     if (item.workoutSets.isNotEmpty()) {
@@ -129,7 +130,7 @@ fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickLis
                 workoutSetRepsUnit.text = if (workoutSet.reps > 1) resources.getString(R.string.reps_text) else resources.getString(R.string.rep_text)
                 workoutSetWeights.text = "${workoutSet.weights.toInt()}"
                 workoutSetWeightsUnit.text = resources.getString(R.string.default_weights_unit)
-                clickListener = itemClickListener
+                clickListener = itemClickListener as UpdateWorkoutSetListener
                 addView(this.root)
             }
         }

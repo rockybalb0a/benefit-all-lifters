@@ -26,10 +26,10 @@ class ItemViewHolder private constructor(
             item = workoutDetail
             listeners.forEach { clickListener ->
                 when (clickListener) {
-                    is AddWorkoutSetListener -> addSetListener = clickListener
-                    is RemoveWorkoutSetListener -> deleteSetListener = clickListener
-                    is DropWorkoutListener -> closeListener = clickListener
-                    is UpdateWorkoutSetListener -> modifyListener = clickListener
+                    is AddWorkoutSetListener -> addListener = clickListener
+                    is RemoveWorkoutSetListener -> removeListener = clickListener
+                    is DropWorkoutListener -> dropListener = clickListener
+                    is UpdateWorkoutSetListener -> updateListener = clickListener
                 }
             }
             setsDetail.removeAllViews()

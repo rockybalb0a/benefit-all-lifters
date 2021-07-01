@@ -12,7 +12,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
-import kr.valor.bal.adapters.listeners.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.ScheduleFragmentBinding
 

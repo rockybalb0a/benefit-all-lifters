@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="kr.valor.bal.adapters.RecyclerviewItemClickListener" />
+            type="kr.valor.bal.adapters.UpdateWorkoutSetListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
