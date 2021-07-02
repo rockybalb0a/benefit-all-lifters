@@ -1,40 +1,30 @@
 package kr.valor.bal.ui.schedule
 
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.utilities.TrackingStatus
-import java.time.LocalDate
 import javax.inject.Inject
 import kotlin.Long as Long
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val workoutDao: WorkoutDao
+    private val repository: DefaultRepository
 ) : ViewModel() {
 
-    private val _currentWorkoutOverview = liveData {
-        val currentDate = LocalDate.now()
-        val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(currentDate)
-            ?: run {
-                val newWorkoutOverview = WorkoutOverview()
-                workoutDao.insert(newWorkoutOverview)
-                workoutDao.getLatestWorkoutOverview()
-            }
-        syncElapsedTimeWithDatabase(currentWorkoutOverview)
-        emit(currentWorkoutOverview)
+    private val _currentWorkoutOverview = repository.getWorkoutOverviewOfToday {
+        syncElapsedTimeWithDatabase(it)
     }
 
-
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
-        workoutDao.getWorkoutSchedule(it.overviewId)
+        repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }
 
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
@@ -186,38 +176,44 @@ class ScheduleViewModel @Inject constructor(
 
     private fun insertWorkoutSet(workoutSet: WorkoutSet) {
         viewModelScope.launch {
-            val latestWorkoutSet = workoutDao.getLatestWorkoutSetByWorkoutDetailId(workoutSet.containerId)
+            val latestWorkoutSet = repository.getLatestWorkoutSetInfo(workoutSet)
             latestWorkoutSet?.let {
                 workoutSet.weights = it.weights
                 workoutSet.reps = it.reps
                 workoutSet.platesStack = it.platesStack
             }
-            workoutDao.insert(workoutSet)
+            addWorkoutSet(workoutSet)
+        }
+    }
+
+    private fun addWorkoutSet(workoutSet: WorkoutSet) {
+        viewModelScope.launch {
+            repository.addWorkoutSet(workoutSet)
         }
     }
 
 
     private fun deleteWorkoutSet(detailId: Long) {
         viewModelScope.launch {
-            workoutDao.deleteWorkoutSetAssociatedWithWorkoutDetail(detailId)
+            repository.removeWorkoutSet(detailId)
         }
     }
 
     private fun insertWorkoutDetail(workoutDetail: WorkoutDetail) {
         viewModelScope.launch {
-            workoutDao.insert(workoutDetail)
+            repository.addWorkoutDetail(workoutDetail)
         }
     }
 
     private fun deleteWorkoutDetail(workoutDetail: WorkoutDetail) {
         viewModelScope.launch {
-            workoutDao.delete(workoutDetail)
+            repository.dropWorkoutDetail(workoutDetail)
         }
     }
 
     private fun updateWorkoutOverview(workoutOverview: WorkoutOverview) {
         viewModelScope.launch {
-            workoutDao.update(workoutOverview)
+            repository.updateWorkoutOverview(workoutOverview)
         }
     }
 

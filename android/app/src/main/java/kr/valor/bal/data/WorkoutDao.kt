@@ -1,9 +1,7 @@
 package kr.valor.bal.data
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
@@ -38,7 +36,7 @@ interface WorkoutDao {
     fun getAllWorkouts(): LiveData<List<WorkoutOverview>>
 
     @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC LIMIT 1")
-    suspend fun getLatestWorkoutOverview(): WorkoutOverview?
+    suspend fun getLatestWorkoutOverview(): WorkoutOverview
 
     @Query("SELECT * FROM workout_overview WHERE date is :date")
     suspend fun getWorkoutOverviewByDate(date: LocalDate): WorkoutOverview?
