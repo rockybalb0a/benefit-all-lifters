@@ -15,15 +15,15 @@ import kr.valor.bal.databinding.DetailCardviewItemBinding
 class DetailViewHolder private constructor(private val binding: DetailCardviewItemBinding): ViewHolder(binding) {
 
     fun bind(workoutDetail: WorkoutDetailAndSets, viewPool: RecyclerView.RecycledViewPool) {
+        bind(data = workoutDetail)
         with(binding) {
-            item = workoutDetail
             bindChild(viewPool, workoutDetail.workoutSets)
             executePendingBindings()
         }
     }
 
-    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        TODO("Not yet implemented")
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        binding.item = data as WorkoutDetailAndSets
     }
 
     private fun DetailCardviewItemBinding.bindChild(viewPool: RecyclerView.RecycledViewPool, item: List<WorkoutSet>) {

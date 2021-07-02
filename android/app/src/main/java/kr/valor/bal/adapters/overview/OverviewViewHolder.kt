@@ -13,10 +13,12 @@ class OverviewViewHolder private constructor(
     private  val binding: OverviewCardviewItemBinding
 ): ViewHolder(binding) {
 
-    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        binding.item = item as WorkoutSchedule
-        binding.clickListener = listeners.single() as OverviewItemListener
-        binding.executePendingBindings()
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        with(binding) {
+            item = data as WorkoutSchedule
+            clickListener = listeners.single() as OverviewItemListener
+            executePendingBindings()
+        }
     }
 
     companion object: ViewHolderFactory {

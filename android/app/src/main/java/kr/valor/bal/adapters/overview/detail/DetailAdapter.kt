@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.data.WorkoutDetailAndSets
 
-class DetailAdapter: ListAdapter<WorkoutDetailAndSets, ViewHolder>(
-    DIFF_CALLBACK
-) {
+class DetailAdapter: ListAdapter<WorkoutDetailAndSets, ViewHolder>(DIFF_CALLBACK) {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 

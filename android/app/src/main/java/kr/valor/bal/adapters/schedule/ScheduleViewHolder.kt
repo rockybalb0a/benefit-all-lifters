@@ -12,18 +12,17 @@ import kr.valor.bal.databinding.ScheduleFooterItemBinding
 
 abstract class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
-class ItemViewHolder private constructor(
-    private val binding: ScheduleCardviewItemBinding
-): ScheduleViewHolder(binding) {
+class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
 
-    fun bind(
-        workoutDetail: WorkoutDetailAndSets,
-        listeners: List<RecyclerviewItemClickListener<*>>
-    ) {
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        data as WorkoutDetailAndSets
+        bindingData(data, listeners)
+    }
 
+    private fun bindingData(data: WorkoutDetailAndSets, listeners: Array<out RecyclerviewItemClickListener<*>>) {
         with(binding) {
             refresh(View.VISIBLE)
-            item = workoutDetail
+            item = data
             listeners.forEach { clickListener ->
                 when (clickListener) {
                     is AddWorkoutSetListener -> addListener = clickListener
@@ -33,12 +32,13 @@ class ItemViewHolder private constructor(
                 }
             }
             setsDetail.removeAllViews()
-            if (workoutDetail.workoutSets.isNotEmpty()) {
+            if (data.workoutSets.isNotEmpty()) {
                 refresh(View.GONE)
             }
             executePendingBindings()
         }
     }
+
 
 
     @SuppressLint("SwitchIntDef")
@@ -65,22 +65,16 @@ class ItemViewHolder private constructor(
         }
     }
 
-    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        TODO("Not yet implemented")
-    }
+
 }
 
-class FooterViewHolder private constructor(
-    private val binding: ScheduleFooterItemBinding
-): ScheduleViewHolder(binding) {
+class FooterViewHolder private constructor(private val binding: ScheduleFooterItemBinding): ScheduleViewHolder(binding) {
 
-    fun bind(finishedClickListener: RecyclerviewItemClickListener<*>) {
-        binding.clickListener = finishedClickListener as CompleteWorkoutScheduleListener
-        binding.executePendingBindings()
-    }
-
-    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        TODO("Not yet implemented")
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        with(binding) {
+            clickListener = listeners.single() as CompleteWorkoutScheduleListener
+            executePendingBindings()
+        }
     }
 
     companion object: ViewHolderFactory {

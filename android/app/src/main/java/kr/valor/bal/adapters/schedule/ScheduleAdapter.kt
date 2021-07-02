@@ -7,10 +7,7 @@ import kr.valor.bal.adapters.CompleteWorkoutScheduleListener
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.WorkoutDetailItem
 
-class ScheduleAdapter(
-    val listeners: List<RecyclerviewItemClickListener<*>>
-): ListAdapter<WorkoutDetailItem, ScheduleViewHolder>(DIFF_CALLBACK) {
-
+class ScheduleAdapter(vararg val listeners: RecyclerviewItemClickListener<*>): ListAdapter<WorkoutDetailItem, ScheduleViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         return when(viewType) {
@@ -23,7 +20,7 @@ class ScheduleAdapter(
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
 
         val footerViewListener =
-            listeners.filterIsInstance<CompleteWorkoutScheduleListener>()[0]
+            listeners.filterIsInstance<CompleteWorkoutScheduleListener>()
 
         val itemViewListener =
             listeners.filter { it !is CompleteWorkoutScheduleListener }
@@ -31,10 +28,10 @@ class ScheduleAdapter(
         when(holder) {
             is ItemViewHolder -> {
                 val item = getItem(position) as WorkoutDetailItem.Item
-                holder.bind(item.workoutDetailAndSets, itemViewListener)
+                holder.bind(item.workoutDetailAndSets, *itemViewListener.toTypedArray())
             }
             is FooterViewHolder -> {
-                holder.bind(footerViewListener)
+                holder.bind(null, listeners = footerViewListener.toTypedArray())
             }
         }
     }

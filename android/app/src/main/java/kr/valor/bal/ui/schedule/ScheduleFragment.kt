@@ -36,7 +36,7 @@ class ScheduleFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = ScheduleAdapter(
-            initializeRecyclerviewClickListeners()
+            *initializeRecyclerviewClickListeners()
         )
 
         recyclerView = binding.scheduleRecyclerView
@@ -77,11 +77,10 @@ class ScheduleFragment : Fragment() {
                 } + listOf(WorkoutDetailItem.Footer)
             adapter.submitList(items)
         }
-
     }
 
-    private fun initializeRecyclerviewClickListeners(): List<RecyclerviewItemClickListener<*>> =
-        listOf(
+    private fun initializeRecyclerviewClickListeners(): Array<RecyclerviewItemClickListener<*>> =
+        arrayOf(
             AddWorkoutSetListener { item ->
                 viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
             },

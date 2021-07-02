@@ -22,7 +22,7 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBA
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as ChildViewHolder).bind(item, position)
+        (holder as ChildViewHolder).bind(data = item, itemPosition = position)
     }
 
     companion object {
@@ -40,14 +40,14 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBA
 }
 
 class ChildViewHolder private constructor (private val binding: SetInfoItemGridBinding): ViewHolder(binding) {
-    fun bind(workoutSet: WorkoutSet, position: Int) {
-        binding.item = workoutSet
-        binding.index = position
-        binding.executePendingBindings()
-    }
 
-    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        TODO("Not yet implemented")
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        data as WorkoutSet
+        with(binding) {
+            item = data
+            index = itemPosition!!
+            executePendingBindings()
+        }
     }
 
     companion object: ViewHolderFactory {
