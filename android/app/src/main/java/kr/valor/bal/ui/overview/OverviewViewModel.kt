@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OverviewViewModel @Inject constructor(
-    workoutDao: WorkoutDao
+    workoutRepo: DefaultRepository
 ): ViewModel() {
 
-    val workoutSchedules = workoutDao.getAllWorkoutSchedule()
+    val workoutSchedules = workoutRepo.getAllWorkoutSchedule()
 
 }

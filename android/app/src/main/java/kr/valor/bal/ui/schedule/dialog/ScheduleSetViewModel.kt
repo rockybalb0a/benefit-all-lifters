@@ -3,38 +3,39 @@ package kr.valor.bal.ui.schedule.dialog
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.data.entities.WorkoutSet
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleSetViewModel @Inject constructor(
-    private val workoutDao: WorkoutDao,
+    private val workoutRepo: DefaultRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    val checkedPlatesTypeBtnIndex = MutableLiveData(PLATES_TYPE_DEFAULT)
-
-    val checkedRepsUnitBtnIndex = MutableLiveData(REPS_UNIT_SINGLE)
 
     private val setId: Long? = savedStateHandle["setId"]
 
     private val _currentWorkoutSet = liveData{
         setId?.let {
-            emitSource(workoutDao.getWorkoutSet(it))
+            emitSource(workoutRepo.getWorkoutSetById(it))
         }
     }
-
     val currentWorkoutSet: LiveData<WorkoutSet>
         get() = _currentWorkoutSet
+
+
+    private val _candidatePlatesLiveData = MutableLiveData<Double?>()
+    val candidatePlatesLiveData: LiveData<Double?>
+        get() = _candidatePlatesLiveData
 
     val popButtonEnabled: LiveData<Boolean> = _currentWorkoutSet.map {
         it.platesStack.isNotEmpty()
     }
 
-    private val _candidatePlatesLiveData = MutableLiveData<Double?>()
-    val candidatePlatesLiveData: LiveData<Double?>
-        get() = _candidatePlatesLiveData
+    val checkedPlatesTypeBtnIndex = MutableLiveData(PLATES_TYPE_DEFAULT)
+
+    val checkedRepsUnitBtnIndex = MutableLiveData(REPS_UNIT_SINGLE)
 
     fun applyChange() {
         _currentWorkoutSet.value?.let { workoutSet ->
@@ -88,7 +89,7 @@ class ScheduleSetViewModel @Inject constructor(
 
     private fun update(workoutSet: WorkoutSet) {
         viewModelScope.launch {
-            workoutDao.updateWorkoutSet(workoutSet)
+            workoutRepo.updateWorkoutSet(workoutSet)
             _candidatePlatesLiveData.value?.let { dequeuePlates() }
         }
     }

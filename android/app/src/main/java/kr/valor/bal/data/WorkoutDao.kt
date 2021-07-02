@@ -24,6 +24,12 @@ interface WorkoutDao {
     @Insert
     suspend fun insert(workoutSet: WorkoutSet): Long
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(workoutSet: WorkoutSet)
+
+    @Query("SELECT * FROM workout_set WHERE set_id is :workoutSetId")
+    fun getWorkoutSet(workoutSetId: Long): LiveData<WorkoutSet>
+
     @Transaction
     @Query("SELECT * FROM workout_overview WHERE overview_id is :workoutOverviewId")
     fun getWorkoutSchedule(workoutOverviewId: Long): LiveData<WorkoutSchedule>
@@ -55,11 +61,5 @@ interface WorkoutDao {
         val target = getWorkoutSetAssociatedWithWorkoutDetail(detailId)
         deleteWorkoutSet(target)
     }
-
-    @Query("SELECT * FROM workout_set WHERE set_id is :workoutSetId")
-    fun getWorkoutSet(workoutSetId: Long): LiveData<WorkoutSet>
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateWorkoutSet(workoutSet: WorkoutSet)
 
 }

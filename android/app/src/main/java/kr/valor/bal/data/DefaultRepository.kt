@@ -13,15 +13,13 @@ import javax.inject.Singleton
 @Singleton
 class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) {
 
-    fun getAllWorkouts(): LiveData<List<WorkoutOverview>> = workoutDao.getAllWorkouts()
+    fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>> = workoutDao.getAllWorkoutSchedule()
 
-    fun getWorkoutOverviewOfToday(init: (WorkoutOverview) -> Unit) = liveData<WorkoutOverview> {
+    fun getWorkoutOverviewOfToday(init: (WorkoutOverview) -> Unit) = liveData {
         val currentDate = LocalDate.now()
         val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(currentDate)
             ?: run {
-                val newWorkoutOverview = WorkoutOverview()
-                workoutDao.insert(newWorkoutOverview)
-                workoutDao.getLatestWorkoutOverview()
+                createWorkoutOverviewIfNotExist()
             }
         init(currentWorkoutOverview)
         emit(currentWorkoutOverview)
@@ -31,8 +29,16 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
         return workoutDao.getWorkoutSchedule(id)
     }
 
+    fun getWorkoutSetById(id: Long): LiveData<WorkoutSet> {
+        return workoutDao.getWorkoutSet(id)
+    }
+
     suspend fun addWorkoutSet(workoutSet: WorkoutSet) {
         workoutDao.insert(workoutSet)
+    }
+
+    suspend fun updateWorkoutSet(workoutSet: WorkoutSet) {
+        workoutDao.update(workoutSet)
     }
 
     suspend fun removeWorkoutSet(detailId: Long) {
@@ -55,4 +61,9 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
         workoutDao.update(workoutOverview)
     }
 
+    private suspend fun createWorkoutOverviewIfNotExist(): WorkoutOverview {
+        val newWorkoutOverview = WorkoutOverview()
+        workoutDao.insert(newWorkoutOverview)
+        return workoutDao.getLatestWorkoutOverview()
+    }
 }

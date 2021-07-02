@@ -16,7 +16,23 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
 
-//    @Singleton
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            DATABASE_NAME
+        )
+            .build()
+    }
+
+    @Provides
+    fun provideWorkoutDao(appDatabase: AppDatabase): WorkoutDao {
+        return appDatabase.workoutDao()
+    }
+
+    //    @Singleton
 //    @Provides
 //    fun provideAppDatabase(@ApplicationContext appContext: Context, provider: Provider<WorkoutDao>): AppDatabase {
 //        return Room.databaseBuilder(
@@ -36,20 +52,4 @@ class DatabaseModule {
 //            })
 //            .build()
 //    }
-
-    @Singleton
-    @Provides
-    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            AppDatabase::class.java,
-            DATABASE_NAME
-        )
-            .build()
-    }
-
-    @Provides
-    fun provideWorkoutDao(appDatabase: AppDatabase): WorkoutDao {
-        return appDatabase.workoutDao()
-    }
 }

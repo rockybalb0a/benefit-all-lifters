@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
@@ -16,15 +15,15 @@ import kotlin.Long as Long
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val repository: DefaultRepository
+    private val workoutRepo: DefaultRepository
 ) : ViewModel() {
 
-    private val _currentWorkoutOverview = repository.getWorkoutOverviewOfToday {
+    private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
         syncElapsedTimeWithDatabase(it)
     }
 
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
-        repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
+        workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }
 
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
@@ -176,7 +175,7 @@ class ScheduleViewModel @Inject constructor(
 
     private fun insertWorkoutSet(workoutSet: WorkoutSet) {
         viewModelScope.launch {
-            val latestWorkoutSet = repository.getLatestWorkoutSetInfo(workoutSet)
+            val latestWorkoutSet = workoutRepo.getLatestWorkoutSetInfo(workoutSet)
             latestWorkoutSet?.let {
                 workoutSet.weights = it.weights
                 workoutSet.reps = it.reps
@@ -188,32 +187,32 @@ class ScheduleViewModel @Inject constructor(
 
     private fun addWorkoutSet(workoutSet: WorkoutSet) {
         viewModelScope.launch {
-            repository.addWorkoutSet(workoutSet)
+            workoutRepo.addWorkoutSet(workoutSet)
         }
     }
 
 
     private fun deleteWorkoutSet(detailId: Long) {
         viewModelScope.launch {
-            repository.removeWorkoutSet(detailId)
+            workoutRepo.removeWorkoutSet(detailId)
         }
     }
 
     private fun insertWorkoutDetail(workoutDetail: WorkoutDetail) {
         viewModelScope.launch {
-            repository.addWorkoutDetail(workoutDetail)
+            workoutRepo.addWorkoutDetail(workoutDetail)
         }
     }
 
     private fun deleteWorkoutDetail(workoutDetail: WorkoutDetail) {
         viewModelScope.launch {
-            repository.dropWorkoutDetail(workoutDetail)
+            workoutRepo.dropWorkoutDetail(workoutDetail)
         }
     }
 
     private fun updateWorkoutOverview(workoutOverview: WorkoutOverview) {
         viewModelScope.launch {
-            repository.updateWorkoutOverview(workoutOverview)
+            workoutRepo.updateWorkoutOverview(workoutOverview)
         }
     }
 
