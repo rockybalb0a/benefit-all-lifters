@@ -14,7 +14,7 @@ class DetailAdapter: ListAdapter<WorkoutDetailAndSets, ViewHolder>(
     private val viewPool = RecyclerView.RecycledViewPool()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return DetailViewHolder.from(parent)
+        return DetailViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

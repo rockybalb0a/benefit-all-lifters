@@ -12,7 +12,7 @@ class OverviewAdapter(val clickListener: OverviewItemListener): ListAdapter<Work
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return OverviewViewHolder.from(parent)
+        return OverviewViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

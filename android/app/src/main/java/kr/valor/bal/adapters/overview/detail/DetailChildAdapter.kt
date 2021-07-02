@@ -8,14 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
+import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemGridBinding
 
 class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ChildViewHolder.from(parent)
+        return ChildViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,8 +46,12 @@ class ChildViewHolder private constructor (private val binding: SetInfoItemGridB
         binding.executePendingBindings()
     }
 
-    companion object {
-        fun from(parent: ViewGroup): ViewHolder {
+    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        TODO("Not yet implemented")
+    }
+
+    companion object: ViewHolderFactory {
+        override fun create(parent: ViewGroup): ViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = SetInfoItemGridBinding.inflate(layoutInflater, parent, false)
             return ChildViewHolder(binding)

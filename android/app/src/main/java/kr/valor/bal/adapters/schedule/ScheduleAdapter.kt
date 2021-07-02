@@ -14,8 +14,8 @@ class ScheduleAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         return when(viewType) {
-            ITEM_VIEW_TYPE_ITEM -> ItemViewHolder.from(parent)
-            ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.from(parent)
+            ITEM_VIEW_TYPE_ITEM -> ItemViewHolder.create(parent)
+            ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.create(parent)
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }

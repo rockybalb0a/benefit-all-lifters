@@ -10,7 +10,7 @@ import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
 
-open class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
+abstract class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(
     private val binding: ScheduleCardviewItemBinding
@@ -56,13 +56,17 @@ class ItemViewHolder private constructor(
         }
     }
 
-    companion object {
-        fun from(parent: ViewGroup): ScheduleViewHolder {
+    companion object: ViewHolderFactory {
+        override fun create(parent: ViewGroup): ScheduleViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding =
                 ScheduleCardviewItemBinding.inflate(layoutInflater, parent, false)
             return ItemViewHolder(binding)
         }
+    }
+
+    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        TODO("Not yet implemented")
     }
 }
 
@@ -75,8 +79,12 @@ class FooterViewHolder private constructor(
         binding.executePendingBindings()
     }
 
-    companion object {
-        fun from(parent: ViewGroup): ScheduleViewHolder {
+    override fun <T> bind(item: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        TODO("Not yet implemented")
+    }
+
+    companion object: ViewHolderFactory {
+        override fun create(parent: ViewGroup): ScheduleViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding =
                 ScheduleFooterItemBinding.inflate(layoutInflater, parent, false)
