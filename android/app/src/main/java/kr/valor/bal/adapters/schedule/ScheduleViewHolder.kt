@@ -10,16 +10,22 @@ import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
 
-abstract class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
+sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
-
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+    override fun <T> bind(
+        data: T,
+        vararg listeners: RecyclerviewItemClickListener<*>,
+        itemPosition: Int?
+    ) {
         data as WorkoutDetailAndSets
         bindingData(data, listeners)
     }
 
-    private fun bindingData(data: WorkoutDetailAndSets, listeners: Array<out RecyclerviewItemClickListener<*>>) {
+    private fun bindingData(
+        data: WorkoutDetailAndSets,
+        listeners: Array<out RecyclerviewItemClickListener<*>>
+    ) {
         with(binding) {
             refresh(View.VISIBLE)
             item = data
@@ -42,7 +48,7 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
     @SuppressLint("SwitchIntDef")
     private fun ScheduleCardviewItemBinding.refresh(visibility: Int) {
         emptyAddSetButton.visibility = visibility
-        when(emptyAddSetButton.visibility) {
+        when (emptyAddSetButton.visibility) {
             View.VISIBLE -> {
                 existAddSetButton.visibility = View.GONE
                 existDeleteSetButton.visibility = View.GONE
@@ -54,15 +60,13 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
         }
     }
 
-    companion object: ViewHolderFactory() {
+    companion object : ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
             val binding =
                 inflate<ScheduleCardviewItemBinding>(parent, R.layout.schedule_cardview_item)
             return ItemViewHolder(binding)
         }
     }
-
-
 }
 
 class FooterViewHolder private constructor(private val binding: ScheduleFooterItemBinding): ScheduleViewHolder(binding) {
@@ -82,4 +86,3 @@ class FooterViewHolder private constructor(private val binding: ScheduleFooterIt
         }
     }
 }
-
