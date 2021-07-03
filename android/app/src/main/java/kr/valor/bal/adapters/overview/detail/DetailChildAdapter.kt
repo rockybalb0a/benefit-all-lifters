@@ -2,27 +2,23 @@ package kr.valor.bal.adapters.overview.detail
 
 import android.content.Context
 import android.graphics.Rect
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.entities.WorkoutSet
-import kr.valor.bal.databinding.SetInfoItemGridBinding
 
 class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ChildViewHolder.create(parent)
+        return DetailChildViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as ChildViewHolder).bind(data = item, itemPosition = position)
+        (holder as DetailChildViewHolder).bind(data = item, itemPosition = position)
     }
 
     companion object {
@@ -37,26 +33,6 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBA
         }
     }
 
-}
-
-class ChildViewHolder private constructor (private val binding: SetInfoItemGridBinding): ViewHolder(binding) {
-
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        data as WorkoutSet
-        with(binding) {
-            item = data
-            index = itemPosition!!
-            executePendingBindings()
-        }
-    }
-
-    companion object: ViewHolderFactory {
-        override fun create(parent: ViewGroup): ViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = SetInfoItemGridBinding.inflate(layoutInflater, parent, false)
-            return ChildViewHolder(binding)
-        }
-    }
 }
 
 class ItemOffsetDecoration(context : Context, itemOffsetId : Int) : RecyclerView.ItemDecoration() {

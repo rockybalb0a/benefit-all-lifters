@@ -1,6 +1,5 @@
 package kr.valor.bal.adapters.overview.detail
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,10 +42,10 @@ class DetailViewHolder private constructor(private val binding: DetailCardviewIt
 
     }
 
-    companion object: ViewHolderFactory {
+    companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = DetailCardviewItemBinding.inflate(layoutInflater, parent, false)
+            val binding =
+                inflate<DetailCardviewItemBinding>(parent, R.layout.detail_cardview_item)
             return DetailViewHolder(binding)
         }
     }

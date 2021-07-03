@@ -1,10 +1,10 @@
 package kr.valor.bal.adapters.schedule
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
@@ -39,8 +39,6 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
         }
     }
 
-
-
     @SuppressLint("SwitchIntDef")
     private fun ScheduleCardviewItemBinding.refresh(visibility: Int) {
         emptyAddSetButton.visibility = visibility
@@ -56,11 +54,10 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
         }
     }
 
-    companion object: ViewHolderFactory {
+    companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
             val binding =
-                ScheduleCardviewItemBinding.inflate(layoutInflater, parent, false)
+                inflate<ScheduleCardviewItemBinding>(parent, R.layout.schedule_cardview_item)
             return ItemViewHolder(binding)
         }
     }
@@ -77,11 +74,10 @@ class FooterViewHolder private constructor(private val binding: ScheduleFooterIt
         }
     }
 
-    companion object: ViewHolderFactory {
+    companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
             val binding =
-                ScheduleFooterItemBinding.inflate(layoutInflater, parent, false)
+                inflate<ScheduleFooterItemBinding>(parent, R.layout.schedule_footer_item)
             return FooterViewHolder(binding)
         }
     }
