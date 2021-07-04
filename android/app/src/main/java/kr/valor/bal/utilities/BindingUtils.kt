@@ -21,41 +21,38 @@ import java.lang.IndexOutOfBoundsException
 // Data Binding — lessons learnt
 // https://medium.com/androiddevelopers/data-binding-lessons-learnt-4fd16576b719
 
-@BindingAdapter("elapsedTimeOnTracking")
-fun TextView.setTrackingTimeText(elapsedTime: Long?) {
-    text = elapsedTime?.run {
-        elapsedTime.elapsedTimeFormatter()
-    } ?: resources.getString(R.string.empty_elapsed_time)
-}
-
+// detail_cardview_item.xml, schedule_cardview_item.xml
 @BindingAdapter("workoutName")
 fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
     text = item.workoutDetail.workoutName
 }
 
+// set_info_item_grid.xml
 @BindingAdapter("sets")
 fun TextView.setCurrentSets(setItemIndex: Int) {
     text = resources.getString(R.string.sets_text_full_template, setItemIndex + 1)
 }
 
-@BindingAdapter("weights")
-fun TextView.setWeights(item: WorkoutSet?) {
-    val weights = item?.weights?.toInt() ?: 20
-    text = weights.toString()
-}
-
+// set_info_item_grid.xml
 @BindingAdapter("weightsWithWeightUnit")
 fun TextView.setWeightsWithWeightUnit(item: WorkoutSet?) {
     val weights = item?.weights?.toInt() ?: 20
     text = resources.getString(R.string.weights_text, weights)
 }
 
+// set_info_item_grid.xml
 @BindingAdapter("reps")
 fun TextView.setReps(item: WorkoutSet?) {
     val reps = item?.reps ?: 0
     text = if (reps > 1) resources.getString(R.string.reps_text_with, reps) else resources.getString(R.string.rep_text_with, reps)
 }
 
+// schedule_dialog.xml
+@BindingAdapter("weights")
+fun TextView.setWeights(item: WorkoutSet?) {
+    val weights = item?.weights?.toInt() ?: 20
+    text = weights.toString()
+}
 
 @BindingAdapter("workoutSets", "updateListener")
 fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: RecyclerviewItemClickListener<*>) {

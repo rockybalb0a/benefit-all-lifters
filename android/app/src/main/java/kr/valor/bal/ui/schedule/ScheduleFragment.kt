@@ -14,6 +14,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.ScheduleFragmentBinding
+import kr.valor.bal.utilities.binding.ScheduleBindingParameterCreator
 
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
@@ -32,6 +33,7 @@ class ScheduleFragment : Fragment() {
     ): View {
 
         binding = ScheduleFragmentBinding.inflate(inflater, container, false)
+        binding.bindingCreator = ScheduleBindingParameterCreator
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

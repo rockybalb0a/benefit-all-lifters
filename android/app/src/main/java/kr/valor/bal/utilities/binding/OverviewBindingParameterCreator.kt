@@ -7,6 +7,7 @@ import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.utilities.TrackingStatus
+import kr.valor.bal.utilities.elapsedTimeFormatter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -71,14 +72,6 @@ object OverviewBindingParameterCreator {
             endTimeMilli - startTimeMilli
         }
         return durationTimeMilli.elapsedTimeFormatter()
-    }
-
-    private fun Long.elapsedTimeFormatter(): String {
-        val hour = (this / (1000 * 60 * 60)) % 24
-        val min = (this / (1000 * 60)) % 60
-        val sec = (this / 1000) % 60
-
-        return String.format("%02d:%02d:%02d", hour, min, sec)
     }
 
     private fun LocalDate.isSimplifiable(targetDayOfWeek: Long): Boolean =

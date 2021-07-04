@@ -4,10 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+
+        <import type="android.content.Context" />
+
         <variable
             name="viewModel"
             type="kr.valor.bal.ui.schedule.ScheduleViewModel" />
-        <import type="android.view.View" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.ScheduleBindingParameterCreator" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +71,8 @@
                     android:textStyle="bold"
                     android:gravity="fill_vertical"
                     android:textAlignment="gravity"
-                    app:elapsedTimeOnTracking="@{viewModel.elapsedTimeMilli}"
+                    android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.elapsedTimeMilli, context)}"
+
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/timer_view_vertical_separator"
