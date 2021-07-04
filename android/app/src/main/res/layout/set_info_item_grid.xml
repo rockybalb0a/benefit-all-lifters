@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.content.Context" />
+
         <variable
             name="item"
             type="kr.valor.bal.data.entities.WorkoutSet" />
@@ -11,6 +13,10 @@
         <variable
             name="index"
             type="int" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.DetailBindingParameterCreator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +29,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textAlignment="viewStart"
-            app:sets="@{index}"
+            android:text="@{bindingCreator.getCurrentSetsNumberString(index, context)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/set_weights"
@@ -36,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:textAlignment="center"
-            app:weightsWithWeightUnit="@{item}"
+            android:text="@{bindingCreator.getWeightsWithWeightUnitString(item, context)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_number"
@@ -48,13 +54,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            app:reps="@{item}"
+            android:text="@{bindingCreator.getRepsString(item, context)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_weights"
             tools:text="5 reps" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
