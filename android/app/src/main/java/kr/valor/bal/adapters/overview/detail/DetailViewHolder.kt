@@ -10,6 +10,7 @@ import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.DetailCardviewItemBinding
+import kr.valor.bal.utilities.binding.GeneralBindingParameterCreator
 
 class DetailViewHolder private constructor(private val binding: DetailCardviewItemBinding): ViewHolder(binding) {
 
@@ -17,6 +18,7 @@ class DetailViewHolder private constructor(private val binding: DetailCardviewIt
         bind(data = workoutDetail)
         with(binding) {
             bindChild(viewPool, workoutDetail.workoutSets)
+            bindingCreator = GeneralBindingParameterCreator
             executePendingBindings()
         }
     }

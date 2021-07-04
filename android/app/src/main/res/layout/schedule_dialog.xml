@@ -11,6 +11,10 @@
         <variable
             name="viewModel"
             type="kr.valor.bal.ui.schedule.dialog.ScheduleSetViewModel" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,8 +103,8 @@
                     android:textAlignment="viewEnd"
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"
+                    android:text="@{bindingCreator.getWeightsWithoutWeightUnit(viewModel.currentWorkoutSet)}"
                     android:alpha="0.6"
-                    app:weights="@{viewModel.currentWorkoutSet}"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/platesview_reps"
                     app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_guideline"

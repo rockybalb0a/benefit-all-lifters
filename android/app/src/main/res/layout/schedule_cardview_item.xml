@@ -7,6 +7,10 @@
         <variable
             name="item"
             type="kr.valor.bal.data.WorkoutDetailAndSets" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
         
         <variable
             name="addListener"
@@ -46,11 +50,11 @@
                 android:padding="@dimen/padding_large"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:text="@{bindingCreator.getWorkoutNameString(item)}"
                 android:background="@color/secondaryColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:workoutName="@{item}"
                 tools:text="Barbell Back Squat" />
 
             <ImageButton

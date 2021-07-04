@@ -7,6 +7,11 @@
         <variable
             name="item"
             type="kr.valor.bal.data.WorkoutDetailAndSets" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,10 +33,10 @@
                 android:layout_margin="@dimen/margin_medium"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:text="@{bindingCreator.getWorkoutNameString(item)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/title_contents_separator"
-                app:workoutName="@{item}"
                 tools:text="Squat" />
 
             <View

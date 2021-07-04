@@ -1,9 +1,8 @@
-package kr.valor.bal.utilities
+package kr.valor.bal.utilities.binding
 
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -14,24 +13,22 @@ import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.UpdateWorkoutSetListener
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemBinding
-import java.lang.IndexOutOfBoundsException
 
-// Data Binding — lessons learnt
-// https://medium.com/androiddevelopers/data-binding-lessons-learnt-4fd16576b719
 
-// detail_cardview_item.xml, schedule_cardview_item.xml
-@BindingAdapter("workoutName")
-fun TextView.setWorkoutName(item: WorkoutDetailAndSets) {
-    text = item.workoutDetail.workoutName
-}
-
-// schedule_dialog.xml
-@BindingAdapter("weights")
-fun TextView.setWeights(item: WorkoutSet?) {
-    val weights = item?.weights?.toInt() ?: 20
-    text = weights.toString()
+@BindingAdapter("thumbnailImage")
+fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
+    item?.let {
+        setImageResource(when (it.workoutOverview.overviewId.toInt() % 7) {
+            0 -> R.drawable.thumbnail_background_1
+            1 -> R.drawable.thumbnail_background_2
+            2 -> R.drawable.thumbnail_background_3
+            3 -> R.drawable.thumbnail_background_4
+            4 -> R.drawable.thumbnail_background_5
+            5 -> R.drawable.thumbnail_background_6
+            else -> R.drawable.thumbnail_background_7
+        })
+    } ?: setImageResource(R.drawable.thumbnail_background_7)
 }
 
 @BindingAdapter("workoutSets", "updateListener")

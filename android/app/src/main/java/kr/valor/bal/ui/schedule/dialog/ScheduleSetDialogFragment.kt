@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.R
-import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ScheduleDialogBinding
 import kr.valor.bal.ui.schedule.view.BarbellState
 import kr.valor.bal.ui.schedule.view.PlatesView
+import kr.valor.bal.utilities.binding.GeneralBindingParameterCreator
 
 @AndroidEntryPoint
 class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
@@ -52,6 +52,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
         binding = ScheduleDialogBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.bindingCreator = GeneralBindingParameterCreator
 
         platesView = binding.platesView
         return binding.root
