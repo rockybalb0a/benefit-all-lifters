@@ -18,71 +18,14 @@ import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemBinding
 import java.lang.IndexOutOfBoundsException
 
-@BindingAdapter("dateString")
-fun TextView.setDateFormatted(item: WorkoutSchedule) {
-    text = item.workoutOverview.localDateFormatter()
-}
-
-
-@BindingAdapter("elapsedTime")
-fun TextView.setElapsedTimeFormatted(item: WorkoutSchedule?) {
-    item?.let {
-        text = when(it.workoutOverview.trackingStatus) {
-            TrackingStatus.DONE -> getElapsedTimeFormatted(resources.getString(R.string.empty_elapsed_time), item)
-            else -> resources.getString(R.string.empty_elapsed_time)
-        }
-    } ?: resources.getString(R.string.empty_elapsed_time)
-}
+// Data Binding — lessons learnt
+// https://medium.com/androiddevelopers/data-binding-lessons-learnt-4fd16576b719
 
 @BindingAdapter("elapsedTimeOnTracking")
 fun TextView.setTrackingTimeText(elapsedTime: Long?) {
     text = elapsedTime?.run {
         elapsedTime.elapsedTimeFormatter()
     } ?: resources.getString(R.string.empty_elapsed_time)
-}
-
-
-private fun getElapsedTimeFormatted(default: String ,item: WorkoutSchedule?): String {
-    return item?.run {
-        this.workoutOverview.elapsedTimeFormatter()
-    } ?: default
-}
-
-
-@BindingAdapter("thumbnailImage")
-fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
-    item?.let {
-        setImageResource(when (it.workoutOverview.overviewId.toInt() % 7) {
-            0 -> R.drawable.thumbnail_background_1
-            1 -> R.drawable.thumbnail_background_2
-            2 -> R.drawable.thumbnail_background_3
-            3 -> R.drawable.thumbnail_background_4
-            4 -> R.drawable.thumbnail_background_5
-            5 -> R.drawable.thumbnail_background_6
-            else -> R.drawable.thumbnail_background_7
-        })
-    } ?: setImageResource(R.drawable.thumbnail_background_7)
-}
-
-@BindingAdapter("mainLifting")
-fun TextView.setMainLiftingCategoryText(item: WorkoutSchedule) {
-    val workouts = item.workoutDetails
-    if (workouts.size >= 2) {
-        text = resources.getString(
-            R.string.main_lifting_more,
-            workouts.component1().workoutDetail.workoutName,
-            workouts.component2().workoutDetail.workoutName
-        )
-    } else {
-        text = try {
-            resources.getString(
-                R.string.main_lifting_one,
-                workouts.component1().workoutDetail.workoutName
-            )
-        } catch (e: IndexOutOfBoundsException) {
-            resources.getString(R.string.main_lifting_empty)
-        }
-    }
 }
 
 @BindingAdapter("workoutName")
