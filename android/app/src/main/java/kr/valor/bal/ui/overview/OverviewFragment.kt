@@ -13,6 +13,9 @@ import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.OverviewItemListener
 import kr.valor.bal.databinding.OverviewFragmentBinding
 
+
+// TODO : Set state for rest / workout
+// TODO : Different UI for each state
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
 

@@ -12,6 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.overview.detail.DetailAdapter
 import kr.valor.bal.databinding.DetailFragmentBinding
 
+
+// TODO : Considering use of ViewPager2 ... ?
+// TODO : Upgrading UI needed
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 

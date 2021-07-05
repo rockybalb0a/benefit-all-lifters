@@ -17,6 +17,11 @@ import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.ScheduleFragmentBinding
 import kr.valor.bal.utilities.binding.ScheduleBindingParameterCreator
 
+
+// TODO : Set state for rest / workout
+// TODO : Different UI for each state
+
+// TODO : Additional process needed (when workout recording is done...)
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
 
