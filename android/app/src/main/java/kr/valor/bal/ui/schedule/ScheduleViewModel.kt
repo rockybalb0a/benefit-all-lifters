@@ -35,7 +35,7 @@ class ScheduleViewModel @Inject constructor(
         it != null
     }
 
-    private val _elapsedTimeMilli = MutableLiveData<Long>()
+    private val _elapsedTimeMilli = MutableLiveData<Long>(0L)
 
     val elapsedTimeMilli: LiveData<Long>
         get() = _elapsedTimeMilli
@@ -58,6 +58,7 @@ class ScheduleViewModel @Inject constructor(
             timer.collect { tick ->
                 _currentWorkoutOverview.value?.let {
                     it.elapsedTimeMilli += tick
+                    it.trackingTimeMilli = System.currentTimeMillis()
                     _elapsedTimeMilli.value = it.elapsedTimeMilli
                     updateWorkoutOverview(it)
                 }
@@ -73,7 +74,8 @@ class ScheduleViewModel @Inject constructor(
     private fun syncElapsedTimeWithDatabase(currentWorkoutOverview: WorkoutOverview) {
         if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
             with(currentWorkoutOverview) {
-                elapsedTimeMilli = System.currentTimeMillis() - startTimeMilli
+//                elapsedTimeMilli = System.currentTimeMillis() - startTimeMilli
+                elapsedTimeMilli += (System.currentTimeMillis() - trackingTimeMilli)
             }
             _trackingJob.value?.let { deactivateTimer() } ?: activateTimer()
         }
@@ -84,6 +86,7 @@ class ScheduleViewModel @Inject constructor(
         _currentWorkoutOverview.value?.let {
             it.trackingStatus = TrackingStatus.TRACKING
             it.startTimeMilli = System.currentTimeMillis()
+            it.trackingTimeMilli = it.startTimeMilli
             updateWorkoutOverview(it)
         }
         activateTimer()
@@ -115,6 +118,7 @@ class ScheduleViewModel @Inject constructor(
             it.trackingStatus = TrackingStatus.DONE
             it.endTimeMilli  = it.startTimeMilli + it.elapsedTimeMilli
             it.elapsedTimeMilli = 0L
+            it.trackingTimeMilli = 0L
             updateWorkoutOverview(it)
         }
     }
@@ -140,6 +144,7 @@ class ScheduleViewModel @Inject constructor(
                 startTimeMilli = 0L
                 elapsedTimeMilli = 0L
                 endTimeMilli = 0L
+                trackingTimeMilli = 0L
                 trackingStatus = TrackingStatus.NONE
             }
             updateWorkoutOverview(it)

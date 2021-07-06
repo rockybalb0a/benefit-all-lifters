@@ -22,8 +22,11 @@ data class WorkoutOverview(
     @ColumnInfo(name = "end_time_milli")
     var endTimeMilli: Long = 0L,
 
-    @ColumnInfo(name ="elapsed_time_milli")
+    @ColumnInfo(name = "elapsed_time_milli")
     var elapsedTimeMilli: Long = 0L,
+
+    @ColumnInfo(name = "tracking_time_milli")
+    var trackingTimeMilli: Long = 0L,
 
     @ColumnInfo(name = "tracking_status")
     var trackingStatus: TrackingStatus = TrackingStatus.NONE
