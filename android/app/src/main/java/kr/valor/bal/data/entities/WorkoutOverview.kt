@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import kr.valor.bal.utilities.TrackingStatus
 import java.time.LocalDate
 
-
+// TODO: Considering use of Domain Model
 @Entity(tableName = "workout_overview")
 data class WorkoutOverview(
     @PrimaryKey(autoGenerate = true)

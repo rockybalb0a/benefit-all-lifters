@@ -3,7 +3,6 @@ package kr.valor.bal.ui.schedule
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
@@ -11,7 +10,6 @@ import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.utilities.TrackingStatus
 import javax.inject.Inject
-import kotlin.Long as Long
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
@@ -25,37 +23,23 @@ class ScheduleViewModel @Inject constructor(
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
         workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }
-
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
         get() = _currentWorkoutSchedule
-
-    private val _trackingJob = MutableLiveData<Job?>()
-
-    val onTracking = _trackingJob.map {
-        it != null
-    }
-
-    private val _elapsedTimeMilli = MutableLiveData<Long>(0L)
-
-    val elapsedTimeMilli: LiveData<Long>
-        get() = _elapsedTimeMilli
-
-
     val layoutViewVisibility = _currentWorkoutSchedule.map {
         it.workoutDetails.isNotEmpty()
     }
 
-    private val timer = flow {
-        while (true) {
-            emit(1000L)
-            delay(1000L)
-        }
-    }
+    private val _elapsedTimeMilli = MutableLiveData<Long>(0L)
+    val elapsedTimeMilli: LiveData<Long>
+        get() = _elapsedTimeMilli
 
+    private val _onTracking = MutableLiveData<Boolean>()
+    val onTracking: LiveData<Boolean>
+        get() = _onTracking
 
-    private fun activateTimer() {
-        _trackingJob.value = viewModelScope.launch {
-            timer.collect { tick ->
+    private fun activateTimeTracking() {
+        _onTracking.value =
+            ScheduleTimeTracker.activateTimeTracker(viewModelScope) { tick ->
                 _currentWorkoutOverview.value?.let {
                     it.elapsedTimeMilli += tick
                     it.trackingTimeMilli = System.currentTimeMillis()
@@ -63,21 +47,19 @@ class ScheduleViewModel @Inject constructor(
                     updateWorkoutOverview(it)
                 }
             }
-        }
     }
 
-    private fun deactivateTimer() {
-        _trackingJob.value?.cancel()
-        _trackingJob.value = null
+    private fun deactivateTimeTracking() {
+        _onTracking.value = ScheduleTimeTracker.deactivateTimeTracker()
     }
+
 
     private fun syncElapsedTimeWithDatabase(currentWorkoutOverview: WorkoutOverview) {
         if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
             with(currentWorkoutOverview) {
-//                elapsedTimeMilli = System.currentTimeMillis() - startTimeMilli
                 elapsedTimeMilli += (System.currentTimeMillis() - trackingTimeMilli)
             }
-            _trackingJob.value?.let { deactivateTimer() } ?: activateTimer()
+            activateTimeTracking()
         }
         _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
     }
@@ -89,11 +71,11 @@ class ScheduleViewModel @Inject constructor(
             it.trackingTimeMilli = it.startTimeMilli
             updateWorkoutOverview(it)
         }
-        activateTimer()
+        activateTimeTracking()
     }
 
     private fun onPause() {
-        deactivateTimer()
+        deactivateTimeTracking()
         _currentWorkoutOverview.value?.let {
             it.trackingStatus = TrackingStatus.PAUSE
             updateWorkoutOverview(it)
@@ -107,12 +89,12 @@ class ScheduleViewModel @Inject constructor(
                 updateWorkoutOverview(it)
             }
         }
-        activateTimer()
+        activateTimeTracking()
     }
 
 
     private fun onStop() {
-        deactivateTimer()
+        deactivateTimeTracking()
         _elapsedTimeMilli.value = 0L
         _currentWorkoutOverview.value?.let {
             it.trackingStatus = TrackingStatus.DONE
@@ -130,7 +112,7 @@ class ScheduleViewModel @Inject constructor(
             onStart()
             return
         }
-        _trackingJob.value?.let { onPause() } ?: onResume()
+        if (ScheduleTimeTracker.onTracking) onPause() else onResume()
     }
 
     fun stopTimer() {
