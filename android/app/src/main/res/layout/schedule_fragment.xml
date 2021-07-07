@@ -161,6 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:text="@string/add_new_workout"
+            android:onClick="@{() -> viewModel.onAddNewWorkoutButtonClicked()}"
             app:icon="@drawable/ic_baseline_note_add_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

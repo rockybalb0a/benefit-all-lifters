@@ -3,6 +3,8 @@ package kr.valor.bal.ui.schedule
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
@@ -15,6 +17,13 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     private val workoutRepo: DefaultRepository
 ) : ViewModel() {
+
+    sealed class Event {
+        object ShowAddNewWorkoutDialog: Event()
+    }
+
+    private val eventChannel = Channel<Event>(Channel.BUFFERED)
+    val eventsFlow = eventChannel.receiveAsFlow()
 
     private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
         syncElapsedTimeWithDatabase(it)
@@ -37,86 +46,18 @@ class ScheduleViewModel @Inject constructor(
     val onTracking: LiveData<Boolean>
         get() = _onTracking
 
-    private fun activateTimeTracking() {
-        _onTracking.value =
-            ScheduleTimeTracker.activateTimeTracker(viewModelScope) { tick ->
-                _currentWorkoutOverview.value?.let {
-                    it.elapsedTimeMilli += tick
-                    it.trackingTimeMilli = System.currentTimeMillis()
-                    _elapsedTimeMilli.value = it.elapsedTimeMilli
-                    updateWorkoutOverview(it)
-                }
-            }
-    }
-
-    private fun deactivateTimeTracking() {
-        _onTracking.value = ScheduleTimeTracker.deactivateTimeTracker()
-    }
-
-
-    private fun syncElapsedTimeWithDatabase(currentWorkoutOverview: WorkoutOverview) {
-        if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
-            with(currentWorkoutOverview) {
-                elapsedTimeMilli += (System.currentTimeMillis() - trackingTimeMilli)
-            }
-            activateTimeTracking()
-        }
-        _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
-    }
-
-    private fun onStart() {
-        _currentWorkoutOverview.value?.let {
-            it.trackingStatus = TrackingStatus.TRACKING
-            it.startTimeMilli = System.currentTimeMillis()
-            it.trackingTimeMilli = it.startTimeMilli
-            updateWorkoutOverview(it)
-        }
-        activateTimeTracking()
-    }
-
-    private fun onPause() {
-        deactivateTimeTracking()
-        _currentWorkoutOverview.value?.let {
-            it.trackingStatus = TrackingStatus.PAUSE
-            updateWorkoutOverview(it)
-        }
-    }
-
-    private fun onResume() {
-        _currentWorkoutOverview.value?.let {
-            if (it.trackingStatus == TrackingStatus.PAUSE)  {
-                it.trackingStatus = TrackingStatus.TRACKING
-                updateWorkoutOverview(it)
-            }
-        }
-        activateTimeTracking()
-    }
-
-
-    private fun onStop() {
-        deactivateTimeTracking()
-        _elapsedTimeMilli.value = 0L
-        _currentWorkoutOverview.value?.let {
-            it.trackingStatus = TrackingStatus.DONE
-            it.endTimeMilli  = it.startTimeMilli + it.elapsedTimeMilli
-            it.elapsedTimeMilli = 0L
-            it.trackingTimeMilli = 0L
-            updateWorkoutOverview(it)
-        }
-    }
-
 
     fun toggleTimer() {
         val trackingStatus = _currentWorkoutOverview.value!!.trackingStatus
         if (trackingStatus == TrackingStatus.NONE) {
-            onStart()
+            onStartTimeTracking()
             return
         }
-        if (ScheduleTimeTracker.onTracking) onPause() else onResume()
+        if (ScheduleTimeTracker.onTracking) onPauseTimeTracking() else onResumeTimeTracking()
     }
 
     fun stopTimer() {
-        onStop()
+        onStopTimeTracking()
     }
 
     // For testing
@@ -134,7 +75,13 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun onWorkoutFinish() {
-        onStop()
+        onStopTimeTracking()
+    }
+
+    fun onAddNewWorkoutButtonClicked() {
+        viewModelScope.launch {
+            eventChannel.send(Event.ShowAddNewWorkoutDialog)
+        }
     }
 
     fun onAddNewSetButtonClicked(detailId: Long) {
@@ -158,6 +105,74 @@ class ScheduleViewModel @Inject constructor(
             )
             insertWorkoutDetail(newWorkoutDetail)
         }
+    }
+
+    private fun activateTimeTracking() {
+        _onTracking.value =
+            ScheduleTimeTracker.activateTimeTracker(viewModelScope) { tick ->
+                _currentWorkoutOverview.value?.let {
+                    it.elapsedTimeMilli += tick
+                    it.trackingTimeMilli = System.currentTimeMillis()
+                    _elapsedTimeMilli.value = it.elapsedTimeMilli
+                    updateWorkoutOverview(it)
+                }
+            }
+    }
+
+    private fun deactivateTimeTracking() {
+        _onTracking.value = ScheduleTimeTracker.deactivateTimeTracker()
+    }
+
+
+    private fun onStartTimeTracking() {
+        _currentWorkoutOverview.value?.let {
+            it.trackingStatus = TrackingStatus.TRACKING
+            it.startTimeMilli = System.currentTimeMillis()
+            it.trackingTimeMilli = it.startTimeMilli
+            updateWorkoutOverview(it)
+        }
+        activateTimeTracking()
+    }
+
+    private fun onPauseTimeTracking() {
+        deactivateTimeTracking()
+        _currentWorkoutOverview.value?.let {
+            it.trackingStatus = TrackingStatus.PAUSE
+            updateWorkoutOverview(it)
+        }
+    }
+
+    private fun onResumeTimeTracking() {
+        _currentWorkoutOverview.value?.let {
+            if (it.trackingStatus == TrackingStatus.PAUSE)  {
+                it.trackingStatus = TrackingStatus.TRACKING
+                updateWorkoutOverview(it)
+            }
+        }
+        activateTimeTracking()
+    }
+
+
+    private fun onStopTimeTracking() {
+        deactivateTimeTracking()
+        _elapsedTimeMilli.value = 0L
+        _currentWorkoutOverview.value?.let {
+            it.trackingStatus = TrackingStatus.DONE
+            it.endTimeMilli  = it.startTimeMilli + it.elapsedTimeMilli
+            it.elapsedTimeMilli = 0L
+            it.trackingTimeMilli = 0L
+            updateWorkoutOverview(it)
+        }
+    }
+
+    private fun syncElapsedTimeWithDatabase(currentWorkoutOverview: WorkoutOverview) {
+        if (currentWorkoutOverview.trackingStatus == TrackingStatus.TRACKING) {
+            with(currentWorkoutOverview) {
+                elapsedTimeMilli += (System.currentTimeMillis() - trackingTimeMilli)
+            }
+            activateTimeTracking()
+        }
+        _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
     }
 
     private fun insertWorkoutSet(workoutSet: WorkoutSet) {
