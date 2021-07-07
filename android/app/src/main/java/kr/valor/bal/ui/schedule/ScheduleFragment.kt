@@ -55,6 +55,11 @@ class ScheduleFragment : Fragment() {
                     ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
                         showWorkoutSelectionDialog()
                     }
+                    ScheduleViewModel.Event.ShowTimerSettingDialog -> {
+                        MaterialAlertDialogBuilder(requireActivity())
+                            .setView(R.layout.schedule_timer)
+                            .show()
+                    }
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)

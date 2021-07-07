@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/timer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toTopOf="@id/clock_top_guideline"/>
+
+    <!--
+    TODO : Ripple effect
+    https://ohdbjj.tistory.com/2
+    https://rinav.dev/post/2020/12/how-to-achieve-click-effect-on-shapeableimageview/
+     -->
+    <ImageButton
+        android:id="@+id/timer_start_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:tint="#851320"
+        android:scaleType="fitXY"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_baseline_start_timer_filled_24"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@id/timer_text"
+        app:layout_constraintTop_toBottomOf="@id/timer_text"
+        app:layout_constraintEnd_toStartOf="@id/timer_stop_button"
+        />
+
+
+    <ImageButton
+        android:id="@+id/timer_stop_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_baseline_stop_timer_circle_24"
+        android:backgroundTint="@color/primaryColorAlt"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/timer_text"
+        app:layout_constraintStart_toEndOf="@id/timer_start_button"
+        app:layout_constraintTop_toBottomOf="@id/timer_text" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_large" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_large" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/clock_top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/margin_large" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

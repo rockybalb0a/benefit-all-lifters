@@ -20,6 +20,7 @@ class ScheduleViewModel @Inject constructor(
 
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
+        object ShowTimerSettingDialog: Event()
     }
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
@@ -81,6 +82,12 @@ class ScheduleViewModel @Inject constructor(
     fun onAddNewWorkoutButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.ShowAddNewWorkoutDialog)
+        }
+    }
+
+    fun onWorkoutTimerButtonClicked() {
+        viewModelScope.launch {
+            eventChannel.send(Event.ShowTimerSettingDialog)
         }
     }
 
