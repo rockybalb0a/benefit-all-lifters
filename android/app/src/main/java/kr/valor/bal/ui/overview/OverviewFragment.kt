@@ -21,7 +21,9 @@ class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
 
-    private lateinit var adapter: OverviewAdapter
+    private lateinit var binding: OverviewFragmentBinding
+
+    private lateinit var overviewAdapter: OverviewAdapter
 
     private lateinit var recyclerView: RecyclerView
 
@@ -29,29 +31,28 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = OverviewFragmentBinding.inflate(
-            inflater, container, false
-        )
-
-        adapter = OverviewAdapter(
-            OverviewItemListener {
-                findNavController().navigate(OverviewFragmentDirections.actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
-            }
-        )
-        recyclerView = binding.recyclerView
-        recyclerView.adapter = adapter
-
-        return binding.root
+        return OverviewFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView = binding.recyclerView.also { it.initRecyclerView() }
 
         viewModel.workoutSchedules.observe(viewLifecycleOwner) {
             it?.let {
-                adapter.submitList(it)
+                overviewAdapter.submitList(it)
             }
         }
+    }
+
+    private fun RecyclerView.initRecyclerView() {
+        overviewAdapter = OverviewAdapter(
+            OverviewItemListener {
+                findNavController().navigate(OverviewFragmentDirections
+                    .actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
+            }
+        ).also { adapter = it }
     }
 
 }

@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
 import kr.valor.bal.databinding.HomeFragmentBinding
+import kr.valor.bal.utilities.observeInLifecycle
 
 
 @AndroidEntryPoint
@@ -23,16 +25,29 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = HomeFragmentBinding.inflate(inflater, container, false)
-        return binding.root
+        return HomeFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.initBinding()
 
-        binding.addWorkoutView.setOnClickListener {
-            findNavController().navigate(R.id.action_home_dest_to_schedule_dest)
-        }
+        viewModel.eventsFlow
+            .onEach {
+                when (it) {
+                    HomeViewModel.Event.NavigateToScheduleDest -> {
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeDestToScheduleDest()
+                        )
+                    }
+                }
+            }
+            .observeInLifecycle(viewLifecycleOwner)
     }
 
+    private fun HomeFragmentBinding.initBinding() {
+        viewModel = this@HomeFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
+    }
 }

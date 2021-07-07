@@ -28,7 +28,7 @@ import kr.valor.bal.utilities.observeInLifecycle
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
 
-    private val scheduleViewModel: ScheduleViewModel by viewModels()
+    private val viewModel: ScheduleViewModel by viewModels()
 
     private lateinit var binding: ScheduleFragmentBinding
 
@@ -40,21 +40,16 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        binding = ScheduleFragmentBinding.inflate(inflater, container, false)
-        recyclerView = binding.scheduleRecyclerView
-
-        return binding.root
+        return ScheduleFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.initBinding()
-        recyclerView.initRecyclerview()
+        recyclerView = binding.scheduleRecyclerView.also { it.initRecyclerview() }
 
-
-        scheduleViewModel.eventsFlow
+        viewModel.eventsFlow
             .onEach {
                 when (it) {
                     ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
@@ -64,7 +59,7 @@ class ScheduleFragment : Fragment() {
             }
             .observeInLifecycle(viewLifecycleOwner)
 
-        scheduleViewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
+        viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
             val items =
                 it.workoutDetails.map { item ->
                     WorkoutDetailItem.Item(item)
@@ -73,25 +68,15 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun showWorkoutSelectionDialog(): AlertDialog {
-        val title = resources.getString(R.string.add_new_workout_popup_title)
-        val items = resources.getStringArray(R.array.exercise_list)
-
-        return MaterialAlertDialogBuilder(requireActivity())
-            .setTitle(title)
-            .setItems(items) { _ , i: Int ->
-                scheduleViewModel.onDialogItemSelected(items[i])
-            }
-            .show()
+    private fun ScheduleFragmentBinding.initBinding() {
+        bindingCreator = ScheduleBindingParameterCreator
+        viewModel = this@ScheduleFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
     }
 
     private fun RecyclerView.initRecyclerview() {
-
-        scheduleAdapter = ScheduleAdapter(
-            *initializeRecyclerviewClickListeners()
-        )
-
-        adapter = scheduleAdapter
+        scheduleAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
+            .also { adapter = it }
 
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
@@ -106,23 +91,17 @@ class ScheduleFragment : Fragment() {
         })
     }
 
-    private fun ScheduleFragmentBinding.initBinding() {
-        bindingCreator = ScheduleBindingParameterCreator
-        viewModel = scheduleViewModel
-        lifecycleOwner = viewLifecycleOwner
-    }
-
     private fun initializeRecyclerviewClickListeners(): Array<RecyclerviewItemClickListener<*>> =
         arrayOf(
             AddWorkoutSetListener { item ->
-                scheduleViewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
+                viewModel.onAddNewSetButtonClicked(item.workoutDetail.detailId)
             },
             RemoveWorkoutSetListener { item ->
-                scheduleViewModel.onDeleteSetButtonClicked(item.workoutDetail.detailId)
+                viewModel.onDeleteSetButtonClicked(item.workoutDetail.detailId)
             },
 
             DropWorkoutListener { item ->
-                scheduleViewModel.onCloseButtonClicked(item.workoutDetail)
+                viewModel.onCloseButtonClicked(item.workoutDetail)
             },
 
             UpdateWorkoutSetListener { item ->
@@ -133,8 +112,19 @@ class ScheduleFragment : Fragment() {
             },
 
             CompleteWorkoutScheduleListener {
-                scheduleViewModel.onWorkoutFinish()
+                viewModel.onWorkoutFinish()
             }
         )
 
+    private fun showWorkoutSelectionDialog(): AlertDialog {
+        val title = resources.getString(R.string.add_new_workout_popup_title)
+        val items = resources.getStringArray(R.array.exercise_list)
+
+        return MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(title)
+            .setItems(items) { _ , i: Int ->
+                viewModel.onDialogItemSelected(items[i])
+            }
+            .show()
+    }
 }

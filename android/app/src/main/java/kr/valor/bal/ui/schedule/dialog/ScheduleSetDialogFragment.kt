@@ -23,8 +23,9 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: ScheduleDialogBinding
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.initBinding()
 
         viewModel.currentWorkoutSet.observe(viewLifecycleOwner) {
             platesView.synchronizePlatesInfo(it.platesStack)
@@ -42,20 +43,21 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        binding = ScheduleDialogBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        binding.bindingCreator = GeneralBindingParameterCreator
-
-        platesView = binding.platesView
-        return binding.root
+        return ScheduleDialogBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
+    private fun ScheduleDialogBinding.initBinding() {
+        with(this) {
+            lifecycleOwner = viewLifecycleOwner
+            bindingCreator = GeneralBindingParameterCreator
+            viewModel = this@ScheduleSetDialogFragment.viewModel
+            this@ScheduleSetDialogFragment.platesView = platesView
+        }
+    }
 }

@@ -23,6 +23,7 @@
             android:layout_weight="3"
             android:layout_marginTop="@dimen/margin_large"
             android:layout_marginHorizontal="@dimen/margin_medium"
+            android:onClick="@{() -> viewModel.onWorkoutStartButtonClicked()}"
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="@dimen/cardview_corner_radius_default">
@@ -42,11 +43,19 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/backgroundShadowAlt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
                 <TextView
                     android:id="@+id/new_workout_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#AA18202B"
                     android:gravity="center"
                     android:text="@string/new_workout_text"
                     android:textColor="?attr/colorOnPrimary"
@@ -54,8 +63,10 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 

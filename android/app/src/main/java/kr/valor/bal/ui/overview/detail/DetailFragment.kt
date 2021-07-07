@@ -30,25 +30,20 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DetailFragmentBinding.inflate(inflater, container, false)
-
-        adapter = DetailAdapter()
-
-        recyclerView = binding.recyclerView
-
-        recyclerView.adapter = adapter
-
-        return binding.root
+        return DetailFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = binding.recyclerView.also {
+            adapter = DetailAdapter()
+            it.adapter = adapter
+        }
 
         viewModel.workoutSchedule.observe(viewLifecycleOwner) {
             (activity as AppCompatActivity).supportActionBar?.title = it.workoutOverview.date.toString()
             adapter.submitList(it.workoutDetails)
-
         }
     }
-
-
 }
