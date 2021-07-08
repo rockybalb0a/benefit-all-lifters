@@ -1,5 +1,6 @@
 package kr.valor.bal.ui.schedule
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -55,10 +56,8 @@ class ScheduleFragment : Fragment() {
                     ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
                         showWorkoutSelectionDialog()
                     }
-                    ScheduleViewModel.Event.ShowTimerSettingDialog -> {
-                        MaterialAlertDialogBuilder(requireActivity())
-                            .setView(R.layout.schedule_timer)
-                            .show()
+                    ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
+                        showTimerResetActionChoiceDialog()
                     }
                 }
             }
@@ -117,7 +116,7 @@ class ScheduleFragment : Fragment() {
             },
 
             CompleteWorkoutScheduleListener {
-                viewModel.onWorkoutFinish()
+                viewModel.onWorkoutFinishButtonClicked()
             }
         )
 
@@ -129,6 +128,24 @@ class ScheduleFragment : Fragment() {
             .setTitle(title)
             .setItems(items) { _ , i: Int ->
                 viewModel.onDialogItemSelected(items[i])
+            }
+            .show()
+    }
+
+    private fun showTimerResetActionChoiceDialog(): AlertDialog {
+        val dialogTitleRes = R.string.timer_stop_action_choice_dialog_title
+        val dialogMessageRes = R.string.timer_stop_action_choice_dialog_message
+        val dialogPositiveBtnLabelRes = R.string.timer_stop_action_choice_dialog_positive_action_btn_label
+        val dialogNegativeBtnLabelRes = R.string.timer_stop_action_choice_dialog_negative_action_btn_label
+
+        return MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(dialogTitleRes)
+            .setMessage(dialogMessageRes)
+            .setPositiveButton(dialogPositiveBtnLabelRes) { _, _ ->
+                viewModel.onTimerResetActionSelected()
+            }
+            .setNegativeButton(dialogNegativeBtnLabelRes) { dialogInterface: DialogInterface, _ ->
+                dialogInterface.dismiss()
             }
             .show()
     }

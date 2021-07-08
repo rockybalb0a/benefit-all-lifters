@@ -57,11 +57,11 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@color/backgroundShadow"
-                    android:onClick="@{() -> viewModel.clearTimer()}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
+
 
                 <TextView
                     android:layout_width="0dp"
@@ -72,14 +72,12 @@
                     android:gravity="fill_vertical"
                     android:textAlignment="gravity"
                     android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.elapsedTimeMilli, context)}"
-                    android:onClick="@{() -> viewModel.onWorkoutTimerButtonClicked()}"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/timer_view_vertical_separator"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="01:30:22"
-                    />
+                    tools:text="01:30:22" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/timer_view_vertical_separator"
@@ -92,9 +90,8 @@
                     android:id="@+id/timer_toggle_button"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:onClick="@{() -> viewModel.onTimerToggleButtonClicked()}"
                     android:background="@{viewModel.onTracking ? @drawable/ic_baseline_pause_timer_24 : @drawable/ic_baseline_start_timer_24}"
-                    android:backgroundTint="?attr/colorOnPrimary"
-                    android:onClick="@{() -> viewModel.toggleTimer()}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="@id/timer_view_vertical_separator"
                     app:layout_constraintTop_toTopOf="parent"
@@ -106,11 +103,11 @@
                     android:id="@+id/timer_reset_button"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_small"
+                    android:onClick="@{() -> viewModel.onTimerResetButtonClicked()}"
                     android:background="@drawable/ic_baseline_stop_timer_24"
                     android:backgroundTint="@drawable/toggle_img_btn_bg_color_selector"
-                    android:layout_margin="@dimen/margin_small"
-                    android:onClick="@{() -> viewModel.stopTimer()}"
-                    android:enabled="@{viewModel.onTracking ? false : true}"
+                    android:enabled="@{viewModel.resetButtonEnabled ? true : false}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/timer_toggle_button"
                     app:layout_constraintTop_toTopOf="parent"

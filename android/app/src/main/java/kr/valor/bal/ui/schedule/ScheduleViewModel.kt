@@ -20,7 +20,7 @@ class ScheduleViewModel @Inject constructor(
 
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
-        object ShowTimerSettingDialog: Event()
+        object ShowTimerStopActionChoiceDialog: Event()
     }
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
@@ -38,6 +38,9 @@ class ScheduleViewModel @Inject constructor(
     val layoutViewVisibility = _currentWorkoutSchedule.map {
         it.workoutDetails.isNotEmpty()
     }
+    val resetButtonEnabled = _currentWorkoutSchedule.map {
+        it.workoutOverview.trackingStatus == TrackingStatus.PAUSE
+    }
 
     private val _elapsedTimeMilli = MutableLiveData<Long>(0L)
     val elapsedTimeMilli: LiveData<Long>
@@ -47,8 +50,7 @@ class ScheduleViewModel @Inject constructor(
     val onTracking: LiveData<Boolean>
         get() = _onTracking
 
-
-    fun toggleTimer() {
+    fun onTimerToggleButtonClicked() {
         val trackingStatus = _currentWorkoutOverview.value!!.trackingStatus
         if (trackingStatus == TrackingStatus.NONE) {
             onStartTimeTracking()
@@ -57,12 +59,13 @@ class ScheduleViewModel @Inject constructor(
         if (ScheduleTimeTracker.onTracking) onPauseTimeTracking() else onResumeTimeTracking()
     }
 
-    fun stopTimer() {
-        onStopTimeTracking()
+    fun onTimerResetButtonClicked() {
+        viewModelScope.launch {
+            eventChannel.send(Event.ShowTimerStopActionChoiceDialog)
+        }
     }
 
-    // For testing
-    fun clearTimer() {
+    fun onTimerResetActionSelected() {
         _currentWorkoutOverview.value?.let {
             with(it) {
                 startTimeMilli = 0L
@@ -70,24 +73,20 @@ class ScheduleViewModel @Inject constructor(
                 endTimeMilli = 0L
                 trackingTimeMilli = 0L
                 trackingStatus = TrackingStatus.NONE
+                updateWorkoutOverview(it)
             }
-            updateWorkoutOverview(it)
         }
+        _elapsedTimeMilli.value = 0L
     }
 
-    fun onWorkoutFinish() {
+    fun onWorkoutFinishButtonClicked() {
         onStopTimeTracking()
+        // TODO : Navigate to ScheduleRecordFragment(temporary name)
     }
 
     fun onAddNewWorkoutButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.ShowAddNewWorkoutDialog)
-        }
-    }
-
-    fun onWorkoutTimerButtonClicked() {
-        viewModelScope.launch {
-            eventChannel.send(Event.ShowTimerSettingDialog)
         }
     }
 
