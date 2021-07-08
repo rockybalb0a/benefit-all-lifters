@@ -58,10 +58,11 @@
                 tools:text="Barbell Back Squat" />
 
             <ImageButton
-                style="@style/Theme.BenefitAllLifters.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_close_24"
+                android:src="@drawable/ic_baseline_close_24"
+                android:tint="@color/primaryColorAlt"
+                android:background="?attr/selectableItemBackground"
                 android:layout_margin="@dimen/margin_medium"
                 android:onClick="@{() -> dropListener.onClick(item)}"
                 app:layout_constraintTop_toTopOf="parent"

@@ -73,11 +73,7 @@
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">0dp</item>
     </style>
-
-    <style name="Theme.BenefitAllLifters.ImageButton">
-        <item name="android:backgroundTint">?attr/colorPrimary</item>
-    </style>
-
+    
     <!-- TODO : https://stackoverflow.com/questions/43852562/round-corner-for-bottomsheetdialogfragment/50645769 -->
     <style name="Theme.BenefitAllLifters.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Theme.BenefitAllLifters.ModalStyle</item>
