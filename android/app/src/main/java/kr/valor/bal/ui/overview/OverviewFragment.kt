@@ -1,6 +1,7 @@
 package kr.valor.bal.ui.overview
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,8 +50,11 @@ class OverviewFragment : Fragment() {
     private fun RecyclerView.initRecyclerView() {
         overviewAdapter = OverviewAdapter(
             OverviewItemListener {
+//                findNavController().navigate(OverviewFragmentDirections
+//                    .actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
+                Log.d("NavArg", "${it.workoutOverview.overviewId}")
                 findNavController().navigate(OverviewFragmentDirections
-                    .actionOverviewDestToDetailFragment(it.workoutOverview.overviewId))
+                    .actionOverviewDestToScheduleDetailDest(it.workoutOverview.overviewId))
             }
         ).also { adapter = it }
     }

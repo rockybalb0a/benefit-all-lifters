@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/start"
+        motion:duration="1000"
+        motion:motionInterpolator="linear">
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorId="@+id/header_image"
+            motion:touchAnchorSide="bottom" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/header_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.05"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+
+        <Constraint
+            android:id="@id/header_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_large"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toBottomOf="@id/header_image" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/header_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.2"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+
+        <Constraint
+            android:id="@+id/header_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/header_image" />
+    </ConstraintSet>
+
+</MotionScene>

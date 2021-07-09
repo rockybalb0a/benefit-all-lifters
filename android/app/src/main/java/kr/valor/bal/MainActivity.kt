@@ -78,10 +78,17 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavMenu(navController: NavController) {
         bottomNavigationView = binding.bottomNavView
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.detail_dest) {
+//            if (destination.id == R.id.detail_dest) {
+//                bottomNavigationView.visibility = View.GONE
+//            } else {
+//                bottomNavigationView.visibility = View.VISIBLE
+//            }
+            if (destination.id == R.id.schedule_detail_dest) {
                 bottomNavigationView.visibility = View.GONE
+                supportActionBar?.hide()
             } else {
                 bottomNavigationView.visibility = View.VISIBLE
+                supportActionBar?.show()
             }
         }
         bottomNavigationView.setupWithNavController(navController)

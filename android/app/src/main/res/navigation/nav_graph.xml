@@ -11,8 +11,11 @@
         android:label="@string/overview_title"
         tools:layout="@layout/overview_fragment" >
         <action
-            android:id="@+id/action_overview_dest_to_detailFragment"
+            android:id="@+id/action_overview_dest_to_detail_dest"
             app:destination="@id/detail_dest" />
+        <action
+            android:id="@+id/action_overview_dest_to_schedule_detail_dest"
+            app:destination="@id/schedule_detail_dest" />
     </fragment>
     <fragment
         android:id="@+id/home_dest"
@@ -29,12 +32,15 @@
         android:label="@string/schedule_title"
         tools:layout="@layout/schedule_fragment" >
         <action
-            android:id="@+id/action_schedule_dest_to_scheduleSetDialogFragment"
-            app:destination="@id/scheduleSet_dest" />
+            android:id="@+id/action_schedule_dest_to_schedule_set_dest"
+            app:destination="@id/schedule_set_dest" />
+        <action
+            android:id="@+id/action_schedule_dest_to_schedule_detail_dest"
+            app:destination="@id/schedule_detail_dest" />
     </fragment>
 
     <dialog
-        android:id="@+id/scheduleSet_dest"
+        android:id="@+id/schedule_set_dest"
         android:name="kr.valor.bal.ui.schedule.dialog.ScheduleSetDialogFragment"
         tools:layout="@layout/schedule_dialog">
         <argument
@@ -46,6 +52,15 @@
         android:id="@+id/detail_dest"
         android:name="kr.valor.bal.ui.overview.detail.DetailFragment"
         tools:layout="@layout/detail_fragment" >
+        <argument
+            android:name="overviewId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/schedule_detail_dest"
+        android:name="kr.valor.bal.ui.detail.ScheduleDetailFragment"
+        tools:layout="@layout/schedule_detail_fragment">
         <argument
             android:name="overviewId"
             app:argType="long" />

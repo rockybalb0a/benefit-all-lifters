@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.content.Context" />
+
+        <variable
+            name="viewModel"
+            type="kr.valor.bal.ui.detail.ScheduleDetailViewModel" />
+
+        <variable
+            name="contentBindingCreator"
+            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
+
+        <variable
+            name="headerBindingCreator"
+            type="kr.valor.bal.utilities.binding.OverviewBindingParameterCreator" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:background="#FFFFFF">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:theme="@style/Theme.BenefitAllLifters.AppBarOverlay">
+
+            <kr.valor.bal.ui.detail.CollapsibleToolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="50dp"
+                android:fitsSystemWindows="false"
+                app:layoutDescription="@xml/motion_schedule_detail"
+                app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+                <ImageView
+                    android:id="@+id/header_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:thumbnailImage="@{viewModel.workoutSchedule}"
+                    tools:src="@drawable/thumbnail_background_1" />
+
+                <TextView
+                    android:id="@+id/header_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="@{headerBindingCreator.getLocalDateFormattedString(viewModel.workoutSchedule.workoutOverview.date, context)}" />
+
+
+            </kr.valor.bal.ui.detail.CollapsibleToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contents_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -19,8 +19,8 @@ object OverviewBindingParameterCreator {
 
     private const val SIMPLIFY_TO_YESTERDAY = 1L
 
-    fun getLocalDateFormattedString(localDate: LocalDate, context: Context): String =
-        localDate.localDateFormatter(context)
+    fun getLocalDateFormattedString(localDate: LocalDate?, context: Context): String? =
+        localDate?.localDateFormatter(context)
 
     fun getElapsedTimeFormattedString(item: WorkoutSchedule?, context: Context): String {
         val res = context.resources
