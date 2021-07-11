@@ -59,7 +59,7 @@ class ScheduleFragment : Fragment() {
                     ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
                         showTimerResetActionChoiceDialog()
                     }
-                    is ScheduleViewModel.Event.NavigateToScheduleDetail -> {
+                    is ScheduleViewModel.Event.NavigateToScheduleDetailDest -> {
                         findNavController().navigate(
                             ScheduleFragmentDirections.actionScheduleDestToScheduleDetailDest(it.overviewId)
                         )

@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
+import kr.valor.bal.R
 import kr.valor.bal.adapters.detail.DetailAdapter
 import kr.valor.bal.databinding.ScheduleDetailFragmentBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
+import kr.valor.bal.utilities.observeInLifecycle
 
 @AndroidEntryPoint
 class ScheduleDetailFragment: Fragment() {
@@ -44,6 +48,18 @@ class ScheduleDetailFragment: Fragment() {
         viewModel.workoutSchedule.observe(viewLifecycleOwner) {
             adapter.submitList(it.workoutDetails)
         }
+
+        viewModel.eventFlow
+            .onEach {
+                when (it) {
+                    ScheduleDetailViewModel.Event.NavigateToOverviewDest -> {
+                        findNavController().navigate(
+                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToOverviewDest()
+                        )
+                    }
+                }
+            }
+            .observeInLifecycle(viewLifecycleOwner)
 
     }
 

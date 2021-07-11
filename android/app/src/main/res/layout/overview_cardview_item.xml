@@ -90,9 +90,11 @@
                 android:id="@+id/elapsed_time_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_minimum"
                 android:src="@drawable/ic_clock"
-                app:layout_constraintEnd_toEndOf="@id/elapsed_time"
-                app:layout_constraintBottom_toTopOf="@id/elapsed_time"
+                app:layout_constraintEnd_toStartOf="@id/elapsed_time"
+                app:layout_constraintTop_toTopOf="@id/elapsed_time"
+                app:layout_constraintBottom_toBottomOf="@id/elapsed_time"
                 tools:ignore="ContentDescription" />
 
             <TextView

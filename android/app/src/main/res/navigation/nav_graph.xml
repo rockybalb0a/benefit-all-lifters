@@ -52,6 +52,9 @@
         <argument
             android:name="overviewId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_schedule_detail_dest_to_overview_dest"
+            app:destination="@id/overview_dest" />
     </fragment>
 
 

@@ -28,34 +28,54 @@
             android:layout_marginTop="0dp"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_medium"
-            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintStart_toEndOf="@id/header_back_button"
             motion:layout_constraintBottom_toBottomOf="parent" />
+
+        <Constraint
+            android:id="@id/header_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:alpha="1.0"
+            motion:layout_constraintStart_toStartOf="@id/header_image"
+            motion:layout_constraintEnd_toStartOf="@id/header_date"
+            motion:layout_constraintTop_toTopOf="@id/header_date"
+            motion:layout_constraintBottom_toBottomOf="@id/header_date" />
 
         <Constraint
             android:id="@id/header_main_workout"
             android:alpha="0.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_small"
-            motion:layout_constraintTop_toBottomOf="@id/header_image"/>
+            motion:layout_constraintStart_toStartOf="@id/header_date"
+            motion:layout_constraintTop_toBottomOf="@id/header_date" />
 
         <Constraint
-            android:id="@+id/header_elapsed_time"
+            android:id="@+id/header_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:alpha="1.0"
+            motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time_icon" />
+
+        <Constraint
+            android:id="@id/header_elapsed_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_large"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent" />
+            android:alpha="0.0"
+            motion:layout_constraintStart_toEndOf="@id/header_elapsed_time_icon" />
 
         <Constraint
-            android:id="@+id/header_elapsed_time_icon"
+            android:id="@id/header_elapsed_time_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintEnd_toEndOf="@id/header_elapsed_time"
-            motion:layout_constraintBottom_toTopOf="@id/header_elapsed_time"
-            android:alpha="0.0" />
+            android:layout_marginEnd="@dimen/margin_minimum"
+            android:alpha="0.0"
+            motion:layout_constraintStart_toEndOf="@id/header_image"
+            motion:layout_constraintBottom_toBottomOf="@id/header_elapsed_time"
+            motion:layout_constraintTop_toTopOf="@id/header_elapsed_time" />
 
     </ConstraintSet>
 
@@ -73,17 +93,44 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_medium"
-            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintStart_toEndOf="@id/header_back_button"
             motion:layout_constraintTop_toTopOf="@id/header_image" />
+
+        <Constraint
+            android:id="@+id/header_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            motion:layout_constraintEnd_toStartOf="@id/header_image"
+            motion:layout_constraintTop_toTopOf="@id/header_date" />
 
         <Constraint
             android:id="@+id/header_main_workout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_small"
-            motion:layout_constraintStart_toStartOf="parent"
+            android:alpha="1.0"
+            motion:layout_constraintStart_toStartOf="@id/header_date"
             motion:layout_constraintTop_toBottomOf="@id/header_date" />
+
+        <Constraint
+            android:id="@+id/header_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time_icon"
+            motion:layout_constraintBottom_toBottomOf="@id/header_elapsed_time_icon"
+            motion:layout_constraintTop_toTopOf="@id/header_elapsed_time_icon" />
+
+        <Constraint
+            android:id="@+id/header_elapsed_time_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_minimum"
+            android:alpha="1.0"
+            motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time"
+            motion:layout_constraintBottom_toBottomOf="@id/header_elapsed_time"
+            motion:layout_constraintTop_toTopOf="@id/header_elapsed_time" />
 
         <Constraint
             android:id="@+id/header_elapsed_time"
@@ -91,15 +138,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_large"
+            android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent" />
-
-        <Constraint
-            android:id="@+id/header_elapsed_time_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintEnd_toEndOf="@id/header_elapsed_time"
-            motion:layout_constraintBottom_toTopOf="@id/header_elapsed_time" />
 
     </ConstraintSet>
 

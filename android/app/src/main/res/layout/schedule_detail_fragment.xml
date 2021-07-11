@@ -41,6 +41,14 @@
                 app:layoutDescription="@xml/motion_schedule_detail"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed">
 
+                <ImageButton
+                    android:id="@+id/header_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{() -> viewModel.onBackButtonClicked()}"/>
+
                 <ImageView
                     android:id="@+id/header_image"
                     android:layout_width="match_parent"
@@ -70,6 +78,13 @@
                     android:textSize="12sp"
                     tools:text="Main | Squat, Overhead press" />
 
+                <ImageButton
+                    android:id="@+id/header_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_baseline_edit_24" />
+
                 <ImageView
                     android:id="@+id/header_elapsed_time_icon"
                     android:layout_width="wrap_content"
@@ -96,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
