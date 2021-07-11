@@ -39,28 +39,24 @@ object WorkoutSummaryInfoBindingParameterCreator {
         } ?: res.getString(R.string.empty_elapsed_time)
     }
 
-
-    fun getMainLiftingCategoryText(item: WorkoutSchedule, context: Context): String {
-
-        val workouts = item.workoutDetails
+    fun getMainLiftingCategoryText(item: WorkoutSchedule?, context: Context): String {
         val res = context.resources
-
-        return if (workouts.size >= 2) {
-            res.getString(
-                R.string.main_lifting_more,
-                workouts.component1().workoutDetail.workoutName,
-                workouts.component2().workoutDetail.workoutName
-            )
-        } else {
-            try {
-                res.getString(
-                    R.string.main_lifting_one,
-                    workouts.component1().workoutDetail.workoutName
-                )
-            } catch (e: IndexOutOfBoundsException) {
+        return item?.run {
+            val workouts = item.workoutDetails
+            if (workouts.isNotEmpty()) {
+                when(workouts.size) {
+                    1 -> res.getString(R.string.main_lifting_one,
+                        workouts.component1().workoutDetail.workoutName
+                    )
+                    else -> res.getString(R.string.main_lifting_more,
+                        workouts.component1().workoutDetail.workoutName,
+                        workouts.component2().workoutDetail.workoutName
+                    )
+                }
+            } else {
                 res.getString(R.string.main_lifting_empty)
             }
-        }
+        }  ?: res.getString(R.string.main_lifting_empty)
     }
 
     private fun LocalDate.localDateFormatter(context: Context): String = when {

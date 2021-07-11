@@ -36,7 +36,7 @@
             <kr.valor.bal.ui.detail.CollapsibleToolbar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="50dp"
+                android:minHeight="60dp"
                 android:fitsSystemWindows="false"
                 app:layoutDescription="@xml/motion_schedule_detail"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed">
@@ -54,10 +54,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnPrimary"
-                    android:textSize="24sp"
+                    android:textSize="24dp"
                     android:textStyle="bold"
-                    android:text="@{headerBindingCreator.getLocalDateFormattedString(viewModel.workoutSchedule, context)}" />
+                    android:text="@{headerBindingCreator.getLocalDateFormattedString(viewModel.workoutSchedule, context)}"
+                    tools:text="Today"/>
 
+                <TextView
+                    android:id="@+id/header_main_workout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@{headerBindingCreator.getMainLiftingCategoryText(viewModel.workoutSchedule, context)}"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="12sp"
+                    tools:text="Main | Squat, Overhead press" />
+
+                <ImageView
+                    android:id="@+id/header_elapsed_time_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_clock" />
+
+                <TextView
+                    android:id="@+id/header_elapsed_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:text="@{headerBindingCreator.getElapsedTimeFormattedString(viewModel.workoutSchedule, context)}"
+                    tools:text="1:34:13" />
 
             </kr.valor.bal.ui.detail.CollapsibleToolbar>
         </com.google.android.material.appbar.AppBarLayout>
