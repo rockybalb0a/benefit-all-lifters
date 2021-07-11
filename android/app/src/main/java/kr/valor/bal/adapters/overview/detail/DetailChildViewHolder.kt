@@ -7,7 +7,7 @@ import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.SetInfoItemGridBinding
-import kr.valor.bal.utilities.binding.DetailBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 
 class DetailChildViewHolder private constructor (private val binding: SetInfoItemGridBinding): ViewHolder(binding) {
 
@@ -16,7 +16,7 @@ class DetailChildViewHolder private constructor (private val binding: SetInfoIte
         with(binding) {
             item = data
             index = itemPosition!!
-            bindingCreator = DetailBindingParameterCreator
+            bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }
     }

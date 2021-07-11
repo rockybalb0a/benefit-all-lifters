@@ -14,7 +14,7 @@
 
         <variable
             name="bindingCreator"
-            type="kr.valor.bal.utilities.binding.ScheduleBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator" />
 
     </data>
 
@@ -71,7 +71,7 @@
                     android:textStyle="bold"
                     android:gravity="fill_vertical"
                     android:textAlignment="gravity"
-                    android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.elapsedTimeMilli, context)}"
+                    android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.currentWorkoutSchedule, context)}"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/timer_view_vertical_separator"

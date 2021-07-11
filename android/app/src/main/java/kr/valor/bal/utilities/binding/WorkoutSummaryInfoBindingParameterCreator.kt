@@ -12,15 +12,22 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.*
 
-
-object OverviewBindingParameterCreator {
+object WorkoutSummaryInfoBindingParameterCreator {
 
     private const val SIMPLIFY_TO_TODAY = 0L
 
     private const val SIMPLIFY_TO_YESTERDAY = 1L
 
-    fun getLocalDateFormattedString(localDate: LocalDate?, context: Context): String? =
-        localDate?.localDateFormatter(context)
+    fun getElapsedTimeOnTrackingString(workoutSchedule: WorkoutSchedule?, context: Context): String {
+        val res = context.resources
+        return workoutSchedule?.run {
+            workoutOverview.elapsedTimeMilli.elapsedTimeFormatter()
+        } ?: res.getString(R.string.empty_elapsed_time)
+    }
+
+    fun getLocalDateFormattedString(item: WorkoutSchedule?, context: Context): String? {
+        return item?.workoutOverview?.date?.localDateFormatter(context)
+    }
 
     fun getElapsedTimeFormattedString(item: WorkoutSchedule?, context: Context): String {
         val res = context.resources
@@ -80,5 +87,4 @@ object OverviewBindingParameterCreator {
     private fun LocalDate.getFullDateString(): String =
         dayOfWeek.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.US) +
                 ", " + format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-
 }

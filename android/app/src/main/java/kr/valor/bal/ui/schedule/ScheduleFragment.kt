@@ -2,12 +2,10 @@ package kr.valor.bal.ui.schedule
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +18,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.ScheduleFragmentBinding
-import kr.valor.bal.utilities.binding.ScheduleBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
 
@@ -80,7 +78,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun ScheduleFragmentBinding.initBinding() {
-        bindingCreator = ScheduleBindingParameterCreator
+        bindingCreator = WorkoutSummaryInfoBindingParameterCreator
         viewModel = this@ScheduleFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
     }

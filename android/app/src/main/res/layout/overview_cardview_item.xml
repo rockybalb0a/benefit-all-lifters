@@ -16,7 +16,7 @@
 
         <variable
             name="bindingCreator"
-            type="kr.valor.bal.utilities.binding.OverviewBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator" />
         
     </data>
 
@@ -67,7 +67,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@{bindingCreator.getLocalDateFormattedString(item.workoutOverview.date, context)}"
+                android:text="@{bindingCreator.getLocalDateFormattedString(item, context)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Today" />

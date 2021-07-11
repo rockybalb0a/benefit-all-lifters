@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.databinding.ScheduleDetailFragmentBinding
-import kr.valor.bal.utilities.binding.GeneralBindingParameterCreator
-import kr.valor.bal.utilities.binding.OverviewBindingParameterCreator
-import kr.valor.bal.utilities.binding.setThumbnailImage
+import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 @AndroidEntryPoint
 class ScheduleDetailFragment: Fragment() {
@@ -24,21 +23,21 @@ class ScheduleDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ScheduleDetailFragmentBinding.inflate(inflater, container, false).also {
-            binding = it.apply { initBinding() }
-        }.root
+        return ScheduleDetailFragmentBinding.inflate(inflater, container, false)
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.initBinding()
     }
 
     private fun ScheduleDetailFragmentBinding.initBinding() {
         with(this) {
-            headerBindingCreator = OverviewBindingParameterCreator
-            contentBindingCreator = GeneralBindingParameterCreator
-            lifecycleOwner = viewLifecycleOwner
             viewModel = this@ScheduleDetailFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
+            headerBindingCreator = WorkoutSummaryInfoBindingParameterCreator
+            contentBindingCreator = WorkoutDetailInfoBindingParameterCreator
         }
     }
 }

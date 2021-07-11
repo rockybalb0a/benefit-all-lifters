@@ -9,7 +9,7 @@ import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
-import kr.valor.bal.utilities.binding.GeneralBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 
 sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
@@ -42,7 +42,7 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
             if (data.workoutSets.isNotEmpty()) {
                 refresh(View.GONE)
             }
-            bindingCreator = GeneralBindingParameterCreator
+            bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }
     }

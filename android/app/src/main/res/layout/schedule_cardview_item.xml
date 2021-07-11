@@ -10,7 +10,7 @@
 
         <variable
             name="bindingCreator"
-            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator" />
         
         <variable
             name="addListener"

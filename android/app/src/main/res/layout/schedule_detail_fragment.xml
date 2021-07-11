@@ -12,11 +12,11 @@
 
         <variable
             name="contentBindingCreator"
-            type="kr.valor.bal.utilities.binding.GeneralBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator" />
 
         <variable
             name="headerBindingCreator"
-            type="kr.valor.bal.utilities.binding.OverviewBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator" />
 
     </data>
 
@@ -56,7 +56,7 @@
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:text="@{headerBindingCreator.getLocalDateFormattedString(viewModel.workoutSchedule.workoutOverview.date, context)}" />
+                    android:text="@{headerBindingCreator.getLocalDateFormattedString(viewModel.workoutSchedule, context)}" />
 
 
             </kr.valor.bal.ui.detail.CollapsibleToolbar>

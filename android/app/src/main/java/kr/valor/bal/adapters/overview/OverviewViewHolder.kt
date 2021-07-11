@@ -5,7 +5,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.databinding.OverviewCardviewItemBinding
-import kr.valor.bal.utilities.binding.OverviewBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 class OverviewViewHolder private constructor(
     private  val binding: OverviewCardviewItemBinding
@@ -15,7 +15,7 @@ class OverviewViewHolder private constructor(
         with(binding) {
             item = data as WorkoutSchedule
             clickListener = listeners.single() as OverviewItemListener
-            bindingCreator = OverviewBindingParameterCreator
+            bindingCreator = WorkoutSummaryInfoBindingParameterCreator
             executePendingBindings()
         }
     }

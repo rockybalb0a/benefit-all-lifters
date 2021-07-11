@@ -12,7 +12,7 @@ import kr.valor.bal.R
 import kr.valor.bal.databinding.ScheduleDialogBinding
 import kr.valor.bal.ui.schedule.view.BarbellState
 import kr.valor.bal.ui.schedule.view.PlatesView
-import kr.valor.bal.utilities.binding.GeneralBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 
 @AndroidEntryPoint
 class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
@@ -55,7 +55,7 @@ class ScheduleSetDialogFragment : BottomSheetDialogFragment() {
     private fun ScheduleDialogBinding.initBinding() {
         with(this) {
             lifecycleOwner = viewLifecycleOwner
-            bindingCreator = GeneralBindingParameterCreator
+            bindingCreator = WorkoutDetailInfoBindingParameterCreator
             viewModel = this@ScheduleSetDialogFragment.viewModel
             this@ScheduleSetDialogFragment.platesView = platesView
         }
