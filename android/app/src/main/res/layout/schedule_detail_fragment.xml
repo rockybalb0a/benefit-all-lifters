@@ -39,7 +39,7 @@
                 android:minHeight="50dp"
                 android:fitsSystemWindows="false"
                 app:layoutDescription="@xml/motion_schedule_detail"
-                app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed">
 
                 <ImageView
                     android:id="@+id/header_image"
