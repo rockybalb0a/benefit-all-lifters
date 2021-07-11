@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kr.valor.bal.adapters.overview.detail.DetailAdapter
+import kr.valor.bal.adapters.detail.DetailAdapter
 import kr.valor.bal.databinding.ScheduleDetailFragmentBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator

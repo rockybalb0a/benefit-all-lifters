@@ -1,4 +1,4 @@
-package kr.valor.bal.adapters.overview.detail
+package kr.valor.bal.adapters.detail
 
 import android.content.Context
 import android.graphics.Rect

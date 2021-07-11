@@ -1,4 +1,4 @@
-package kr.valor.bal.adapters.overview.detail
+package kr.valor.bal.adapters.detail
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
