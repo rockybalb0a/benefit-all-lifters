@@ -18,10 +18,10 @@ object WorkoutSummaryInfoBindingParameterCreator {
 
     private const val SIMPLIFY_TO_YESTERDAY = 1L
 
-    fun getElapsedTimeOnTrackingString(workoutSchedule: WorkoutSchedule?, context: Context): String {
+    fun getElapsedTimeOnTrackingString(elapsedTimeMilli: Long?, context: Context): String {
         val res = context.resources
-        return workoutSchedule?.run {
-            workoutOverview.elapsedTimeMilli.elapsedTimeFormatter()
+        return elapsedTimeMilli?.run {
+            elapsedTimeFormatter()
         } ?: res.getString(R.string.empty_elapsed_time)
     }
 

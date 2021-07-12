@@ -32,7 +32,7 @@
             android:id="@+id/action_schedule_dest_to_schedule_set_dest"
             app:destination="@id/schedule_set_dest" />
         <action
-            android:id="@+id/action_schedule_dest_to_schedule_detail_dest"
+        android:id="@+id/action_schedule_dest_to_schedule_detail_dest"
             app:destination="@id/schedule_detail_dest" />
     </fragment>
 

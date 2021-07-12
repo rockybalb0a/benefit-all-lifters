@@ -31,7 +31,7 @@ class ScheduleFragment : Fragment() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
-    private lateinit var binding: ScheduleFragmentBinding
+    private lateinit var scheduleBinding: ScheduleFragmentBinding
 
     private lateinit var scheduleAdapter: ScheduleAdapter
 
@@ -42,13 +42,13 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return ScheduleFragmentBinding.inflate(inflater, container, false)
-            .also { binding = it }.root
+            .also { scheduleBinding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.initBinding()
-        recyclerView = binding.scheduleRecyclerView.also { it.initRecyclerview() }
+        scheduleBinding.initBinding()
+        recyclerView = scheduleBinding.scheduleRecyclerView.also { it.initRecyclerview() }
 
         viewModel.eventsFlow
             .onEach {
@@ -92,9 +92,9 @@ class ScheduleFragment : Fragment() {
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    binding.addWorkoutButton.hide()
+                    scheduleBinding.addWorkoutButton.hide()
                 } else {
-                    binding.addWorkoutButton.show()
+                    scheduleBinding.addWorkoutButton.show()
                 }
             }
         })

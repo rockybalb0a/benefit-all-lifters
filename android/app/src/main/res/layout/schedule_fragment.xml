@@ -71,7 +71,7 @@
                     android:textStyle="bold"
                     android:gravity="fill_vertical"
                     android:textAlignment="gravity"
-                    android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.currentWorkoutSchedule, context)}"
+                    android:text="@{bindingCreator.getElapsedTimeOnTrackingString(viewModel.elapsedTimeMilli, context)}"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/timer_view_vertical_separator"
