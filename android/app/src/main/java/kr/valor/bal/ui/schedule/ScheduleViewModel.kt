@@ -21,6 +21,7 @@ class ScheduleViewModel @Inject constructor(
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
         object ShowTimerStopActionChoiceDialog: Event()
+        object NavigateToScheduleDoneDest: Event()
         data class NavigateToScheduleDetailDest(val overviewId: Long): Event()
     }
 
@@ -84,7 +85,8 @@ class ScheduleViewModel @Inject constructor(
         onStopTimeTracking()
         // TODO : Navigate to ScheduleRecordFragment(temporary name)
         viewModelScope.launch {
-            eventChannel.send(Event.NavigateToScheduleDetailDest(_currentWorkoutOverview.value!!.overviewId))
+//            eventChannel.send(Event.NavigateToScheduleDetailDest(_currentWorkoutOverview.value!!.overviewId))
+            eventChannel.send(Event.NavigateToScheduleDoneDest)
         }
     }
 

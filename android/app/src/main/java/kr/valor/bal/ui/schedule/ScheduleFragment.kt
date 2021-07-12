@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
+import kr.valor.bal.MainApplication
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
@@ -31,7 +33,7 @@ class ScheduleFragment : Fragment() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
-    private lateinit var scheduleBinding: ScheduleFragmentBinding
+    private lateinit var binding: ScheduleFragmentBinding
 
     private lateinit var scheduleAdapter: ScheduleAdapter
 
@@ -41,14 +43,20 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val workoutRecordingStatus =
+            MainApplication.prefs.getWorkoutRecordingState()
+
+        Toast.makeText(context, workoutRecordingStatus.toString(), Toast.LENGTH_SHORT).show()
+
         return ScheduleFragmentBinding.inflate(inflater, container, false)
-            .also { scheduleBinding = it }.root
+            .also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scheduleBinding.initBinding()
-        recyclerView = scheduleBinding.scheduleRecyclerView.also { it.initRecyclerview() }
+        binding.initBinding()
+        recyclerView = binding.scheduleRecyclerView.also { it.initRecyclerview() }
 
         viewModel.eventsFlow
             .onEach {
@@ -58,6 +66,12 @@ class ScheduleFragment : Fragment() {
                     }
                     ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
                         showTimerResetActionChoiceDialog()
+                    }
+                    ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
+                        MainApplication.prefs.setWorkoutRecordingState(true)
+                        findNavController().navigate(
+                            ScheduleFragmentDirections.actionScheduleDestSelf()
+                        )
                     }
                     is ScheduleViewModel.Event.NavigateToScheduleDetailDest -> {
                         findNavController().navigate(
@@ -92,9 +106,9 @@ class ScheduleFragment : Fragment() {
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    scheduleBinding.addWorkoutButton.hide()
+                    binding.addWorkoutButton.hide()
                 } else {
-                    scheduleBinding.addWorkoutButton.show()
+                    binding.addWorkoutButton.show()
                 }
             }
         })

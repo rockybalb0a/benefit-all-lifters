@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Benefit All Lifters</string>
 
+    <string name="shared_preference_storage_name">SHARED_PREF</string>
+    <string name="complete_state_key">STATUS</string>
 
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
