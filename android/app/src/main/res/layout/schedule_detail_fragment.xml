@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:minHeight="60dp"
                 android:fitsSystemWindows="false"
-                app:layoutDescription="@xml/motion_schedule_detail"
+                app:layoutDescription="@xml/detail_header_scene"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed">
 
                 <ImageButton

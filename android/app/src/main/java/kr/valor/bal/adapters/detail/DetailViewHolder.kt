@@ -38,7 +38,9 @@ class DetailViewHolder private constructor(private val binding: DetailCardviewIt
             layoutManager = childLayoutManager
             adapter = childAdapter
             setRecycledViewPool(viewPool)
-            addItemDecoration(ItemOffsetDecoration(context, R.dimen.padding_default))
+            if (itemDecorationCount == 0) {
+                addItemDecoration(ItemOffsetDecoration(context, R.dimen.padding_default))
+            }
         }
         childAdapter.submitList(item)
 
