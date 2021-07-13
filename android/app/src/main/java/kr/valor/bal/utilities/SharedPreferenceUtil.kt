@@ -13,19 +13,20 @@ class SharedPreferenceUtil(private val context: Context) {
             Context.MODE_PRIVATE
         )
 
-    private var key: String = context.resources.getString(R.string.complete_state_key) +
-            LocalDate.now().toString()
+    private var keyPrefix: String = context.resources.getString(R.string.complete_state_key)
 
     init {
-        // TODO : Clear Before Status
+
     }
 
     fun getWorkoutRecordingState(): Boolean {
-        return prefs.getBoolean(key, false)
+        val keySuffix = LocalDate.now().toString()
+        return prefs.getBoolean(keyPrefix + keySuffix, false)
     }
 
     fun setWorkoutRecordingState(isCompleted: Boolean) {
-        prefs.edit().putBoolean(key, isCompleted).apply()
+        val keySuffix = LocalDate.now().toString()
+        prefs.edit().putBoolean(keyPrefix + keySuffix, isCompleted).apply()
     }
 }
 

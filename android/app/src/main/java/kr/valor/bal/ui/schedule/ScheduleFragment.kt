@@ -2,12 +2,14 @@ package kr.valor.bal.ui.schedule
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +20,9 @@ import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.MainApplication
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
+import kr.valor.bal.adapters.detail.DetailAdapter
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
+import kr.valor.bal.databinding.ScheduleDoneFragmentBinding
 import kr.valor.bal.databinding.ScheduleFragmentBinding
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
@@ -33,9 +37,11 @@ class ScheduleFragment : Fragment() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
-    private lateinit var binding: ScheduleFragmentBinding
+    private lateinit var binding: ViewDataBinding
 
     private lateinit var scheduleAdapter: ScheduleAdapter
+
+    private lateinit var detailAdapter: DetailAdapter
 
     private lateinit var recyclerView: RecyclerView
 
@@ -43,21 +49,59 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        val workoutRecordingStatus =
-            MainApplication.prefs.getWorkoutRecordingState()
-
-        Toast.makeText(context, workoutRecordingStatus.toString(), Toast.LENGTH_SHORT).show()
-
-        return ScheduleFragmentBinding.inflate(inflater, container, false)
-            .also { binding = it }.root
+        return when(MainApplication.prefs.getWorkoutRecordingState()) {
+            false -> ScheduleFragmentBinding.inflate(inflater, container, false)
+            true -> ScheduleDoneFragmentBinding.inflate(inflater, container, false)
+        }.also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.initBinding()
-        recyclerView = binding.scheduleRecyclerView.also { it.initRecyclerview() }
 
+        when(binding) {
+            is ScheduleFragmentBinding -> {
+                (binding as ScheduleFragmentBinding).initBinding()
+                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
+                    val items =
+                        it.workoutDetails.map { item ->
+                            WorkoutDetailItem.Item(item)
+                        } + listOf(WorkoutDetailItem.Footer)
+                    scheduleAdapter.submitList(items)
+                }
+            }
+
+            is ScheduleDoneFragmentBinding -> {
+                (binding as ScheduleDoneFragmentBinding).initBinding()
+                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
+                    detailAdapter.submitList(it.workoutDetails)
+                }
+            }
+        }
+
+        observeEventFlow()
+
+    }
+
+
+    private fun ScheduleFragmentBinding.initBinding() {
+        bindingCreator = WorkoutSummaryInfoBindingParameterCreator
+        viewModel = this@ScheduleFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
+
+        recyclerView = scheduleRecyclerView.also { it.initRecyclerview(this) }
+    }
+
+    private fun ScheduleDoneFragmentBinding.initBinding() {
+        viewModel = this@ScheduleFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
+
+        recyclerView = detailRecyclerView.also {
+            detailAdapter = DetailAdapter()
+            it.adapter = detailAdapter
+        }
+    }
+
+    private fun observeEventFlow() {
         viewModel.eventsFlow
             .onEach {
                 when (it) {
@@ -68,36 +112,25 @@ class ScheduleFragment : Fragment() {
                         showTimerResetActionChoiceDialog()
                     }
                     ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
-                        MainApplication.prefs.setWorkoutRecordingState(true)
+                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = true)
                         findNavController().navigate(
                             ScheduleFragmentDirections.actionScheduleDestSelf()
                         )
                     }
-                    is ScheduleViewModel.Event.NavigateToScheduleDetailDest -> {
+                    ScheduleViewModel.Event.NavigateToScheduleEditDest -> {
+                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = false)
                         findNavController().navigate(
-                            ScheduleFragmentDirections.actionScheduleDestToScheduleDetailDest(it.overviewId)
+                            ScheduleFragmentDirections.actionScheduleDestSelf()
                         )
                     }
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)
-
-        viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
-            val items =
-                it.workoutDetails.map { item ->
-                    WorkoutDetailItem.Item(item)
-                } + listOf(WorkoutDetailItem.Footer)
-            scheduleAdapter.submitList(items)
-        }
     }
 
-    private fun ScheduleFragmentBinding.initBinding() {
-        bindingCreator = WorkoutSummaryInfoBindingParameterCreator
-        viewModel = this@ScheduleFragment.viewModel
-        lifecycleOwner = viewLifecycleOwner
-    }
 
-    private fun RecyclerView.initRecyclerview() {
+    private fun RecyclerView.initRecyclerview(binding: ScheduleFragmentBinding) {
+
         scheduleAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
             .also { adapter = it }
 

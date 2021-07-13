@@ -22,7 +22,7 @@ class ScheduleViewModel @Inject constructor(
         object ShowAddNewWorkoutDialog: Event()
         object ShowTimerStopActionChoiceDialog: Event()
         object NavigateToScheduleDoneDest: Event()
-        data class NavigateToScheduleDetailDest(val overviewId: Long): Event()
+        object NavigateToScheduleEditDest: Event()
     }
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
@@ -31,6 +31,8 @@ class ScheduleViewModel @Inject constructor(
     private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
         syncElapsedTimeWithDatabase(it)
     }
+    val currentWorkoutOverview: LiveData<WorkoutOverview>
+        get() = _currentWorkoutOverview
 
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
         workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
@@ -87,6 +89,16 @@ class ScheduleViewModel @Inject constructor(
         viewModelScope.launch {
 //            eventChannel.send(Event.NavigateToScheduleDetailDest(_currentWorkoutOverview.value!!.overviewId))
             eventChannel.send(Event.NavigateToScheduleDoneDest)
+        }
+    }
+
+    fun onEditWorkoutButtonClicked() {
+        viewModelScope.launch {
+            _currentWorkoutOverview.value?.let {
+                it.trackingStatus = TrackingStatus.PAUSE
+                workoutRepo.updateWorkoutOverview(it)
+            }
+            eventChannel.send(Event.NavigateToScheduleEditDest)
         }
     }
 
@@ -171,8 +183,8 @@ class ScheduleViewModel @Inject constructor(
         _currentWorkoutOverview.value?.let {
             it.trackingStatus = TrackingStatus.DONE
             it.endTimeMilli  = it.startTimeMilli + it.elapsedTimeMilli
-            it.elapsedTimeMilli = 0L
-            it.trackingTimeMilli = 0L
+//            it.elapsedTimeMilli = 0L
+//            it.trackingTimeMilli = 0L
             updateWorkoutOverview(it)
         }
     }

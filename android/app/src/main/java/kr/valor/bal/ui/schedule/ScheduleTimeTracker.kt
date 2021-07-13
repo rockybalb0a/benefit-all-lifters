@@ -3,7 +3,6 @@ package kr.valor.bal.ui.schedule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -11,14 +10,14 @@ import kotlinx.coroutines.launch
 
 object ScheduleTimeTracker {
 
-    private const val TIME_UNIT = 1000L
+    private const val TIMER_UNIT = 1000L
 
-    private const val ONE_SECOND = 1000L
+    private const val DELAY_ONE_SECOND = 1000L
 
     private val ticker = flow {
         while(true) {
-            emit(TIME_UNIT)
-            delay(ONE_SECOND)
+            emit(TIMER_UNIT)
+            delay(DELAY_ONE_SECOND)
         }
     }
 
