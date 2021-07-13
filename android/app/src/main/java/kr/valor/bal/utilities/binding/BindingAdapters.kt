@@ -37,7 +37,7 @@ fun ImageView.setHeaderImage(item: WorkoutDetail?) {
     item?.let {
         setImageResource(when (it.workoutName) {
             workoutList[0] -> R.drawable.background_image_squat
-            workoutList[1] -> R.drawable.background_image_front_squat_2
+            workoutList[1] -> R.drawable.background_image_front_squat
             workoutList[2] -> R.drawable.background_image_dead_lift
             workoutList[3] -> R.drawable.background_image_press
             workoutList[4] -> R.drawable.background_image_bench_press

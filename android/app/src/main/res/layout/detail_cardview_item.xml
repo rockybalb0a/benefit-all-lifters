@@ -17,7 +17,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_margin="@dimen/margin_small"
         android:backgroundTint="@color/secondaryColor"
         app:cardCornerRadius="@dimen/cardview_corner_radius_default"
         app:cardElevation="@dimen/cardview_elevation_default">
@@ -37,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/background_image_front_squat_2"/>
+                tools:src="@drawable/background_image_front_squat" />
 
             <View
                 android:id="@+id/image_shadow"
