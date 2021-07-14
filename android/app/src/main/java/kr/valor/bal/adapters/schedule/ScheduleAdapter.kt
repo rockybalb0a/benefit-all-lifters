@@ -3,11 +3,14 @@ package kr.valor.bal.adapters.schedule
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.adapters.CompleteWorkoutScheduleListener
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.WorkoutDetailItem
 
-class ScheduleAdapter(vararg val listeners: RecyclerviewItemClickListener<*>): ListAdapter<WorkoutDetailItem, ScheduleViewHolder>(DIFF_CALLBACK) {
+class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListener<*>): ListAdapter<WorkoutDetailItem, ScheduleViewHolder>(DIFF_CALLBACK) {
+
+    private val viewPool = RecyclerView.RecycledViewPool()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         return when(viewType) {
@@ -28,7 +31,7 @@ class ScheduleAdapter(vararg val listeners: RecyclerviewItemClickListener<*>): L
         when(holder) {
             is ItemViewHolder -> {
                 val item = getItem(position) as WorkoutDetailItem.Item
-                holder.bind(item.workoutDetailAndSets, *itemViewListener.toTypedArray())
+                holder.bind(item.workoutDetailAndSets, *itemViewListener.toTypedArray(), viewPool = viewPool)
             }
             is FooterViewHolder -> {
                 holder.bind(null, listeners = footerViewListener.toTypedArray())

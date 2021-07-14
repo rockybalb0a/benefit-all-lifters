@@ -1,20 +1,14 @@
 package kr.valor.bal.utilities.binding
 
-import android.view.LayoutInflater
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
-import kr.valor.bal.adapters.RecyclerviewItemClickListener
-import kr.valor.bal.adapters.UpdateWorkoutSetListener
-import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.databinding.SetInfoItemBinding
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
@@ -44,29 +38,6 @@ fun ImageView.setHeaderImage(item: WorkoutDetail?) {
             workoutList[5] -> R.drawable.background_image_barbell_row
             else -> R.drawable.background_image_default
         })
-    }
-}
-
-@BindingAdapter("workoutSets", "updateListener")
-fun LinearLayout.inflateWorkoutSetsView(item: WorkoutDetailAndSets, itemClickListener: RecyclerviewItemClickListener<*>) {
-
-    if (item.workoutSets.isNotEmpty()) {
-        val layoutInflater = LayoutInflater.from(context)
-
-        item.workoutSets.forEachIndexed { index, workoutSet ->
-
-            val setsView = SetInfoItemBinding.inflate(layoutInflater)
-            with(setsView) {
-                set = workoutSet
-                workoutSetNumber.text = resources.getString(R.string.sets_text_simplified_template, index + 1)
-                workoutSetReps.text = "${workoutSet.reps}"
-                workoutSetRepsUnit.text = if (workoutSet.reps > 1) resources.getString(R.string.reps_text) else resources.getString(R.string.rep_text)
-                workoutSetWeights.text = "${workoutSet.weights.toInt()}"
-                workoutSetWeightsUnit.text = resources.getString(R.string.default_weights_unit)
-                clickListener = itemClickListener as UpdateWorkoutSetListener
-                addView(this.root)
-            }
-        }
     }
 }
 

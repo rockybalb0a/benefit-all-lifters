@@ -4,13 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.content.Context" />
+
         <variable
-            name="set"
+            name="item"
             type="kr.valor.bal.data.entities.WorkoutSet" />
+
+        <variable
+            name="index"
+            type="int" />
 
         <variable
             name="clickListener"
             type="kr.valor.bal.adapters.UpdateWorkoutSetListener" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +29,7 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> clickListener.onClick(set)}"
+        android:onClick="@{() -> clickListener.onClick(item)}"
         android:padding="@dimen/padding_medium">
 
         <TextView
@@ -29,6 +39,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_margin="@dimen/margin_small"
+            android:text="@{bindingCreator.getCurrentSetsNumberSimplifiedString(index, context)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/set_number_guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +55,7 @@
             android:textAlignment="viewEnd"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:text="@{bindingCreator.getWeightsWithoutWeightUnit(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/workoutSet_weights_unit"
             app:layout_constraintStart_toStartOf="@id/set_number_guideline"
@@ -58,6 +70,7 @@
             android:textStyle="bold"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:text="@{bindingCreator.getWeightsUnit(context)}"
             app:layout_constraintStart_toEndOf="@id/workoutSet_weights"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,6 +87,7 @@
             android:textStyle="bold"
             android:textAlignment="viewEnd"
             android:textSize="18sp"
+            android:text="@{bindingCreator.getRepsWithoutUnitString(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/workoutSet_reps_unit"
             app:layout_constraintStart_toStartOf="@id/set_weights_reps_separator"
@@ -89,6 +103,7 @@
             android:textStyle="bold"
             android:textAlignment="viewStart"
             android:textSize="18sp"
+            android:text="@{bindingCreator.getRepsUnit(item, context)}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/workoutSet_reps"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
@@ -14,34 +15,42 @@ import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
+
     override fun <T> bind(
         data: T,
         vararg listeners: RecyclerviewItemClickListener<*>,
         itemPosition: Int?
     ) {
-        data as WorkoutDetailAndSets
-        bindingData(data, listeners)
+        binding.item = data as WorkoutDetailAndSets
     }
 
-    private fun bindingData(
+    fun bind(
         data: WorkoutDetailAndSets,
-        listeners: Array<out RecyclerviewItemClickListener<*>>
+        listeners: Array<out RecyclerviewItemClickListener<*>>,
+        viewPool: RecyclerView.RecycledViewPool
     ) {
+        bind(data, *listeners)
         with(binding) {
-            refresh(View.VISIBLE)
-            item = data
+            if (data.workoutSets.isNotEmpty()) {
+                refresh(View.GONE)
+            } else {
+                refresh(View.VISIBLE)
+            }
             listeners.forEach { clickListener ->
                 when (clickListener) {
                     is AddWorkoutSetListener -> addListener = clickListener
                     is RemoveWorkoutSetListener -> removeListener = clickListener
                     is DropWorkoutListener -> dropListener = clickListener
-                    is UpdateWorkoutSetListener -> updateListener = clickListener
                 }
             }
-            setsDetail.removeAllViews()
-            if (data.workoutSets.isNotEmpty()) {
-                refresh(View.GONE)
+
+            val childAdapter = ScheduleChildAdapter(*listeners)
+            setsDetail.apply {
+                adapter = childAdapter
+                setRecycledViewPool(viewPool)
             }
+            childAdapter.submitList(data.workoutSets)
+
             bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }

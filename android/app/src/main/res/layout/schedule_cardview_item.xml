@@ -23,10 +23,6 @@
         <variable
             name="dropListener"
             type="kr.valor.bal.adapters.DropWorkoutListener" />
-
-        <variable
-            name="updateListener"
-            type="kr.valor.bal.adapters.UpdateWorkoutSetListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -67,18 +63,17 @@
                 android:onClick="@{() -> dropListener.onClick(item)}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-
-
-            <LinearLayout
+            
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sets_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/workout_title"
-                app:workoutSets="@{item}"
-                app:updateListener="@{updateListener}"/>
+                tools:visibility="gone" />
 
             <Button
                 android:id="@+id/empty_add_set_button"
