@@ -10,6 +10,7 @@
 
     <color name="secondaryLightColor">#ffffff</color>
     <color name="secondaryColor">#ebf1f5</color>
+    <color name="secondaryColorShadow">#CCEBF1F5</color>
     <color name="secondaryDarkColor">#b9bec2</color>
 
     <color name="primaryTextColor">#ffffff</color>

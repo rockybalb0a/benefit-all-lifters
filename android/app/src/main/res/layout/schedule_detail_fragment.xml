@@ -110,8 +110,21 @@
             android:id="@+id/contents_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/padding_medium"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_anchor="@id/contents_recycler_view"
+            app:layout_anchorGravity="bottom|end"
+            app:backgroundTint="@color/secondaryColor"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+            app:tint="@color/primaryColorAlt" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
