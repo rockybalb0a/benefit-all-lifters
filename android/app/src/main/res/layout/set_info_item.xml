@@ -30,7 +30,8 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> clickListener.onClick(item)}"
-        android:padding="@dimen/padding_medium">
+        android:paddingVertical="@dimen/padding_medium"
+        android:paddingHorizontal="@dimen/padding_large">
 
         <TextView
             android:id="@+id/workoutSet_number"
