@@ -12,7 +12,7 @@ class MainApplication : Application() {
     }
 
     override fun onCreate() {
-        prefs = SharedPreferenceUtil(applicationContext)
+        prefs = SharedPreferenceUtil(this)
         super.onCreate()
     }
 }

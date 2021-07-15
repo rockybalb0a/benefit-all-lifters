@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import kr.valor.bal.R
 import java.time.LocalDate
 
-class SharedPreferenceUtil(private val context: Context) {
+class SharedPreferenceUtil(context: Context) {
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences(
@@ -14,10 +14,6 @@ class SharedPreferenceUtil(private val context: Context) {
         )
 
     private var keyPrefix: String = context.resources.getString(R.string.complete_state_key)
-
-    init {
-
-    }
 
     fun getWorkoutRecordingState(): Boolean {
         val keySuffix = LocalDate.now().toString()

@@ -2,8 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.BenefitAllLifters" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-<!--        <item name="colorPrimary">@color/primaryLightColor</item>-->
-        <item name="colorPrimary">@color/primaryColorDarkTheme</item>
+        <item name="colorPrimary">@color/primaryColorAlt</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
 
@@ -13,26 +12,17 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
+        <item name="android:statusBarColor">@color/primaryColorAlt</item>
         <!-- Customize your theme here. -->
+        <item name="bottomSheetDialogTheme">@style/Theme.BenefitAllLifters.BottomSheetDialogTheme</item>
     </style>
 
-    <style name="Theme.BenefitAllLifters.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:colorBackground">#ff303030</item>
-
-    </style>
-
-    <style name="Theme.BenefitAllLifters.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
-
-    <style name="Theme.BenefitAllLifters.ImageButton">
-        <item name="android:backgroundTint">?attr/colorOnPrimary</item>
-        <item name="android:alpha">0.6</item>
-    </style>
+    <style name="Theme.BenefitAllLifters.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.BenefitAllLifters.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Widget.App.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:backgroundTint">@color/primaryColorAlt</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:alpha">0.6</item>
         <item name="iconTint">?attr/colorOnPrimary</item>
         <item name="rippleColor">?attr/colorSecondaryVariant</item>
         <item name="android:insetTop">0dp</item>
@@ -42,10 +32,59 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
+        <item name="rippleColor">?attr/colorSecondaryVariant</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="Widget.App.PlatesButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--        <item name="android:textColor">?attr/colorPrimaryVariant</item>-->
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="icon">@drawable/ic_plates_default</item>
+        <item name="iconGravity">textTop</item>
+    </style>
+
+    <style name="Widget.App.ToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:backgroundTint">@drawable/toggle_btn_bg_color_selector</item>
+        <item name="strokeColor">@drawable/toggle_btn_strk_color_selector</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">0dp</item>
+    </style>
+
+    <!-- TODO : https://stackoverflow.com/questions/43852562/round-corner-for-bottomsheetdialogfragment/50645769 -->
+    <style name="Theme.BenefitAllLifters.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.BenefitAllLifters.ModalStyle</item>
+    </style>
+
+    <style name="Theme.BenefitAllLifters.ModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_shape</item>
+    </style>
+
     <style name="Widget.BenefitAllLiters.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">@drawable/bottom_nav_item_color_selector</item>
         <item name="itemTextColor">@drawable/bottom_nav_item_color_selector</item>
     </style>
-
 
 </resources>
