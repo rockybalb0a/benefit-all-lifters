@@ -39,6 +39,16 @@ object WorkoutSummaryInfoBindingParameterCreator {
         } ?: res.getString(R.string.empty_elapsed_time)
     }
 
+    fun getElapsedTimeFormattedString(item: WorkoutOverview?, context: Context): String {
+        val res = context.resources
+        return item?.run {
+            when(trackingStatus) {
+                TrackingStatus.DONE -> elapsedTimeFormatter()
+                else -> res.getString(R.string.empty_elapsed_time)
+            }
+        } ?: res.getString(R.string.empty_elapsed_time)
+    }
+
     fun getMainLiftingCategoryText(item: WorkoutSchedule?, context: Context): String {
         val res = context.resources
         return item?.run {

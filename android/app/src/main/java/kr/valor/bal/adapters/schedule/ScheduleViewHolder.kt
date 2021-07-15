@@ -84,7 +84,7 @@ class FooterViewHolder private constructor(private val binding: ScheduleFooterIt
 
     override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
         with(binding) {
-            clickListener = listeners.single() as CompleteWorkoutScheduleListener
+            clickListener = listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
             executePendingBindings()
         }
     }

@@ -8,9 +8,10 @@
     <string name="schedule_title">Today\'s plan</string>
 
 
-    <string name="menu_item_home">Home</string>
-    <string name="menu_item_overview">Overview</string>
-    <string name="menu_item_schedule">Today</string>
+    <string name="bottom_nav_item_title_home">Home</string>
+    <string name="bottom_nav_item_title_overview">Overview</string>
+    <string name="bottom_nav_item_title_schedule">Today</string>
+    <string name="appbar_menu_item_title_edit">Edit</string>
 
     <string name="today_workout_overview_title">Today</string>
     <string name="yesterday_workout_overview_title">Yesterday</string>
@@ -18,6 +19,7 @@
     <string name="new_workout_text">Пойдем !!</string>
     <string name="rest_today_text">I will rest today..</string>
     <string name="finish_today_text">Done for today</string>
+    <string name="edit_today_text">Change my schedule</string>
 
     <string name="add_new_workout_popup_title">Choose your lift</string>
     <string name="light_mode">Light Mode</string>

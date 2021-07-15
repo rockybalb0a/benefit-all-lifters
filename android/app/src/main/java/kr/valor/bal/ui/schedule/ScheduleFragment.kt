@@ -2,12 +2,8 @@ package kr.valor.bal.ui.schedule
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
@@ -72,14 +68,30 @@ class ScheduleFragment : Fragment() {
 
             is ScheduleDoneFragmentBinding -> {
                 (binding as ScheduleDoneFragmentBinding).initBinding()
-                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
-                    detailAdapter.submitList(it.workoutDetails)
+                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
+                    val items =
+                        listOf(WorkoutDetailItem.Header(schedule.workoutOverview)) +
+                            schedule.workoutDetails.map { item ->
+                                WorkoutDetailItem.Item(item)
+                            } + listOf(WorkoutDetailItem.Footer)
+                    detailAdapter.submitList(items)
                 }
             }
         }
 
-        observeEventFlow()
+        setupFlowEventObserver()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if(binding is ScheduleDoneFragmentBinding) {
+            inflater.inflate(R.menu.menu_plan, menu)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.onEditWorkoutButtonClicked()
+        return true
     }
 
 
@@ -92,16 +104,19 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun ScheduleDoneFragmentBinding.initBinding() {
+        setHasOptionsMenu(true)
         viewModel = this@ScheduleFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
-
         recyclerView = detailRecyclerView.also {
-            detailAdapter = DetailAdapter()
+            detailAdapter = DetailAdapter(EditWorkoutScheduleListener {
+                this@ScheduleFragment.viewModel.onEditWorkoutButtonClicked()
+            })
             it.adapter = detailAdapter
         }
     }
 
-    private fun observeEventFlow() {
+    private fun setupFlowEventObserver() {
+
         viewModel.eventsFlow
             .onEach {
                 when (it) {

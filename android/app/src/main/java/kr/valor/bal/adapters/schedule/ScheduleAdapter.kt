@@ -43,6 +43,7 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
         return when(getItem(position)) {
             is WorkoutDetailItem.Footer -> ITEM_VIEW_TYPE_FOOTER
             is WorkoutDetailItem.Item -> ITEM_VIEW_TYPE_ITEM
+            is WorkoutDetailItem.Header -> ITEM_VIEW_TYPE_HEADER
         }
     }
 

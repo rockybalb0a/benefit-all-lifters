@@ -2,6 +2,7 @@ package kr.valor.bal.adapters
 
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.WorkoutSchedule
+import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 
 interface RecyclerviewItemClickListener<T> {
@@ -55,10 +56,21 @@ class CompleteWorkoutScheduleListener (val clickListener: () -> Unit):
 
 }
 
+class EditWorkoutScheduleListener (val clickListener: () -> Unit):
+    RecyclerviewItemClickListener<Unit>{
+
+    override fun onClick(item: Unit)  = clickListener()
+
+}
+
 
 sealed class WorkoutDetailItem {
 
     abstract val id: Long
+
+    data class Header(val workoutOverview: WorkoutOverview): WorkoutDetailItem() {
+        override val id: Long = Long.MAX_VALUE
+    }
 
     data class Item(val workoutDetailAndSets: WorkoutDetailAndSets): WorkoutDetailItem() {
         override val id = workoutDetailAndSets.workoutDetail.detailId

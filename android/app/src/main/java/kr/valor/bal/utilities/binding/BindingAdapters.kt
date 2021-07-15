@@ -9,11 +9,27 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
+import kr.valor.bal.data.entities.WorkoutOverview
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
     item?.let {
         setImageResource(when (it.workoutOverview.overviewId.toInt() % 7) {
+            0 -> R.drawable.thumbnail_background_1
+            1 -> R.drawable.thumbnail_background_2
+            2 -> R.drawable.thumbnail_background_3
+            3 -> R.drawable.thumbnail_background_4
+            4 -> R.drawable.thumbnail_background_5
+            5 -> R.drawable.thumbnail_background_6
+            else -> R.drawable.thumbnail_background_7
+        })
+    } ?: setImageResource(R.drawable.thumbnail_background_7)
+}
+
+@BindingAdapter("timerImage")
+fun ImageView.setTimerBackgroundImage(item: WorkoutOverview?) {
+    item?.let {
+        setImageResource(when (it.overviewId.toInt() % 7) {
             0 -> R.drawable.thumbnail_background_1
             1 -> R.drawable.thumbnail_background_2
             2 -> R.drawable.thumbnail_background_3

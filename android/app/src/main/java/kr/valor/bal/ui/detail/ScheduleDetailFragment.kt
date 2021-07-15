@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
+import kr.valor.bal.adapters.WorkoutDetailItem
 import kr.valor.bal.adapters.detail.DetailAdapter
+import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.databinding.ScheduleDetailFragmentBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
@@ -41,12 +43,15 @@ class ScheduleDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.initBinding()
         contentRecyclerView = binding.contentsRecyclerView.also {
-            adapter = DetailAdapter()
+            adapter = DetailAdapter(null)
             it.adapter = adapter
         }
 
         viewModel.workoutSchedule.observe(viewLifecycleOwner) {
-            adapter.submitList(it.workoutDetails)
+            val items = it.workoutDetails.map { item ->
+                WorkoutDetailItem.Item(item)
+            }
+            adapter.submitList(items)
         }
 
         viewModel.eventFlow

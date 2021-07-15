@@ -1,18 +1,26 @@
 package kr.valor.bal.adapters.detail
 
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
+import kr.valor.bal.adapters.EditWorkoutScheduleListener
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.WorkoutDetailAndSets
+import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.DetailCardviewItemBinding
+import kr.valor.bal.databinding.ScheduleDoneFooterItemBinding
+import kr.valor.bal.databinding.ScheduleDoneHeaderItemBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
-class DetailViewHolder private constructor(private val binding: DetailCardviewItemBinding): ViewHolder(binding) {
+sealed class DetailViewHolder(binding: ViewDataBinding): ViewHolder(binding)
+
+class ItemViewHolder private constructor(private val binding: DetailCardviewItemBinding): DetailViewHolder(binding) {
 
     fun bind(workoutDetail: WorkoutDetailAndSets, viewPool: RecyclerView.RecycledViewPool) {
         bind(data = workoutDetail)
@@ -50,7 +58,46 @@ class DetailViewHolder private constructor(private val binding: DetailCardviewIt
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
                 inflate<DetailCardviewItemBinding>(parent, R.layout.detail_cardview_item)
-            return DetailViewHolder(binding)
+            return ItemViewHolder(binding)
         }
     }
+}
+
+class HeaderViewHolder private constructor(private val binding: ScheduleDoneHeaderItemBinding): DetailViewHolder(binding) {
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        with(binding) {
+            bindingCreator = WorkoutSummaryInfoBindingParameterCreator
+            item = data as WorkoutOverview
+            executePendingBindings()
+        }
+    }
+
+    companion object: ViewHolderFactory() {
+        override fun create(parent: ViewGroup): ViewHolder {
+            val binding =
+                inflate<ScheduleDoneHeaderItemBinding>(parent, R.layout.schedule_done_header_item)
+            return HeaderViewHolder(binding)
+        }
+    }
+}
+
+
+class FooterViewHolder private constructor(private val binding: ScheduleDoneFooterItemBinding): DetailViewHolder(binding) {
+    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+        with(binding) {
+            if (listeners.isNotEmpty()) {
+                clickListener = listeners.single { it is EditWorkoutScheduleListener } as EditWorkoutScheduleListener
+            }
+            executePendingBindings()
+        }
+    }
+
+    companion object: ViewHolderFactory() {
+        override fun create(parent: ViewGroup): ViewHolder {
+            val binding =
+                inflate<ScheduleDoneFooterItemBinding>(parent, R.layout.schedule_done_footer_item)
+            return FooterViewHolder(binding)
+        }
+    }
+
 }

@@ -5,16 +5,16 @@
     <item
         android:id="@+id/home_dest"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/menu_item_home" />
+        android:title="@string/bottom_nav_item_title_home" />
 
     <item
         android:id="@+id/schedule_dest"
         android:icon="@drawable/ic_baseline_today_24"
-        android:title="@string/menu_item_schedule" />
+        android:title="@string/bottom_nav_item_title_schedule" />
 
     <item
         android:id="@+id/overview_dest"
         android:icon="@drawable/ic_baseline_calendar_today_24"
-        android:title="@string/menu_item_overview" />
+        android:title="@string/bottom_nav_item_title_overview" />
 
 </menu>
