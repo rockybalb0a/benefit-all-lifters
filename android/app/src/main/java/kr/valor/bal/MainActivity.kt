@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
+import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -31,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        setContentView(binding.root)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -78,12 +81,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavMenu(navController: NavController) {
         bottomNavigationView = binding.bottomNavView
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.schedule_detail_dest) {
-                bottomNavigationView.visibility = View.GONE
-                supportActionBar!!.hide()
-            } else {
-                bottomNavigationView.visibility = View.VISIBLE
-                supportActionBar!!.show()
+            when (destination.id) {
+                R.id.schedule_detail_dest -> {
+                    bottomNavigationView.visibility = View.GONE
+                    supportActionBar!!.hide()
+                }
+
+                else -> {
+                    bottomNavigationView.visibility = View.VISIBLE
+                    supportActionBar!!.show()
+                }
             }
         }
         bottomNavigationView.setupWithNavController(navController)

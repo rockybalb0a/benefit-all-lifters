@@ -10,7 +10,7 @@
        <KeyFrameSet>
        </KeyFrameSet>
         <OnClick motion:clickAction="toggle"
-            motion:targetId="@id/workout_title_text" />
+            motion:targetId="@id/content_motion_layout" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">

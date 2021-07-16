@@ -48,7 +48,7 @@
                 android:textStyle="bold"
                 android:text="@{bindingCreator.getWorkoutNameString(item)}"
                 android:textColor="?attr/colorOnPrimary"
-                android:background="@color/primaryColorAlt"
+                android:background="@color/primaryColor5percentOverlay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

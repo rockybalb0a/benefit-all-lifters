@@ -12,7 +12,7 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/primaryColorAlt</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/Theme.BenefitAllLifters.BottomSheetDialogTheme</item>
     </style>
@@ -21,8 +21,8 @@
     <style name="Theme.BenefitAllLifters.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Widget.App.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:backgroundTint">@color/primaryColorAlt</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="backgroundTint">@color/primaryColor5percentOverlay</item>
         <item name="iconTint">?attr/colorOnPrimary</item>
         <item name="rippleColor">?attr/colorSecondaryVariant</item>
         <item name="android:insetTop">0dp</item>
@@ -47,7 +47,8 @@
     <style name="Widget.App.PlatesButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-<!--        <item name="android:textColor">?attr/colorPrimaryVariant</item>-->
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="rippleColor">#42FFFFFF</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:insetLeft">0dp</item>
@@ -83,6 +84,8 @@
     </style>
 
     <style name="Widget.BenefitAllLiters.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="elevation">0dp</item>
+        <item name="backgroundTint">@color/primaryColor12percentOverlay</item>
         <item name="itemIconTint">@drawable/bottom_nav_item_color_selector</item>
         <item name="itemTextColor">@drawable/bottom_nav_item_color_selector</item>
     </style>

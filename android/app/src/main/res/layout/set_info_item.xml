@@ -26,12 +26,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> clickListener.onClick(item)}"
         android:paddingVertical="@dimen/padding_medium"
-        android:paddingHorizontal="@dimen/padding_large">
+        android:paddingHorizontal="@dimen/padding_large"
+        android:background="@drawable/clickable_item_bg_ripple_color"
+        >
 
         <TextView
             android:id="@+id/workoutSet_number"
@@ -41,6 +43,7 @@
             android:textStyle="bold"
             android:layout_margin="@dimen/margin_small"
             android:text="@{bindingCreator.getCurrentSetsNumberSimplifiedString(index, context)}"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/set_number_guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +60,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="@{bindingCreator.getWeightsWithoutWeightUnit(item)}"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/workoutSet_weights_unit"
             app:layout_constraintStart_toStartOf="@id/set_number_guideline"
@@ -72,6 +76,7 @@
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:text="@{bindingCreator.getWeightsUnit(context)}"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintStart_toEndOf="@id/workoutSet_weights"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,6 +94,7 @@
             android:textAlignment="viewEnd"
             android:textSize="18sp"
             android:text="@{bindingCreator.getRepsWithoutUnitString(item)}"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/workoutSet_reps_unit"
             app:layout_constraintStart_toStartOf="@id/set_weights_reps_separator"
@@ -105,6 +111,7 @@
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:text="@{bindingCreator.getRepsUnit(item, context)}"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/workoutSet_reps"

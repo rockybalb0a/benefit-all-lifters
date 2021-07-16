@@ -19,14 +19,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@color/primaryColorAlt"
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/plates_view_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:backgroundTint="?attr/colorSecondary"
-            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/primaryColor5percentOverlay"
+            android:backgroundTintMode="src_over"
+            app:cardCornerRadius="@dimen/cardview_corner_radius_default"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -34,7 +37,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <kr.valor.bal.ui.schedule.view.PlatesView
                     android:id="@+id/plates_view"
@@ -53,8 +57,7 @@
                     android:text="@string/default_weights_unit"
                     android:textStyle="bold"
                     android:textAlignment="viewStart"
-                    android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.6"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_margin="@dimen/margin_small"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_separator"
@@ -68,8 +71,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.6"
+                    android:textColor="?attr/colorOnPrimary"
                     android:textAlignment="viewStart"
                     android:layout_margin="@dimen/margin_small"
                     android:text='@{viewModel.currentWorkoutSet.reps > 1 ? "Reps" : "Rep"}'
@@ -102,9 +104,8 @@
                     android:layout_margin="@dimen/margin_small"
                     android:textAlignment="viewEnd"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="?attr/colorOnPrimary"
                     android:text="@{bindingCreator.getWeightsWithoutWeightUnit(viewModel.currentWorkoutSet)}"
-                    android:alpha="0.6"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/platesview_reps"
                     app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_guideline"
@@ -120,8 +121,7 @@
                     android:text="@{String.valueOf(viewModel.currentWorkoutSet.reps)}"
                     android:textAlignment="viewEnd"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.6"
+                    android:textColor="?attr/colorOnPrimary"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintStart_toStartOf="@id/platesview_inner_vertical_guideline"
                     app:layout_constraintEnd_toStartOf="@+id/platesview_inner_vertical_separator"
@@ -138,13 +138,15 @@
             android:id="@+id/red_plates_button"
             style="@style/Widget.App.PlatesButton"
             android:text="@{viewModel.checkedPlatesTypeBtnIndex == 0 ? @string/red_plates_weights_default : @string/red_plates_weights_small}"
+            android:textColor="?attr/colorOnPrimary"
             android:onClick="@{() -> viewModel.insertPlates(25.0)}"
             android:layout_marginTop="@dimen/margin_small"
             app:iconTint="@color/plateColor25"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toStartOf="@id/blue_plates_button"
             app:layout_constraintTop_toBottomOf="@id/plates_type_toggle_group"
-            app:layout_constraintBottom_toTopOf="@id/green_plates_button" />
+            app:layout_constraintBottom_toTopOf="@id/green_plates_button"
+            tools:text="25kg"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/green_plates_button"
@@ -154,7 +156,8 @@
             app:iconTint="@color/plateColor10"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toStartOf="@id/white_plates_button"
-            app:layout_constraintTop_toBottomOf="@id/red_plates_button" />
+            app:layout_constraintTop_toBottomOf="@id/red_plates_button"
+            tools:text="10kg" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/blue_plates_button"
@@ -165,7 +168,8 @@
             app:layout_constraintStart_toEndOf="@id/red_plates_button"
             app:layout_constraintEnd_toStartOf="@id/yellow_plates_button"
             app:layout_constraintTop_toTopOf="@id/red_plates_button"
-            app:layout_constraintBottom_toTopOf="@id/white_plates_button" />
+            app:layout_constraintBottom_toTopOf="@id/white_plates_button"
+            tools:text="20kg" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/white_plates_button"
@@ -175,7 +179,8 @@
             app:iconTint="@color/plateColor5"
             app:layout_constraintEnd_toEndOf="@+id/blue_plates_button"
             app:layout_constraintStart_toEndOf="@id/green_plates_button"
-            app:layout_constraintTop_toBottomOf="@id/blue_plates_button" />
+            app:layout_constraintTop_toBottomOf="@id/blue_plates_button"
+            tools:text="5kg" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/yellow_plates_button"
@@ -186,7 +191,8 @@
             app:layout_constraintStart_toEndOf="@id/blue_plates_button"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintTop_toTopOf="@id/red_plates_button"
-            app:layout_constraintBottom_toTopOf="@id/pop_plates_button"/>
+            app:layout_constraintBottom_toTopOf="@id/pop_plates_button"
+            tools:text="15kg" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pop_plates_button"
@@ -195,6 +201,7 @@
             android:onClick="@{() -> viewModel.popPlates()}"
             android:enabled="@{viewModel.popButtonEnabled}"
             app:icon="@drawable/ic_baseline_pop_24"
+            app:iconTint="?attr/colorOnPrimary"
             app:layout_constraintTop_toBottomOf="@id/yellow_plates_button"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toEndOf="@id/white_plates_button" />
@@ -217,7 +224,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="10" />
+                android:text="10"
+                android:textColor="?attr/colorOnPrimary"
+                />
 
             <Button
                 android:id="@+id/plates_type_small"
@@ -225,6 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="0.1"
+                android:textColor="?attr/colorOnPrimary"
                 style="@style/Widget.App.ToggleButton" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -247,6 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1"
+                android:textColor="?attr/colorOnPrimary"
                 style="@style/Widget.App.ToggleButton" />
 
             <Button
@@ -255,6 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="5"
+                android:textColor="?attr/colorOnPrimary"
                 style="@style/Widget.App.ToggleButton" />
 
             <Button
@@ -263,6 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="10"
+                android:textColor="?attr/colorOnPrimary"
                 style="@style/Widget.App.ToggleButton" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -274,9 +287,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:text="reps"
+            android:textColor="?attr/colorOnPrimary"
             android:onClick="@{() -> viewModel.minusReps()}"
+            app:rippleColor="#42FFFFFF"
             app:cornerRadius="0dp"
             app:icon="@drawable/ic_baseline_remove_24"
+            app:iconTint="?attr/colorOnPrimary"
             app:iconGravity="textStart"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/green_plates_button"
@@ -289,9 +305,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="reps"
+            android:textColor="?attr/colorOnPrimary"
             android:onClick="@{() -> viewModel.plusReps()}"
+            app:rippleColor="#42FFFFFF"
             app:cornerRadius="0dp"
             app:icon="@drawable/ic_baseline_add_24"
+            app:iconTint="?attr/colorOnPrimary"
             app:iconGravity="textStart"
             app:layout_constraintStart_toEndOf="@id/minus_reps_button"
             app:layout_constraintTop_toTopOf="@id/minus_reps_button"

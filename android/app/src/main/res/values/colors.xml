@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryLightColor">#2d3455</color>
+    <color name="primaryColor5percentOverlay">#F218202B</color>
+    <color name="primaryColor12percentOverlay">#E018202B</color>
+    <color name="primaryColor80percentOverlay">#3318202B</color>
     <color name="primaryColor">#040d2c</color>
-    <color name="primaryColorAlt">#18202b</color>
+    <color name="primaryColorAlt">#18202B</color>
     <color name="primaryColorDarkTheme">#303030</color>
     <color name="primaryDarkColor">#000002</color>
 
@@ -16,7 +18,7 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
 
-    <color name="plateColor5">#ECE6CC</color>
+    <color name="plateColor5">#FFFFFF</color>
     <color name="plateColor10">#385A42</color>
     <color name="plateColor15">#C6AF47</color>
     <color name="plateColor20">#2D4A73</color>

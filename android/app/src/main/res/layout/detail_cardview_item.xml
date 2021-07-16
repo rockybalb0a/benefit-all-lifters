@@ -24,7 +24,7 @@
         app:cardElevation="@dimen/cardview_elevation_default">
 
         <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/content_motion_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutDescription="@xml/detail_item_scene">
@@ -51,6 +51,16 @@
                 app:layout_constraintBottom_toBottomOf="@id/workout_title_image" />
 
             <TextView
+                android:id="@+id/click_guide_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="SHOW DETAIL"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="@id/workout_title_image"
+                app:layout_constraintEnd_toEndOf="@id/workout_title_image" />
+
+            <TextView
                 android:id="@+id/workout_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:nestedScrollingEnabled="false"
+                android:background="@color/primaryColor5percentOverlay"
                 android:padding="@dimen/padding_default" />
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
