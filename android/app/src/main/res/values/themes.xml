@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.BenefitAllLifters" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.BenefitAllLifters" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColorAlt</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
@@ -85,7 +85,7 @@
 
     <style name="Widget.BenefitAllLiters.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="elevation">0dp</item>
-        <item name="backgroundTint">@color/primaryColor12percentOverlay</item>
+        <item name="backgroundTint">@color/primaryColor20percentShade</item>
         <item name="itemIconTint">@drawable/bottom_nav_item_color_selector</item>
         <item name="itemTextColor">@drawable/bottom_nav_item_color_selector</item>
     </style>
