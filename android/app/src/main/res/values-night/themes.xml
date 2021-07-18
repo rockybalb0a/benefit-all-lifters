@@ -75,7 +75,7 @@
         <item name="cornerSize">0dp</item>
     </style>
 
-    <!-- TODO : https://stackoverflow.com/questions/43852562/round-corner-for-bottomsheetdialogfragment/50645769 -->
+    <!-- https://stackoverflow.com/questions/43852562/round-corner-for-bottomsheetdialogfragment/50645769 -->
     <style name="Theme.App.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Theme.App.ModalStyle</item>
     </style>

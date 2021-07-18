@@ -31,9 +31,6 @@ class ScheduleViewModel @Inject constructor(
     private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
         syncElapsedTimeWithDatabase(it)
     }
-    val currentWorkoutOverview: LiveData<WorkoutOverview>
-        get() = _currentWorkoutOverview
-
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
         workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }
@@ -85,9 +82,7 @@ class ScheduleViewModel @Inject constructor(
 
     fun onWorkoutFinishButtonClicked() {
         onStopTimeTracking()
-        // TODO : Navigate to ScheduleRecordFragment(temporary name)
         viewModelScope.launch {
-//            eventChannel.send(Event.NavigateToScheduleDetailDest(_currentWorkoutOverview.value!!.overviewId))
             eventChannel.send(Event.NavigateToScheduleDoneDest)
         }
     }

@@ -24,10 +24,6 @@ import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
 
-// TODO : Set state for rest / workout
-// TODO : Different UI for each state
-
-// TODO : Additional process needed (when workout recording is done...)
 @AndroidEntryPoint
 class ScheduleFragment : Fragment() {
 
