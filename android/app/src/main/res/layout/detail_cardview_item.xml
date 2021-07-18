@@ -29,6 +29,14 @@
             android:layout_height="wrap_content"
             app:layoutDescription="@xml/detail_item_scene">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sets_info_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:nestedScrollingEnabled="false"
+                android:background="@color/primaryColor5percentOverlay"
+                android:padding="@dimen/padding_default" />
+
             <ImageView
                 android:id="@+id/workout_title_image"
                 android:layout_width="0dp"
@@ -50,15 +58,12 @@
                 app:layout_constraintTop_toTopOf="@id/workout_title_image"
                 app:layout_constraintBottom_toBottomOf="@id/workout_title_image" />
 
-            <TextView
-                android:id="@+id/click_guide_text"
+            <ImageButton
+                android:id="@+id/expand_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:text="SHOW DETAIL"
-                android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="@id/workout_title_image"
-                app:layout_constraintEnd_toEndOf="@id/workout_title_image" />
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_expand_24" />
 
             <TextView
                 android:id="@+id/workout_title_text"
@@ -71,13 +76,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Squat" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/sets_info_recyclerview"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:nestedScrollingEnabled="false"
-                android:background="@color/primaryColor5percentOverlay"
-                android:padding="@dimen/padding_default" />
+
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
 

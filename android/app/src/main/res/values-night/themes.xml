@@ -15,6 +15,7 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialogTheme</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
