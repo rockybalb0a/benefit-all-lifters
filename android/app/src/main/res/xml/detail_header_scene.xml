@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_minimum"
-            android:alpha="1.0"
+            android:alpha="0.87"
             motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time"
             motion:layout_constraintBottom_toBottomOf="@id/header_elapsed_time"
             motion:layout_constraintTop_toTopOf="@id/header_elapsed_time" />

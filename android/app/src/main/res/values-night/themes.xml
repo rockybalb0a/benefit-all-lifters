@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.BenefitAllLifters" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColorAlt</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColorHighEmphasis</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
@@ -14,11 +14,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
-        <item name="bottomSheetDialogTheme">@style/Theme.BenefitAllLifters.BottomSheetDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialogTheme</item>
     </style>
 
-    <style name="Theme.BenefitAllLifters.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.BenefitAllLifters.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Widget.App.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -75,19 +75,53 @@
     </style>
 
     <!-- TODO : https://stackoverflow.com/questions/43852562/round-corner-for-bottomsheetdialogfragment/50645769 -->
-    <style name="Theme.BenefitAllLifters.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Theme.BenefitAllLifters.ModalStyle</item>
+    <style name="Theme.App.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.App.ModalStyle</item>
     </style>
 
-    <style name="Theme.BenefitAllLifters.ModalStyle" parent="Widget.Design.BottomSheet.Modal">
+    <style name="Theme.App.ModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/dialog_shape</item>
     </style>
 
-    <style name="Widget.BenefitAllLiters.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="elevation">0dp</item>
-        <item name="backgroundTint">@color/primaryColor12percentOverlay</item>
+        <item name="backgroundTint">@color/primaryColor20percentShade</item>
         <item name="itemIconTint">@drawable/bottom_nav_item_color_selector</item>
         <item name="itemTextColor">@drawable/bottom_nav_item_color_selector</item>
     </style>
 
+    <style name="Theme.App.TextAppearance.Base" parent="android:TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_default_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.HighEmphasis" parent="Theme.App.TextAppearance.Base">
+        <item name="android:textColor">@color/primaryTextColorHighEmphasis</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.HighEmphasis24" parent="Theme.App.TextAppearance.HighEmphasis">
+        <item name="android:textSize">@dimen/text_size_large_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.HighEmphasis18" parent="Theme.App.TextAppearance.HighEmphasis">
+        <item name="android:textSize">@dimen/text_size_medium_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.HighEmphasis12" parent="Theme.App.TextAppearance.HighEmphasis">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_size_small_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.MediumEmphasis" parent="Theme.App.TextAppearance.Base">
+        <item name="android:textColor">@color/primaryTextColorMediumEmphasis</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.MediumEmphasis18" parent="Theme.App.TextAppearance.MediumEmphasis">
+        <item name="android:textSize">@dimen/text_size_medium_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.Disabled" parent="Theme.App.TextAppearance.Base">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/primaryTextColorDisabled</item>
+    </style>
 </resources>

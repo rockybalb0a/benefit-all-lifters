@@ -58,9 +58,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/new_workout_text"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -87,9 +85,7 @@
                 android:layout_height="match_parent"
                 android:background="#AAFF0000"
                 android:gravity="center"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
                 android:text="@string/rest_today_text" />
         </com.google.android.material.card.MaterialCardView>
 

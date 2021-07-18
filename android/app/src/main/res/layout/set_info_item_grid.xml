@@ -22,6 +22,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small"
         tools:background="@color/primaryColor5percentOverlay"
         >
 
@@ -29,24 +30,23 @@
             android:id="@+id/set_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textAlignment="viewStart"
+            android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
             android:text="@{bindingCreator.getCurrentSetsNumberString(index, context)}"
-            android:textColor="?attr/colorOnPrimary"
+            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/set_weights"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Set #1" />
+            tools:text="Set #11" />
 
         <TextView
             android:id="@+id/set_weights"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:textAlignment="center"
+            android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
+            android:textSize="12dp"
             android:text="@{bindingCreator.getWeightsWithWeightUnitString(item, context)}"
-            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_number"
@@ -57,14 +57,14 @@
             android:id="@+id/set_reps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
             android:text="@{bindingCreator.getRepsWithUnitString(item, context)}"
-            android:textColor="?attr/colorOnPrimary"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/set_weights"
-            tools:text="5 reps" />
+            tools:text="15 reps" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

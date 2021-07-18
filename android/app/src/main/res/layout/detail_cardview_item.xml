@@ -66,9 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium"
                 android:text="@{bindingCreator.getWorkoutNameString(item)}"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Squat" />

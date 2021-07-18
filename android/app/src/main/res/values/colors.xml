@@ -17,6 +17,9 @@
     <color name="secondaryDarkColor">#b9bec2</color>
 
     <color name="primaryTextColor">#ffffff</color>
+    <color name="primaryTextColorHighEmphasis">#DEFFFFFF</color>
+    <color name="primaryTextColorMediumEmphasis">#99FFFFFF</color>
+    <color name="primaryTextColorDisabled">#61FFFFFF</color>
     <color name="secondaryTextColor">#000000</color>
 
     <color name="plateColor5">#FFFFFF</color>
