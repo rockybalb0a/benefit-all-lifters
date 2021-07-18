@@ -46,6 +46,7 @@ class ItemViewHolder private constructor(private val binding: DetailCardviewItem
             layoutManager = childLayoutManager
             adapter = childAdapter
             setRecycledViewPool(viewPool)
+            setHasFixedSize(true)
             if (itemDecorationCount == 0) {
                 addItemDecoration(ItemOffsetDecoration(context, R.dimen.padding_small))
             }

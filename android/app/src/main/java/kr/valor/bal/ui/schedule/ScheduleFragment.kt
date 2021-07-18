@@ -111,6 +111,7 @@ class ScheduleFragment : Fragment() {
             detailAdapter = DetailAdapter(EditWorkoutScheduleListener {
                 this@ScheduleFragment.viewModel.onEditWorkoutButtonClicked()
             })
+            it.setHasFixedSize(true)
             it.adapter = detailAdapter
         }
     }
@@ -148,6 +149,7 @@ class ScheduleFragment : Fragment() {
 
         scheduleAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
             .also { adapter = it }
+        setHasFixedSize(true)
 
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 

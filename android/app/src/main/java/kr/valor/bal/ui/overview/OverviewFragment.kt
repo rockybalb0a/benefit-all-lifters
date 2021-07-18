@@ -48,6 +48,7 @@ class OverviewFragment : Fragment() {
     }
 
     private fun RecyclerView.initRecyclerView() {
+        setHasFixedSize(true)
         overviewAdapter = OverviewAdapter(
             OverviewItemListener {
 //                findNavController().navigate(OverviewFragmentDirections
