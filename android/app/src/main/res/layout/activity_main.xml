@@ -16,7 +16,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
             app:popupTheme="@style/Theme.App.PopupOverlay"
             tools:title="Toolbar title" />
 

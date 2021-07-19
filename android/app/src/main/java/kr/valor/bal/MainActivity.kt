@@ -57,26 +57,13 @@ class MainActivity : AppCompatActivity() {
         return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.night_mode -> {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//                true
-//            }
-//            R.id.light_mode -> {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//                true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
-
-
+    override fun onOptionsItemSelected(menuItem : MenuItem) : Boolean {
+        if (menuItem.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true // must return true to consume it here
+        }
+        return super.onOptionsItemSelected(menuItem)
+    }
 
     private fun setupBottomNavMenu(navController: NavController) {
         bottomNavigationView = binding.bottomNavView

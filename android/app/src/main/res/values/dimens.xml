@@ -19,6 +19,7 @@
     <dimen name="cardview_elevation_default">8dp</dimen>
 
 
+    <dimen name="text_size_toolbar_dp">20dp</dimen>
     <dimen name="text_size_default_dp">16dp</dimen>
     <dimen name="text_size_small_dp">12dp</dimen>
     <dimen name="text_size_medium_dp">18dp</dimen>
