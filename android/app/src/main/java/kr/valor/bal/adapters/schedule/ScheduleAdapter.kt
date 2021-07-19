@@ -23,7 +23,8 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
 
         val footerViewListener =
-            listeners.filterIsInstance<CompleteWorkoutScheduleListener>()
+            listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
+
 
         val itemViewListener =
             listeners.filter { it !is CompleteWorkoutScheduleListener }
@@ -34,7 +35,7 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
                 holder.bind(item.workoutDetailAndSets, *itemViewListener.toTypedArray(), viewPool = viewPool)
             }
             is FooterViewHolder -> {
-                holder.bind(null, listeners = footerViewListener.toTypedArray())
+                holder.bind(footerViewListener)
             }
         }
     }

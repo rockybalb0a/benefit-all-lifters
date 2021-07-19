@@ -22,6 +22,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
+
         <Constraint
             android:id="@+id/expand_button"
             android:layout_width="wrap_content"

@@ -11,15 +11,15 @@ import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 
 class DetailChildViewHolder private constructor (private val binding: SetInfoItemGridBinding): ViewHolder(binding) {
 
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        data as WorkoutSet
+    fun bind(data: WorkoutSet, itemPosition: Int) {
         with(binding) {
             item = data
-            index = itemPosition!!
+            index = itemPosition
             bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }
     }
+
 
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {

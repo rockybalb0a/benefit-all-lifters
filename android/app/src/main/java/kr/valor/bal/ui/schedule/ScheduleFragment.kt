@@ -145,7 +145,6 @@ class ScheduleFragment : Fragment() {
 
         scheduleAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
             .also { adapter = it }
-        setHasFixedSize(true)
 
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 

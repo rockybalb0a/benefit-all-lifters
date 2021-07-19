@@ -18,7 +18,7 @@ class WorkoutDetailChildAdapter: ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBA
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as DetailChildViewHolder).bind(data = item, itemPosition = position)
+        (holder as DetailChildViewHolder).bind(item, position)
     }
 
     companion object {

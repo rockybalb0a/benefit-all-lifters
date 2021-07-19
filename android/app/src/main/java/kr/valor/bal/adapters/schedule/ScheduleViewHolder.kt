@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
+import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
@@ -16,21 +17,9 @@ sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
 
-    override fun <T> bind(
-        data: T,
-        vararg listeners: RecyclerviewItemClickListener<*>,
-        itemPosition: Int?
-    ) {
-        binding.item = data as WorkoutDetailAndSets
-    }
-
-    fun bind(
-        data: WorkoutDetailAndSets,
-        listeners: Array<out RecyclerviewItemClickListener<*>>,
-        viewPool: RecyclerView.RecycledViewPool
-    ) {
-        bind(data, *listeners)
+    fun bind(data: WorkoutDetailAndSets, listeners: Array<out RecyclerviewItemClickListener<*>>, viewPool: RecyclerView.RecycledViewPool) {
         with(binding) {
+            item = data
             if (data.workoutSets.isNotEmpty()) {
                 refresh(View.GONE)
             } else {
@@ -44,7 +33,9 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
                 }
             }
 
-            val childAdapter = ScheduleChildAdapter(*listeners)
+            val childListener =
+                listeners.single { it is UpdateWorkoutSetListener } as UpdateWorkoutSetListener
+            val childAdapter = ScheduleChildAdapter(childListener)
             setsDetail.apply {
                 adapter = childAdapter
                 setRecycledViewPool(viewPool)
@@ -53,6 +44,7 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
 
             bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
+
         }
     }
 
@@ -82,9 +74,9 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
 
 class FooterViewHolder private constructor(private val binding: ScheduleFooterItemBinding): ScheduleViewHolder(binding) {
 
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+    fun bind(listeners: RecyclerviewItemClickListener<Unit>) {
         with(binding) {
-            clickListener = listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
+            clickListener = listeners as CompleteWorkoutScheduleListener
             executePendingBindings()
         }
     }

@@ -33,7 +33,7 @@ class DetailAdapter(private val listener: RecyclerviewItemClickListener<Unit>?):
                 holder.bind(item.workoutDetailAndSets, viewPool = viewPool)
             }
             is FooterViewHolder -> {
-                listener?.let { holder.bind(null, listener) } ?: holder.bind(WorkoutDetailItem.Footer)
+                holder.bind(listener)
             }
         }
     }

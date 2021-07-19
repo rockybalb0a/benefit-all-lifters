@@ -11,16 +11,12 @@ import kr.valor.bal.databinding.SetInfoItemBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 
 class ScheduleChildViewHolder(private val binding: SetInfoItemBinding): ViewHolder(binding) {
-    override fun <T> bind(
-        data: T,
-        vararg listeners: RecyclerviewItemClickListener<*>,
-        itemPosition: Int?
-    ) {
-        data as WorkoutSet
+
+    fun bind(data: WorkoutSet, listener: RecyclerviewItemClickListener<WorkoutSet>, itemPosition: Int) {
         with(binding) {
-            item = data
-            index = itemPosition!!
-            clickListener = listeners.single { it is UpdateWorkoutSetListener } as UpdateWorkoutSetListener
+            item  = data
+            index = itemPosition
+            clickListener = listener as UpdateWorkoutSetListener
             bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }

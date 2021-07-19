@@ -22,17 +22,13 @@ sealed class DetailViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(private val binding: DetailCardviewItemBinding): DetailViewHolder(binding) {
 
-    fun bind(workoutDetail: WorkoutDetailAndSets, viewPool: RecyclerView.RecycledViewPool) {
-        bind(data = workoutDetail)
+    fun bind(data: WorkoutDetailAndSets, viewPool: RecyclerView.RecycledViewPool) {
         with(binding) {
-            bindChild(viewPool, workoutDetail.workoutSets)
+            item = data
+            bindChild(viewPool, data.workoutSets)
             bindingCreator = WorkoutDetailInfoBindingParameterCreator
             executePendingBindings()
         }
-    }
-
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
-        binding.item = data as WorkoutDetailAndSets
     }
 
     private fun DetailCardviewItemBinding.bindChild(viewPool: RecyclerView.RecycledViewPool, item: List<WorkoutSet>) {
@@ -65,10 +61,11 @@ class ItemViewHolder private constructor(private val binding: DetailCardviewItem
 }
 
 class HeaderViewHolder private constructor(private val binding: ScheduleDoneHeaderItemBinding): DetailViewHolder(binding) {
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+
+    fun bind(data: WorkoutOverview) {
         with(binding) {
+            item = data
             bindingCreator = WorkoutSummaryInfoBindingParameterCreator
-            item = data as WorkoutOverview
             executePendingBindings()
         }
     }
@@ -84,10 +81,11 @@ class HeaderViewHolder private constructor(private val binding: ScheduleDoneHead
 
 
 class FooterViewHolder private constructor(private val binding: ScheduleDoneFooterItemBinding): DetailViewHolder(binding) {
-    override fun <T> bind(data: T, vararg listeners: RecyclerviewItemClickListener<*>, itemPosition: Int?) {
+
+    fun bind(listener: RecyclerviewItemClickListener<Unit>?) {
         with(binding) {
-            if (listeners.isNotEmpty()) {
-                clickListener = listeners.single { it is EditWorkoutScheduleListener } as EditWorkoutScheduleListener
+            listener?.let {
+                clickListener = listener as EditWorkoutScheduleListener
             }
             executePendingBindings()
         }

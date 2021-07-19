@@ -7,7 +7,7 @@ import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.data.entities.WorkoutSet
 
-class ScheduleChildAdapter(private vararg val listeners: RecyclerviewItemClickListener<*>): ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBACK) {
+class ScheduleChildAdapter(private val listener: RecyclerviewItemClickListener<WorkoutSet>): ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ScheduleChildViewHolder.create(parent)
@@ -15,7 +15,7 @@ class ScheduleChildAdapter(private vararg val listeners: RecyclerviewItemClickLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as ScheduleChildViewHolder).bind(item, *listeners, itemPosition = position)
+        (holder as ScheduleChildViewHolder).bind(item, listener, position)
     }
 
     companion object {
