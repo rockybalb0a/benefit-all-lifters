@@ -26,13 +26,13 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
             listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
 
 
-        val itemViewListener =
+        val itemViewListeners =
             listeners.filter { it !is CompleteWorkoutScheduleListener }
 
         when(holder) {
             is ItemViewHolder -> {
                 val item = getItem(position) as WorkoutDetailItem.Item
-                holder.bind(item.workoutDetailAndSets, *itemViewListener.toTypedArray(), viewPool = viewPool)
+                holder.bind(item.workoutDetailAndSets, itemViewListeners, viewPool)
             }
             is FooterViewHolder -> {
                 holder.bind(footerViewListener)

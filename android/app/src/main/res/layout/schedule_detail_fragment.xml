@@ -35,7 +35,7 @@
             <kr.valor.bal.ui.detail.CollapsibleToolbar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="60dp"
+                android:minHeight="?attr/actionBarSize"
                 android:fitsSystemWindows="false"
                 app:layoutDescription="@xml/detail_header_scene"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap|exitUntilCollapsed">
@@ -78,6 +78,7 @@
                     android:id="@+id/header_edit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onEditButtonClicked()}"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_baseline_edit_24" />
 

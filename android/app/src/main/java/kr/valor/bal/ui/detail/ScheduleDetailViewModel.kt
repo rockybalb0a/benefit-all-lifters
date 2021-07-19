@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutSchedule
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,14 +18,13 @@ class ScheduleDetailViewModel @Inject constructor(
 
     sealed class Event {
         object NavigateToOverviewDest: Event()
+        data class NavigateToEditDest(val overviewId: Long, val date: String): Event()
     }
 
-    private val overviewId: Long? = savedStateHandle["overviewId"]
+    private val overviewId: Long = savedStateHandle["overviewId"]!!
 
     private val _workoutSchedule = liveData {
-        overviewId?.let {
-            emitSource(workoutRepo.getWorkoutScheduleByWorkoutOverviewId(overviewId))
-        }
+        emitSource(workoutRepo.getWorkoutScheduleByWorkoutOverviewId(overviewId))
     }
     val workoutSchedule: LiveData<WorkoutSchedule>
         get() = _workoutSchedule
@@ -35,6 +35,13 @@ class ScheduleDetailViewModel @Inject constructor(
     fun onBackButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.NavigateToOverviewDest)
+        }
+    }
+
+    fun onEditButtonClicked() {
+        viewModelScope.launch {
+            val date = workoutSchedule.value!!.workoutOverview.date.toString()
+            eventChannel.send(Event.NavigateToEditDest(overviewId, date))
         }
     }
 }

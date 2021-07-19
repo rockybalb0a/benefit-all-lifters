@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutDao
 import kr.valor.bal.utilities.TrackingStatus
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,7 +15,7 @@ class OverviewViewModel @Inject constructor(
 
     val workoutSchedules = workoutRepo.getAllWorkoutSchedule().map {
         it.filter { each ->
-            each.workoutOverview.trackingStatus == TrackingStatus.DONE
+            each.workoutOverview.trackingStatus == TrackingStatus.DONE && each.workoutOverview.date != LocalDate.now()
         }
     }
 

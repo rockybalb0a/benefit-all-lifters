@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_toolbar_start"
+            android:layout_marginBottom="@dimen/margin_toolbar_bottom"
             motion:layout_constraintStart_toEndOf="@id/header_back_button"
             motion:layout_constraintBottom_toBottomOf="parent" />
 
@@ -56,8 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_toolbar_bottom"
             android:alpha="1.0"
-            motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time_icon" />
+            motion:layout_constraintEnd_toEndOf="@id/header_image"
+            motion:layout_constraintBottom_toBottomOf="@id/header_image" />
 
         <Constraint
             android:id="@id/header_elapsed_time"
@@ -117,10 +119,11 @@
             android:id="@+id/header_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:alpha="0.0"
-            motion:layout_constraintEnd_toStartOf="@id/header_elapsed_time_icon"
-            motion:layout_constraintBottom_toBottomOf="@id/header_elapsed_time_icon"
-            motion:layout_constraintTop_toTopOf="@id/header_elapsed_time_icon" />
+            motion:layout_constraintEnd_toEndOf="@id/header_image"
+            motion:layout_constraintTop_toTopOf="@id/header_image" />
 
         <Constraint
             android:id="@+id/header_elapsed_time_icon"

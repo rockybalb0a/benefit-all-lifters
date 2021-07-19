@@ -61,6 +61,11 @@ class ScheduleDetailFragment: Fragment() {
                             ScheduleDetailFragmentDirections.actionScheduleDetailDestToOverviewDest()
                         )
                     }
+                    is ScheduleDetailViewModel.Event.NavigateToEditDest -> {
+                        findNavController().navigate(
+                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToEditDest(it.overviewId, it.date)
+                        )
+                    }
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)

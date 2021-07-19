@@ -17,7 +17,7 @@ sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
 class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
 
-    fun bind(data: WorkoutDetailAndSets, listeners: Array<out RecyclerviewItemClickListener<*>>, viewPool: RecyclerView.RecycledViewPool) {
+    fun bind(data: WorkoutDetailAndSets, listeners: List<RecyclerviewItemClickListener<*>>, viewPool: RecyclerView.RecycledViewPool) {
         with(binding) {
             item = data
             if (data.workoutSets.isNotEmpty()) {
@@ -39,6 +39,7 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
             setsDetail.apply {
                 adapter = childAdapter
                 setRecycledViewPool(viewPool)
+                setHasFixedSize(true)
             }
             childAdapter.submitList(data.workoutSets)
 

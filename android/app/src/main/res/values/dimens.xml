@@ -2,7 +2,9 @@
 <resources>
     <string name="plates_view_ratio">90:83</string>
     <string name="plates_view_barbell_ratio">415:50</string>
-
+    
+    <dimen name="margin_toolbar_start">32dp</dimen>
+    <dimen name="margin_toolbar_bottom">12dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
@@ -22,5 +24,6 @@
     <dimen name="text_size_medium_dp">18dp</dimen>
     <dimen name="text_size_large_dp">24dp</dimen>
 
+    <dimen name="toolbar_height">60dp</dimen>
 
 </resources>

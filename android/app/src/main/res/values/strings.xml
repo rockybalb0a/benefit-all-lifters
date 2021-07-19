@@ -74,5 +74,7 @@
     <string name="timer_stop_action_choice_dialog_message">Do you want to reset your workout timer?</string>
     <string name="timer_stop_action_choice_dialog_positive_action_btn_label">RESET</string>
     <string name="timer_stop_action_choice_dialog_negative_action_btn_label">NO THANKS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
