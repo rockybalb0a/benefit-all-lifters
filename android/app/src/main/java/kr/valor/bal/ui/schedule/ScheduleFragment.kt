@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -147,16 +149,19 @@ class ScheduleFragment : Fragment() {
             .also { adapter = it }
 
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-
-        addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    binding.addWorkoutButton.hide()
-                } else {
-                    binding.addWorkoutButton.show()
-                }
-            }
-        })
+//        (itemAnimator as SimpleItemAnimator).moveDuration = 2000L
+//        (itemAnimator as SimpleItemAnimator).removeDuration = 2000L
+//        (itemAnimator as SimpleItemAnimator).addDuration = 2000L
+//        (itemAnimator as SimpleItemAnimator).changeDuration = 2000L
+//        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                if (dy > 0) {
+//                    binding.addWorkoutButton.hide()
+//                } else {
+//                    binding.addWorkoutButton.show()
+//                }
+//            }
+//        })
     }
 
     private fun initializeRecyclerviewClickListeners(): Array<RecyclerviewItemClickListener<*>> =

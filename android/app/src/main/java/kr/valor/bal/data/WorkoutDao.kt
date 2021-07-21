@@ -47,6 +47,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_overview WHERE date is :date")
     suspend fun getWorkoutOverviewByDate(date: LocalDate): WorkoutOverview?
 
+    @Query("SELECT * FROM workout_overview WHERE overview_id is :overviewId")
+    suspend fun getNoneNullWorkoutOverviewById(overviewId: Long): WorkoutOverview
+
     @Delete
     suspend fun deleteWorkoutSet(workoutSet: WorkoutSet)
 

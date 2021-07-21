@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/edit_dest"
-        android:name="kr.valor.bal.ui.edit.EditFragment"
+        android:name="kr.valor.bal.ui.schedule.EditFragment"
         android:label="Plan of {date}"
         tools:layout="@layout/edit_fragment">
         <argument

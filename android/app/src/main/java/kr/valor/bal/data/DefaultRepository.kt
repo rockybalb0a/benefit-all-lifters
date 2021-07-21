@@ -2,7 +2,6 @@ package kr.valor.bal.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import kotlinx.coroutines.flow.Flow
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
@@ -14,6 +13,10 @@ import javax.inject.Singleton
 class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) {
 
     fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>> = workoutDao.getAllWorkoutSchedule()
+
+    fun getExistWorkoutOverviewById(overviewId: Long) = liveData<WorkoutOverview> {
+        emit(workoutDao.getNoneNullWorkoutOverviewById(overviewId))
+    }
 
     fun getWorkoutOverviewOfToday(init: (WorkoutOverview) -> Unit) = liveData {
         val currentDate = LocalDate.now()

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator

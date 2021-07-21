@@ -1,4 +1,4 @@
-package kr.valor.bal.ui.edit
+package kr.valor.bal.ui.schedule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,7 +20,7 @@ import kr.valor.bal.databinding.EditFragmentBinding
 @AndroidEntryPoint
 class EditFragment : Fragment() {
 
-    private val viewModel: EditViewModel by viewModels()
+    private val viewModel: ScheduleViewModel by viewModels()
 
     private val navArgs by navArgs<EditFragmentArgs>()
 
@@ -40,9 +40,6 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initBackButtonPressedCallback()
 
-        viewModel.workoutSchedule.observe(viewLifecycleOwner) {
-            Toast.makeText(context, "ID : ${it.workoutOverview.overviewId}", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun EditFragmentBinding.initBinding() {
@@ -70,7 +67,9 @@ class EditFragment : Fragment() {
             .setMessage(dialogMessageRes)
             .setPositiveButton(dialogPositiveBtnLabelRes) { _,_ ->
                 findNavController().navigate(
-                    EditFragmentDirections.actionEditDestToScheduleDetailDest(navArgs.overviewId)
+                    EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                        navArgs.overviewId
+                    )
                 )
             }
             .setNegativeButton(dialogNegativeBtnLabelRes) {_, _ ->

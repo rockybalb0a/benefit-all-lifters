@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val workoutRepo: DefaultRepository
+    private val workoutRepo: DefaultRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     sealed class Event {
@@ -25,12 +26,18 @@ class ScheduleViewModel @Inject constructor(
         object NavigateToScheduleEditDest: Event()
     }
 
+    private val navArgsOverviewId: Long? = savedStateHandle["overviewId"]
+
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventsFlow = eventChannel.receiveAsFlow()
 
-    private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
-        syncElapsedTimeWithDatabase(it)
-    }
+//    private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
+//        syncElapsedTimeWithDatabase(it)
+//    }
+    private val _currentWorkoutOverview = navArgsOverviewId?.let {
+       workoutRepo.getExistWorkoutOverviewById(it)
+    } ?: workoutRepo.getWorkoutOverviewOfToday { syncElapsedTimeWithDatabase(it) }
+
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
         workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }

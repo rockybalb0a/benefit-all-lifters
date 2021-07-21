@@ -25,7 +25,6 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
         val footerViewListener =
             listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
 
-
         val itemViewListeners =
             listeners.filter { it !is CompleteWorkoutScheduleListener }
 
