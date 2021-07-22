@@ -103,7 +103,7 @@
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
-                android:text="@{bindingCreator.getElapsedTimeFormattedString(item, context)}"
+                android:text="@{bindingCreator.getElapsedTimeFormattedStringByRecords(item, context)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="1:34:13" />

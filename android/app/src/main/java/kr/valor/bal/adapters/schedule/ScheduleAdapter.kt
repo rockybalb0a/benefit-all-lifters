@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.adapters.CompleteWorkoutScheduleListener
+import kr.valor.bal.adapters.ManualTimerSettingListener
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.WorkoutDetailItem
 
@@ -14,6 +15,7 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         return when(viewType) {
+            ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.create(parent)
             ITEM_VIEW_TYPE_ITEM -> ItemViewHolder.create(parent)
             ITEM_VIEW_TYPE_FOOTER -> FooterViewHolder.create(parent)
             else -> throw ClassCastException("Unknown viewType $viewType")
@@ -21,6 +23,13 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
+
+        val headerViewListener =
+            try {
+                listeners.single { it is ManualTimerSettingListener } as ManualTimerSettingListener
+            } catch (e: NoSuchElementException) {
+                null
+            }
 
         val footerViewListener =
             listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
@@ -36,14 +45,18 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
             is FooterViewHolder -> {
                 holder.bind(footerViewListener)
             }
+            is HeaderViewHolder -> {
+                val item = getItem(position) as WorkoutDetailItem.Header
+                holder.bind(item.workoutOverview, headerViewListener!!)
+            }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)) {
-            is WorkoutDetailItem.Footer -> ITEM_VIEW_TYPE_FOOTER
-            is WorkoutDetailItem.Item -> ITEM_VIEW_TYPE_ITEM
             is WorkoutDetailItem.Header -> ITEM_VIEW_TYPE_HEADER
+            is WorkoutDetailItem.Item -> ITEM_VIEW_TYPE_ITEM
+            is WorkoutDetailItem.Footer -> ITEM_VIEW_TYPE_FOOTER
         }
     }
 
@@ -67,7 +80,6 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
             ): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 }

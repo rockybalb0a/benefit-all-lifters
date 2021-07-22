@@ -22,8 +22,10 @@ class ScheduleViewModel @Inject constructor(
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
         object ShowTimerStopActionChoiceDialog: Event()
+        object ShowTimerSettingDialog: Event()
         object NavigateToScheduleDoneDest: Event()
         object NavigateToScheduleEditDest: Event()
+        data class EditDoneAndBackToDetailDest(val overviewId: Long): Event()
     }
 
     private val navArgsOverviewId: Long? = savedStateHandle["overviewId"]
@@ -31,9 +33,6 @@ class ScheduleViewModel @Inject constructor(
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventsFlow = eventChannel.receiveAsFlow()
 
-//    private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday {
-//        syncElapsedTimeWithDatabase(it)
-//    }
     private val _currentWorkoutOverview = navArgsOverviewId?.let {
        workoutRepo.getExistWorkoutOverviewById(it)
     } ?: workoutRepo.getWorkoutOverviewOfToday { syncElapsedTimeWithDatabase(it) }
@@ -91,6 +90,25 @@ class ScheduleViewModel @Inject constructor(
         onStopTimeTracking()
         viewModelScope.launch {
             eventChannel.send(Event.NavigateToScheduleDoneDest)
+        }
+    }
+
+    fun onEditFinishButtonClicked() {
+        viewModelScope.launch {
+            eventChannel.send(Event.EditDoneAndBackToDetailDest(navArgsOverviewId!!))
+        }
+    }
+
+    fun onEditWorkoutTimerSettingButtonClicked() {
+        viewModelScope.launch {
+            eventChannel.send(Event.ShowTimerSettingDialog)
+        }
+    }
+
+    fun onEditTimerButtonClicked(minutes: Long) {
+        _currentWorkoutOverview.value!!.let {
+            it.elapsedTimeMilli += minutes * 60000L
+            updateWorkoutOverview(it)
         }
     }
 

@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
+import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.databinding.ScheduleCardviewItemBinding
 import kr.valor.bal.databinding.ScheduleFooterItemBinding
+import kr.valor.bal.databinding.ScheduleHeaderItemBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
@@ -86,6 +89,26 @@ class FooterViewHolder private constructor(private val binding: ScheduleFooterIt
             val binding =
                 inflate<ScheduleFooterItemBinding>(parent, R.layout.schedule_footer_item)
             return FooterViewHolder(binding)
+        }
+    }
+}
+
+class HeaderViewHolder private constructor(private val binding: ScheduleHeaderItemBinding): ScheduleViewHolder(binding) {
+
+    fun bind(data: WorkoutOverview, listeners: RecyclerviewItemClickListener<Unit>) {
+        with(binding) {
+            item = data
+            clickListener = listeners as ManualTimerSettingListener
+            bindingCreator = WorkoutSummaryInfoBindingParameterCreator
+            executePendingBindings()
+        }
+    }
+
+    companion object: ViewHolderFactory() {
+        override fun create(parent: ViewGroup): ScheduleViewHolder {
+            val binding =
+                inflate<ScheduleHeaderItemBinding>(parent, R.layout.schedule_header_item)
+            return HeaderViewHolder(binding)
         }
     }
 }

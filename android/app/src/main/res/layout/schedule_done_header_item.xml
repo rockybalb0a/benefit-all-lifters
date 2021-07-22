@@ -48,10 +48,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/edit_schedule_text"
+                android:id="@+id/total_workout_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{bindingCreator.getElapsedTimeFormattedString(item, context)}"
+                android:text="@{bindingCreator.getElapsedTimeFormattedStringByRecords(item, context)}"
                 android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
                 android:drawablePadding="@dimen/padding_small"
                 app:drawableStartCompat="@drawable/ic_clock"

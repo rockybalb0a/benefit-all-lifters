@@ -8,8 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -43,6 +41,7 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         return when(MainApplication.prefs.getWorkoutRecordingState()) {
             false -> ScheduleFragmentBinding.inflate(inflater, container, false)
             true -> ScheduleDoneFragmentBinding.inflate(inflater, container, false)
@@ -82,14 +81,24 @@ class ScheduleFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(binding is ScheduleDoneFragmentBinding) {
-            inflater.inflate(R.menu.menu_plan, menu)
+        when(binding) {
+            is ScheduleDoneFragmentBinding -> inflater.inflate(R.menu.schedule_done_menu, menu)
+            is ScheduleFragmentBinding -> inflater.inflate(R.menu.schedule_recording_menu, menu)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        viewModel.onEditWorkoutButtonClicked()
-        return true
+        when(item.itemId) {
+            R.id.edit_schedule_menu_item -> {
+                viewModel.onEditWorkoutButtonClicked()
+                return true
+            }
+            R.id.add_new_workout_menu_item -> {
+                viewModel.onAddNewWorkoutButtonClicked()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -102,7 +111,6 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun ScheduleDoneFragmentBinding.initBinding() {
-        setHasOptionsMenu(true)
         viewModel = this@ScheduleFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
         recyclerView = detailRecyclerView.also {
@@ -137,6 +145,7 @@ class ScheduleFragment : Fragment() {
                             ScheduleFragmentDirections.actionScheduleDestSelf()
                         )
                     }
+                    else -> {}
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)

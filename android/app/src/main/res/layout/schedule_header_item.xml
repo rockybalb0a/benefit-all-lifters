@@ -6,14 +6,24 @@
     <data>
         <import type="kotlin.Unit" />
 
+        <import type="android.content.Context" />
+
+        <variable
+            name="item"
+            type="kr.valor.bal.data.entities.WorkoutOverview" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator" />
+
         <variable
             name="clickListener"
-            type="kr.valor.bal.adapters.CompleteWorkoutScheduleListener" />
+            type="kr.valor.bal.adapters.ManualTimerSettingListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_marginTop="@dimen/margin_large"
         android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_large"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:clickable="true"
@@ -29,28 +39,37 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@drawable/thumbnail_background_3"
+                android:src="@drawable/timer_thumbnail_background_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/thumbnail_background_5" />
+                tools:src="@drawable/timer_thumbnail_background_image" />
 
-            <TextView
+            <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/backgroundShadowAlt"
-                android:text="@string/finish_recording_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bindingCreator.getElapsedTimeFormattedStringByRecords(item, context)}"
                 android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
                 android:gravity="center"
+                android:drawablePadding="@dimen/padding_small"
+                app:drawableStartCompat="@drawable/ic_clock"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="01:43:22" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
 </layout>

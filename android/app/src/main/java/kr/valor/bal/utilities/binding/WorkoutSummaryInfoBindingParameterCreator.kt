@@ -48,6 +48,19 @@ object WorkoutSummaryInfoBindingParameterCreator {
             }
         } ?: res.getString(R.string.empty_elapsed_time)
     }
+    fun getElapsedTimeFormattedStringByRecords(item: WorkoutSchedule?, context: Context): String {
+        val res = context.resources
+        return item?.run {
+            workoutOverview.getElapsedTimeStringByRecording()
+        } ?: res.getString(R.string.empty_elapsed_time)
+    }
+
+    fun getElapsedTimeFormattedStringByRecords(item: WorkoutOverview?, context: Context): String {
+        val res = context.resources
+        return item?.run {
+            getElapsedTimeStringByRecording()
+        } ?: res.getString(R.string.empty_elapsed_time)
+    }
 
     fun getMainLiftingCategoryText(item: WorkoutSchedule?, context: Context): String {
         val res = context.resources
@@ -83,6 +96,10 @@ object WorkoutSummaryInfoBindingParameterCreator {
             endTimeMilli - startTimeMilli
         }
         return durationTimeMilli.elapsedTimeFormatter()
+    }
+
+    private fun WorkoutOverview.getElapsedTimeStringByRecording(): String {
+        return elapsedTimeMilli.elapsedTimeFormatter()
     }
 
     private fun LocalDate.isSimplifiable(targetDayOfWeek: Long): Boolean =
