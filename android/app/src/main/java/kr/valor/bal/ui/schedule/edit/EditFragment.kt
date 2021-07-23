@@ -1,4 +1,4 @@
-package kr.valor.bal.ui.schedule
+package kr.valor.bal.ui.schedule.edit
 
 import android.os.Bundle
 import android.view.*
@@ -18,6 +18,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.EditFragmentBinding
+import kr.valor.bal.ui.schedule.ScheduleViewModel
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
@@ -25,7 +26,7 @@ import kr.valor.bal.utilities.observeInLifecycle
 @AndroidEntryPoint
 class EditFragment : Fragment() {
 
-    private val viewModel: ScheduleViewModel by viewModels()
+    private val viewModel: EditViewModel by viewModels()
 
     private val navArgs by navArgs<EditFragmentArgs>()
 
@@ -61,16 +62,16 @@ class EditFragment : Fragment() {
         viewModel.eventsFlow
             .onEach { event ->
                 when(event) {
-                    is ScheduleViewModel.Event.EditDoneAndBackToDetailDest ->
+                    is EditViewModel.Event.EditDoneAndBackToDetailDest ->
                         findNavController().navigate(
-                            EditFragmentDirections.actionEditDestToScheduleDetailDest(event.overviewId)
+                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                event.overviewId
+                            )
                         )
 
-                    is ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog()
+                    is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog()
 
-                    is ScheduleViewModel.Event.ShowTimerSettingDialog -> showTimerManualSettingDialog()
-
-                    else -> {}
+                    is EditViewModel.Event.ShowTimerSettingDialog -> showTimerManualSettingDialog()
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)
@@ -131,7 +132,7 @@ class EditFragment : Fragment() {
             .setMessage(dialogMessageRes)
             .setPositiveButton(dialogPositiveBtnLabelRes) { _,_ ->
                 findNavController().navigate(
-                    EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                   EditFragmentDirections.actionEditDestToScheduleDetailDest(
                         navArgs.overviewId
                     )
                 )
@@ -183,7 +184,9 @@ class EditFragment : Fragment() {
             UpdateWorkoutSetListener { item ->
                 findNavController()
                     .navigate(
-                        EditFragmentDirections.actionEditDestToScheduleSetDest(item.setId)
+                        EditFragmentDirections.actionEditDestToScheduleSetDest(
+                            item.setId
+                        )
                     )
             },
 

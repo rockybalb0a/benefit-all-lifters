@@ -36,8 +36,8 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
         return workoutDao.getWorkoutSet(id)
     }
 
-    suspend fun addWorkoutSet(workoutSet: WorkoutSet) {
-        workoutDao.insert(workoutSet)
+    suspend fun insertWorkoutSet(workoutSet: WorkoutSet): Long {
+        return workoutDao.insert(workoutSet)
     }
 
     suspend fun updateWorkoutSet(workoutSet: WorkoutSet) {

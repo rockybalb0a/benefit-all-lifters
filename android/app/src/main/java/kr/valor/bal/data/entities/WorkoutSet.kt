@@ -17,7 +17,7 @@ import androidx.room.*
 data class WorkoutSet(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "set_id")
-    val setId: Long = 0L,
+    var setId: Long = 0L,
 
     @ColumnInfo(name = "container_id")
     val containerId: Long,

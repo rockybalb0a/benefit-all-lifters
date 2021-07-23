@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     private val workoutRepo: DefaultRepository,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel(workoutRepo) {
 
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
@@ -93,25 +93,6 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun onEditFinishButtonClicked() {
-        viewModelScope.launch {
-            eventChannel.send(Event.EditDoneAndBackToDetailDest(navArgsOverviewId!!))
-        }
-    }
-
-    fun onEditWorkoutTimerSettingButtonClicked() {
-        viewModelScope.launch {
-            eventChannel.send(Event.ShowTimerSettingDialog)
-        }
-    }
-
-    fun onEditTimerButtonClicked(minutes: Long) {
-        _currentWorkoutOverview.value!!.let {
-            it.elapsedTimeMilli += minutes * 60000L
-            updateWorkoutOverview(it)
-        }
-    }
-
     fun onEditWorkoutButtonClicked() {
         viewModelScope.launch {
             _currentWorkoutOverview.value?.let {
@@ -122,26 +103,13 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun onAddNewWorkoutButtonClicked() {
+    override fun onAddNewWorkoutButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.ShowAddNewWorkoutDialog)
         }
     }
 
-    fun onAddNewSetButtonClicked(detailId: Long) {
-        val newWorkoutSet = WorkoutSet(containerId = detailId)
-        insertWorkoutSet(newWorkoutSet)
-    }
-
-    fun onDeleteSetButtonClicked(detailId: Long) {
-        deleteWorkoutSet(detailId)
-    }
-
-    fun onCloseButtonClicked(workoutDetail: WorkoutDetail) {
-        deleteWorkoutDetail(workoutDetail)
-    }
-
-    fun onDialogItemSelected(newWorkoutName: String) {
+    override fun onDialogItemSelected(newWorkoutName: String) {
         _currentWorkoutOverview.value?.let {
             val newWorkoutDetail = WorkoutDetail(
                 containerId = it.overviewId,
@@ -150,6 +118,7 @@ class ScheduleViewModel @Inject constructor(
             insertWorkoutDetail(newWorkoutDetail)
         }
     }
+
 
     private fun activateTimeTracking() {
         _onTracking.value =
@@ -217,49 +186,6 @@ class ScheduleViewModel @Inject constructor(
             activateTimeTracking()
         }
         _elapsedTimeMilli.value = currentWorkoutOverview.elapsedTimeMilli
-    }
-
-    private fun insertWorkoutSet(workoutSet: WorkoutSet) {
-        viewModelScope.launch {
-            val latestWorkoutSet = workoutRepo.getLatestWorkoutSetInfo(workoutSet)
-            latestWorkoutSet?.let {
-                workoutSet.weights = it.weights
-                workoutSet.reps = it.reps
-                workoutSet.platesStack = it.platesStack
-            }
-            addWorkoutSet(workoutSet)
-        }
-    }
-
-    private fun addWorkoutSet(workoutSet: WorkoutSet) {
-        viewModelScope.launch {
-            workoutRepo.addWorkoutSet(workoutSet)
-        }
-    }
-
-
-    private fun deleteWorkoutSet(detailId: Long) {
-        viewModelScope.launch {
-            workoutRepo.removeWorkoutSet(detailId)
-        }
-    }
-
-    private fun insertWorkoutDetail(workoutDetail: WorkoutDetail) {
-        viewModelScope.launch {
-            workoutRepo.addWorkoutDetail(workoutDetail)
-        }
-    }
-
-    private fun deleteWorkoutDetail(workoutDetail: WorkoutDetail) {
-        viewModelScope.launch {
-            workoutRepo.dropWorkoutDetail(workoutDetail)
-        }
-    }
-
-    private fun updateWorkoutOverview(workoutOverview: WorkoutOverview) {
-        viewModelScope.launch {
-            workoutRepo.updateWorkoutOverview(workoutOverview)
-        }
     }
 
 }

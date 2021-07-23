@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="kr.valor.bal.ui.schedule.ScheduleViewModel" />
+            type="kr.valor.bal.ui.schedule.BaseViewModel" />
 
         <variable
             name="bindingCreator"
@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.schedule.EditFragment">
+        tools:context=".ui.schedule.edit.EditFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/schedule_recycler_view"
