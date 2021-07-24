@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="kr.valor.bal.ui.schedule.BaseViewModel" />
+            type="kr.valor.bal.ui.schedule.edit.EditViewModel" />
 
         <variable
             name="bindingCreator"
@@ -24,6 +26,7 @@
             android:layout_height="0dp"
             android:paddingVertical="@dimen/padding_medium"
             android:clipToPadding="false"
+            android:visibility="@{viewModel.recyclerViewVisibility ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
