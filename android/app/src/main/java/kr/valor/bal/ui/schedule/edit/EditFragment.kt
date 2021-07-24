@@ -1,6 +1,7 @@
 package kr.valor.bal.ui.schedule.edit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -18,7 +19,6 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.EditFragmentBinding
-import kr.valor.bal.ui.schedule.ScheduleViewModel
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
@@ -50,7 +50,10 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initBackButtonPressedCallback()
         binding.initBinding()
+
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
+            Log.d("update-after", "${schedule.workoutOverview.elapsedTimeMilli}")
+
             val items =
                 listOf(WorkoutDetailItem.Header(schedule.workoutOverview)) +
                         schedule.workoutDetails.map { item ->
@@ -63,6 +66,13 @@ class EditFragment : Fragment() {
             .onEach { event ->
                 when(event) {
                     is EditViewModel.Event.EditDoneAndBackToDetailDest ->
+                        findNavController().navigate(
+                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                event.overviewId
+                            )
+                        )
+
+                    is EditViewModel.Event.EditRejectAndBackToDetailDest ->
                         findNavController().navigate(
                             EditFragmentDirections.actionEditDestToScheduleDetailDest(
                                 event.overviewId
@@ -138,7 +148,7 @@ class EditFragment : Fragment() {
                 )
             }
             .setNegativeButton(dialogNegativeBtnLabelRes) {_, _ ->
-                Toast.makeText(context, "못가히히!!", Toast.LENGTH_SHORT).show()
+                viewModel.onEditRejectButtonClicked()
             }
             .show()
     }
