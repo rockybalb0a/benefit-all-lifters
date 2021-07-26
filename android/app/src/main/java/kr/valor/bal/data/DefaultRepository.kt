@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
@@ -52,6 +53,14 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
         val targetWorkoutSchedule = workoutDao.getNoneNullWorkoutSchedule(overviewId)
         _workoutScheduleCached.value = targetWorkoutSchedule
         emitSource(workoutDao.getWorkoutSchedule(overviewId))
+    }
+
+    suspend fun isChanged(overviewId: Long, coroutineScope: CoroutineScope): Boolean {
+        val workoutScheduleAsync = coroutineScope.async {
+            workoutDao.getNoneNullWorkoutSchedule(overviewId)
+        }
+        val workoutScheduleAfterEdit = workoutScheduleAsync.await()
+        return workoutScheduleAfterEdit != workoutScheduleCached.value
     }
 
     suspend fun restore(overviewId: Long, coroutineScope: CoroutineScope): Boolean {

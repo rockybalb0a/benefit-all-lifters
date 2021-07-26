@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -82,6 +81,8 @@ class EditFragment : Fragment() {
                     is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog()
 
                     is EditViewModel.Event.ShowTimerSettingDialog -> showTimerManualSettingDialog()
+
+                    is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog()
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)
@@ -113,7 +114,7 @@ class EditFragment : Fragment() {
     private fun initBackButtonPressedCallback() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showApplyChangeChoiceActionDialog()
+                viewModel.onBackButtonClicked()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -153,6 +154,7 @@ class EditFragment : Fragment() {
             .show()
     }
 
+    // TODO Timer picker spinner mode
     private fun showTimerManualSettingDialog(): AlertDialog {
         val dialogTitleRes = R.string.save_changes_action_choice_dialog_title
         val dialogMessageRes = R.string.save_changes_action_choice_dialog_message

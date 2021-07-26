@@ -77,12 +77,12 @@
     <string name="timer_stop_action_choice_dialog_negative_action_btn_label">NO THANKS</string>
 
     <string name="save_changes_action_choice_dialog_title">
-        What is Lorem Ipsum?
+        Your plan has been edited
     </string>
     <string name="save_changes_action_choice_dialog_message">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s
+        Do you want to apply changes and save them permanently?
     </string>
-    <string name="save_changes_action_choice_dialog_positive_action_btn_label">YES</string>
-    <string name="save_changes_action_choice_dialog_negative_action_btn_label">NO</string>
+    <string name="save_changes_action_choice_dialog_positive_action_btn_label">SAVE</string>
+    <string name="save_changes_action_choice_dialog_negative_action_btn_label">DISCARD</string>
 
 </resources>

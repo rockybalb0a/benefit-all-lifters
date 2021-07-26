@@ -1,6 +1,5 @@
 package kr.valor.bal.ui.schedule.edit
 
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -9,11 +8,8 @@ import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.data.entities.WorkoutSet
 import kr.valor.bal.ui.schedule.BaseViewModel
 import javax.inject.Inject
-import kotlin.math.min
 
 @HiltViewModel
 class EditViewModel @Inject constructor(
@@ -24,6 +20,7 @@ class EditViewModel @Inject constructor(
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
         object ShowTimerSettingDialog: Event()
+        object EditDetectedEvent: Event()
         data class EditDoneAndBackToDetailDest(val overviewId: Long): Event()
         data class EditRejectAndBackToDetailDest(val overviewId: Long): Event()
     }
@@ -46,6 +43,16 @@ class EditViewModel @Inject constructor(
     val recyclerViewVisibility: LiveData<Boolean>
         get() = _recyclerViewVisibility
 
+    fun onBackButtonClicked() {
+        viewModelScope.launch {
+            if (workoutRepo.isChanged(overviewId, this)) {
+                eventChannel.send(Event.EditDetectedEvent)
+            } else {
+                eventChannel.send(Event.EditRejectAndBackToDetailDest(overviewId))
+            }
+        }
+    }
+
     fun onEditWorkoutTimerSettingButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.ShowTimerSettingDialog)
@@ -57,7 +64,6 @@ class EditViewModel @Inject constructor(
             it.elapsedTimeMilli += minutes * 60000L
             updateWorkoutOverview(it)
         }
-        Log.d("update-before", "${_currentWorkoutSchedule.value!!.workoutOverview.elapsedTimeMilli}, ${workoutRepo.workoutScheduleCached.value!!.workoutOverview.elapsedTimeMilli}")
     }
 
     fun onEditFinishButtonClicked() {
