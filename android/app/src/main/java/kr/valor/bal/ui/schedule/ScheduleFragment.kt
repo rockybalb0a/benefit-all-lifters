@@ -1,16 +1,12 @@
 package kr.valor.bal.ui.schedule
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.MainApplication
@@ -25,7 +21,7 @@ import kr.valor.bal.utilities.observeInLifecycle
 
 
 @AndroidEntryPoint
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : DialogContainerFragment() {
 
     private val viewModel: ScheduleViewModel by viewModels()
 
@@ -42,42 +38,17 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+
         return when(MainApplication.prefs.getWorkoutRecordingState()) {
             false -> ScheduleFragmentBinding.inflate(inflater, container, false)
             true -> ScheduleDoneFragmentBinding.inflate(inflater, container, false)
-        }.also { binding = it }.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        when(binding) {
-            is ScheduleFragmentBinding -> {
-                (binding as ScheduleFragmentBinding).initBinding()
-                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) {
-                    val items =
-                        it.workoutDetails.map { item ->
-                            WorkoutDetailItem.Item(item)
-                        } + listOf(WorkoutDetailItem.Footer)
-                    scheduleAdapter.submitList(items)
-                }
+        }.also {
+            binding = it
+            when(it) {
+                is ScheduleFragmentBinding -> it.initRecordLayoutBinding()
+                is ScheduleDoneFragmentBinding -> it.initDoneLayoutBinding()
             }
-
-            is ScheduleDoneFragmentBinding -> {
-                (binding as ScheduleDoneFragmentBinding).initBinding()
-                viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
-                    val items =
-                        listOf(WorkoutDetailItem.Header(schedule.workoutOverview)) +
-                            schedule.workoutDetails.map { item ->
-                                WorkoutDetailItem.Item(item)
-                            } + listOf(WorkoutDetailItem.Footer)
-                    detailAdapter.submitList(items)
-                }
-            }
-        }
-
-        setupFlowEventObserver()
-
+        }.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -101,37 +72,42 @@ class ScheduleFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    private fun ScheduleFragmentBinding.initBinding() {
-        bindingCreator = WorkoutSummaryInfoBindingParameterCreator
-        viewModel = this@ScheduleFragment.viewModel
-        lifecycleOwner = viewLifecycleOwner
-
-        recyclerView = scheduleRecyclerView.also { it.initRecyclerview(this) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setLiveDataObserver()
+        setEventObserver()
     }
 
-    private fun ScheduleDoneFragmentBinding.initBinding() {
-        viewModel = this@ScheduleFragment.viewModel
-        lifecycleOwner = viewLifecycleOwner
-        recyclerView = detailRecyclerView.also {
-            detailAdapter = DetailAdapter(EditWorkoutScheduleListener {
-                this@ScheduleFragment.viewModel.onEditWorkoutButtonClicked()
-            })
-            it.setHasFixedSize(true)
-            it.adapter = detailAdapter
+    private fun setLiveDataObserver() {
+        viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
+            when (binding) {
+                is ScheduleFragmentBinding -> {
+                    val list = WorkoutDetailItem.convertToRequireHeaderAdapterList(schedule)
+                    scheduleAdapter.submitList(list)
+                }
+                is ScheduleDoneFragmentBinding -> {
+                    val list = WorkoutDetailItem.convertToNoHeaderAdapterList(schedule)
+                    detailAdapter.submitList(list)
+                }
+            }
         }
     }
 
-    private fun setupFlowEventObserver() {
-
+    private fun setEventObserver() {
         viewModel.eventsFlow
             .onEach {
                 when (it) {
                     ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
-                        showWorkoutSelectionDialog()
+                        showWorkoutSelectionDialog(viewModel)
                     }
                     ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
-                        showTimerResetActionChoiceDialog()
+                        showTimerResetActionChoiceDialog {
+                            viewModel.onTimerResetActionSelected()
+                        }
+                    }
+                    ScheduleViewModel.Event.ShowEditActionChoiceDialog -> {
+                        showEditActionChoiceDialog {
+                            viewModel.onEditWorkoutAcceptClicked()
+                        }
                     }
                     ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
                         MainApplication.prefs.setWorkoutRecordingState(isCompleted = true)
@@ -145,12 +121,30 @@ class ScheduleFragment : Fragment() {
                             ScheduleFragmentDirections.actionScheduleDestSelf()
                         )
                     }
-                    else -> {}
                 }
             }
             .observeInLifecycle(viewLifecycleOwner)
     }
 
+    private fun ScheduleFragmentBinding.initRecordLayoutBinding() {
+        bindingCreator = WorkoutSummaryInfoBindingParameterCreator
+        viewModel = this@ScheduleFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
+
+        recyclerView = scheduleRecyclerView.also { it.initRecyclerview(this) }
+    }
+
+    private fun ScheduleDoneFragmentBinding.initDoneLayoutBinding() {
+        viewModel = this@ScheduleFragment.viewModel
+        lifecycleOwner = viewLifecycleOwner
+        recyclerView = detailRecyclerView.also {
+            detailAdapter = DetailAdapter(EditWorkoutScheduleListener {
+                this@ScheduleFragment.viewModel.onEditWorkoutButtonClicked()
+            })
+            it.setHasFixedSize(true)
+            it.adapter = detailAdapter
+        }
+    }
 
     private fun RecyclerView.initRecyclerview(binding: ScheduleFragmentBinding) {
 
@@ -198,33 +192,4 @@ class ScheduleFragment : Fragment() {
             }
         )
 
-    private fun showWorkoutSelectionDialog(): AlertDialog {
-        val title = resources.getString(R.string.add_new_workout_popup_title)
-        val items = resources.getStringArray(R.array.exercise_list)
-
-        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
-            .setTitle(title)
-            .setItems(items) { _ , i: Int ->
-                viewModel.onDialogItemSelected(items[i])
-            }
-            .show()
-    }
-
-    private fun showTimerResetActionChoiceDialog(): AlertDialog {
-        val dialogTitleRes = R.string.timer_stop_action_choice_dialog_title
-        val dialogMessageRes = R.string.timer_stop_action_choice_dialog_message
-        val dialogPositiveBtnLabelRes = R.string.timer_stop_action_choice_dialog_positive_action_btn_label
-        val dialogNegativeBtnLabelRes = R.string.timer_stop_action_choice_dialog_negative_action_btn_label
-
-        return MaterialAlertDialogBuilder(requireActivity())
-            .setTitle(dialogTitleRes)
-            .setMessage(dialogMessageRes)
-            .setPositiveButton(dialogPositiveBtnLabelRes) { _, _ ->
-                viewModel.onTimerResetActionSelected()
-            }
-            .setNegativeButton(dialogNegativeBtnLabelRes) { dialogInterface: DialogInterface, _ ->
-                dialogInterface.dismiss()
-            }
-            .show()
-    }
 }

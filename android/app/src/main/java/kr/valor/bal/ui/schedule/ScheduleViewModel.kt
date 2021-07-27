@@ -22,10 +22,9 @@ class ScheduleViewModel @Inject constructor(
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
         object ShowTimerStopActionChoiceDialog: Event()
-        object ShowTimerSettingDialog: Event()
+        object ShowEditActionChoiceDialog: Event()
         object NavigateToScheduleDoneDest: Event()
         object NavigateToScheduleEditDest: Event()
-        data class EditDoneAndBackToDetailDest(val overviewId: Long): Event()
     }
 
     private val navArgsOverviewId: Long? = savedStateHandle["overviewId"]
@@ -95,6 +94,16 @@ class ScheduleViewModel @Inject constructor(
 
     fun onEditWorkoutButtonClicked() {
         viewModelScope.launch {
+//            _currentWorkoutOverview.value?.let {
+//                it.trackingStatus = TrackingStatus.PAUSE
+//                workoutRepo.updateWorkoutOverview(it)
+//            }
+            eventChannel.send(Event.ShowEditActionChoiceDialog)
+        }
+    }
+
+    fun onEditWorkoutAcceptClicked() {
+        viewModelScope.launch {
             _currentWorkoutOverview.value?.let {
                 it.trackingStatus = TrackingStatus.PAUSE
                 workoutRepo.updateWorkoutOverview(it)
@@ -102,6 +111,8 @@ class ScheduleViewModel @Inject constructor(
             eventChannel.send(Event.NavigateToScheduleEditDest)
         }
     }
+
+
 
     override fun onAddNewWorkoutButtonClicked() {
         viewModelScope.launch {

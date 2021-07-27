@@ -1,33 +1,26 @@
 package kr.valor.bal.ui.schedule.edit
 
 import android.os.Bundle
-import android.text.format.DateFormat.is24HourFormat
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
-import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
 import kr.valor.bal.databinding.EditFragmentBinding
+import kr.valor.bal.ui.schedule.DialogContainerFragment
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
 
 @AndroidEntryPoint
-class EditFragment : Fragment() {
+class EditFragment : DialogContainerFragment() {
 
     private val viewModel: EditViewModel by viewModels()
 
@@ -49,51 +42,6 @@ class EditFragment : Fragment() {
         }.root
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initBackButtonPressedCallback()
-        binding.initBinding()
-
-        viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
-            Log.d("update-after", "${schedule.workoutOverview.elapsedTimeMilli}")
-
-            val items =
-                listOf(WorkoutDetailItem.Header(schedule.workoutOverview)) +
-                        schedule.workoutDetails.map { item ->
-                            WorkoutDetailItem.Item(item)
-                        } + listOf(WorkoutDetailItem.Footer)
-            editAdapter.submitList(items)
-        }
-
-        viewModel.eventsFlow
-            .onEach { event ->
-                when(event) {
-                    is EditViewModel.Event.EditDoneAndBackToDetailDest ->
-                        findNavController().navigate(
-                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
-                                event.overviewId
-                            )
-                        )
-
-                    is EditViewModel.Event.EditRejectAndBackToDetailDest ->
-                        findNavController().navigate(
-                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
-                                event.overviewId
-                            )
-                        )
-
-                    is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog()
-
-                    is EditViewModel.Event.ShowTimerSettingDialog -> {
-//                        showTimerManualSettingDialog()
-                    }
-
-                    is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog()
-                }
-            }
-            .observeInLifecycle(viewLifecycleOwner)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.schedule_recording_menu, menu)
     }
@@ -106,6 +54,56 @@ class EditFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initBackButtonPressedCallback()
+        binding.initBinding()
+        setLiveDataObserver()
+        setEventObserver()
+    }
+
+    private fun setLiveDataObserver() {
+        viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
+            val items = WorkoutDetailItem.convertToRequireHeaderAdapterList(schedule)
+            editAdapter.submitList(items)
+        }
+    }
+
+    private fun setEventObserver() {
+        viewModel.eventsFlow
+            .onEach { event ->
+                when (event) {
+                    is EditViewModel.Event.EditDoneAndBackToDetailDest ->
+                        findNavController().navigate(
+                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                event.overviewId
+                            )
+                        )
+                    is EditViewModel.Event.EditRejectAndBackToDetailDest ->
+                        findNavController().navigate(
+                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                event.overviewId
+                            )
+                        )
+                    is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog(
+                        positiveAction = {
+                            findNavController().navigate(
+                                EditFragmentDirections
+                                    .actionEditDestToScheduleDetailDest(navArgs.overviewId)
+                            )
+                        },
+                        negativeAction = {
+                            viewModel.onEditRejectButtonClicked()
+                        }
+                    )
+                    is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog(viewModel)
+                    is EditViewModel.Event.ShowTimerSettingDialog -> {
+                        //                        showTimerManualSettingDialog()
+                    }
+                }
+            }
+            .observeInLifecycle(viewLifecycleOwner)
     }
 
     private fun EditFragmentBinding.initBinding() {
@@ -125,55 +123,6 @@ class EditFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
-
-    private fun showWorkoutSelectionDialog(): AlertDialog {
-        val title = resources.getString(R.string.add_new_workout_popup_title)
-        val items = resources.getStringArray(R.array.exercise_list)
-
-        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
-            .setTitle(title)
-            .setItems(items) { _ , i: Int ->
-                viewModel.onDialogItemSelected(items[i])
-            }
-            .show()
-    }
-
-    private fun showApplyChangeChoiceActionDialog(): AlertDialog {
-        val dialogTitleRes = R.string.save_changes_action_choice_dialog_title
-        val dialogMessageRes = R.string.save_changes_action_choice_dialog_message
-        val dialogPositiveBtnLabelRes = R.string.save_changes_action_choice_dialog_positive_action_btn_label
-        val dialogNegativeBtnLabelRes = R.string.save_changes_action_choice_dialog_negative_action_btn_label
-
-        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
-            .setTitle(dialogTitleRes)
-            .setMessage(dialogMessageRes)
-            .setPositiveButton(dialogPositiveBtnLabelRes) { _,_ ->
-                findNavController().navigate(
-                   EditFragmentDirections.actionEditDestToScheduleDetailDest(
-                        navArgs.overviewId
-                    )
-                )
-            }
-            .setNegativeButton(dialogNegativeBtnLabelRes) {_, _ ->
-                viewModel.onEditRejectButtonClicked()
-            }
-            .show()
-    }
-
-//    private fun showTimerManualSettingDialog(): MaterialTimePicker {
-//        val isSystem24Hour = is24HourFormat(requireContext())
-//        val clockFormat = if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
-//
-//
-//        return MaterialTimePicker.Builder()
-//            .setTimeFormat(clockFormat)
-//            .setHour(12)
-//            .setMinute(10)
-//            .setInputMode(INPUT_MODE_KEYBOARD)
-//            .build()
-//            .also { it.show(parentFragmentManager, "tag") }
-//
-//    }
 
     private fun RecyclerView.bindingRecyclerView() {
         editAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())

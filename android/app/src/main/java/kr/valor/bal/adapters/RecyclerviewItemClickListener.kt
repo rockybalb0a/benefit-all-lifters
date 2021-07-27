@@ -85,4 +85,30 @@ sealed class WorkoutDetailItem {
     object Footer: WorkoutDetailItem() {
         override val id: Long = Long.MIN_VALUE
     }
+
+    companion object {
+
+        fun convertToRequireHeaderAdapterList(schedule: WorkoutSchedule): List<WorkoutDetailItem> {
+            return generateBaseList(schedule).toList()
+        }
+
+        fun convertToNoHeaderAdapterList(schedule: WorkoutSchedule): List<WorkoutDetailItem> {
+            val headerItem = Header(schedule.workoutOverview)
+            val list = generateBaseList(schedule)
+            list.add(0, headerItem)
+
+            return list.toList()
+        }
+
+        private fun generateBaseList(schedule: WorkoutSchedule): MutableList<WorkoutDetailItem> {
+            val contents = schedule.workoutDetails.map { Item(it) }
+            val footerItem = Footer
+            val list = mutableListOf<WorkoutDetailItem>()
+            list.addAll(contents)
+            list.add(footerItem)
+
+            return list
+        }
+    }
+
 }
