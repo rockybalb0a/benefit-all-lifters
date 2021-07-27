@@ -78,7 +78,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_edit_dest_to_schedule_detail_dest"
-            app:destination="@id/schedule_detail_dest" />
+            app:destination="@id/schedule_detail_dest"
+            app:popUpTo="@id/schedule_detail_dest"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_edit_dest_to_schedule_set_dest"
             app:destination="@id/schedule_set_dest" />

@@ -21,6 +21,27 @@
     <style name="Theme.App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="Theme.App.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/primaryColor5percentOverlay</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/primaryTextColorHighEmphasis</item>
+        <item name="android:textAppearance">@style/Theme.App.TextAppearance.HighEmphasis</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/primaryTextColorMediumEmphasis</item>
+        <item name="android:textAppearance">@style/Theme.App.TextAppearance.MediumEmphasis12</item>
+    </style>
+
+
+
     <style name="Widget.App.Button.Colored" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="backgroundTint">@color/primaryColor5percentOverlay</item>
@@ -110,6 +131,10 @@
 
     <style name="Theme.App.TextAppearance.HighEmphasis12" parent="Theme.App.TextAppearance.HighEmphasis">
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_size_small_dp</item>
+    </style>
+
+    <style name="Theme.App.TextAppearance.MediumEmphasis12" parent="Theme.App.TextAppearance.MediumEmphasis">
         <item name="android:textSize">@dimen/text_size_small_dp</item>
     </style>
 

@@ -202,7 +202,7 @@ class ScheduleFragment : Fragment() {
         val title = resources.getString(R.string.add_new_workout_popup_title)
         val items = resources.getStringArray(R.array.exercise_list)
 
-        return MaterialAlertDialogBuilder(requireActivity())
+        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
             .setTitle(title)
             .setItems(items) { _ , i: Int ->
                 viewModel.onDialogItemSelected(items[i])

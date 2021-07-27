@@ -1,6 +1,7 @@
 package kr.valor.bal.ui.schedule.edit
 
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -12,6 +13,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
@@ -80,7 +84,9 @@ class EditFragment : Fragment() {
 
                     is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog()
 
-                    is EditViewModel.Event.ShowTimerSettingDialog -> showTimerManualSettingDialog()
+                    is EditViewModel.Event.ShowTimerSettingDialog -> {
+//                        showTimerManualSettingDialog()
+                    }
 
                     is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog()
                 }
@@ -124,7 +130,7 @@ class EditFragment : Fragment() {
         val title = resources.getString(R.string.add_new_workout_popup_title)
         val items = resources.getStringArray(R.array.exercise_list)
 
-        return MaterialAlertDialogBuilder(requireActivity())
+        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
             .setTitle(title)
             .setItems(items) { _ , i: Int ->
                 viewModel.onDialogItemSelected(items[i])
@@ -138,7 +144,7 @@ class EditFragment : Fragment() {
         val dialogPositiveBtnLabelRes = R.string.save_changes_action_choice_dialog_positive_action_btn_label
         val dialogNegativeBtnLabelRes = R.string.save_changes_action_choice_dialog_negative_action_btn_label
 
-        return MaterialAlertDialogBuilder(requireActivity())
+        return MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_App_Dialog)
             .setTitle(dialogTitleRes)
             .setMessage(dialogMessageRes)
             .setPositiveButton(dialogPositiveBtnLabelRes) { _,_ ->
@@ -154,24 +160,20 @@ class EditFragment : Fragment() {
             .show()
     }
 
-    // TODO Timer picker spinner mode
-    private fun showTimerManualSettingDialog(): AlertDialog {
-        val dialogTitleRes = R.string.save_changes_action_choice_dialog_title
-        val dialogMessageRes = R.string.save_changes_action_choice_dialog_message
-        val dialogPositiveBtnLabelRes = R.string.save_changes_action_choice_dialog_positive_action_btn_label
-        val dialogNegativeBtnLabelRes = R.string.save_changes_action_choice_dialog_negative_action_btn_label
-
-        return MaterialAlertDialogBuilder(requireActivity())
-            .setTitle(dialogTitleRes)
-            .setMessage(dialogMessageRes)
-            .setPositiveButton(dialogPositiveBtnLabelRes) { _,_ ->
-                viewModel.onEditTimerButtonClicked(5)
-            }
-            .setNegativeButton(dialogNegativeBtnLabelRes) {_, _ ->
-                viewModel.onEditTimerButtonClicked(-5)
-            }
-            .show()
-    }
+//    private fun showTimerManualSettingDialog(): MaterialTimePicker {
+//        val isSystem24Hour = is24HourFormat(requireContext())
+//        val clockFormat = if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+//
+//
+//        return MaterialTimePicker.Builder()
+//            .setTimeFormat(clockFormat)
+//            .setHour(12)
+//            .setMinute(10)
+//            .setInputMode(INPUT_MODE_KEYBOARD)
+//            .build()
+//            .also { it.show(parentFragmentManager, "tag") }
+//
+//    }
 
     private fun RecyclerView.bindingRecyclerView() {
         editAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
