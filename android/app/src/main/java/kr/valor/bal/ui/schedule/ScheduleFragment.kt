@@ -81,11 +81,11 @@ class ScheduleFragment : DialogContainerFragment() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
             when (binding) {
                 is ScheduleFragmentBinding -> {
-                    val list = WorkoutDetailItem.convertToRequireHeaderAdapterList(schedule)
+                    val list = WorkoutDetailItem.convertToNoHeaderAdapterList(schedule)
                     scheduleAdapter.submitList(list)
                 }
                 is ScheduleDoneFragmentBinding -> {
-                    val list = WorkoutDetailItem.convertToNoHeaderAdapterList(schedule)
+                    val list = WorkoutDetailItem.convertToRequireHeaderAdapterList(schedule)
                     detailAdapter.submitList(list)
                 }
             }

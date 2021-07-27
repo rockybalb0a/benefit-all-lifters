@@ -1,6 +1,5 @@
 package kr.valor.bal.data
 
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData

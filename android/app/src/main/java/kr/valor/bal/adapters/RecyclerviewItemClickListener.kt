@@ -89,16 +89,15 @@ sealed class WorkoutDetailItem {
     companion object {
 
         fun convertToRequireHeaderAdapterList(schedule: WorkoutSchedule): List<WorkoutDetailItem> {
-            return generateBaseList(schedule).toList()
-        }
-
-        fun convertToNoHeaderAdapterList(schedule: WorkoutSchedule): List<WorkoutDetailItem> {
             val headerItem = Header(schedule.workoutOverview)
             val list = generateBaseList(schedule)
             list.add(0, headerItem)
 
             return list.toList()
         }
+
+        fun convertToNoHeaderAdapterList(schedule: WorkoutSchedule): List<WorkoutDetailItem> =
+            generateBaseList(schedule).toList()
 
         private fun generateBaseList(schedule: WorkoutSchedule): MutableList<WorkoutDetailItem> {
             val contents = schedule.workoutDetails.map { Item(it) }
