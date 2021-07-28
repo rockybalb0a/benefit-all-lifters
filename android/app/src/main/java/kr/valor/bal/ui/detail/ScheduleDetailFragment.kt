@@ -42,7 +42,6 @@ class ScheduleDetailFragment: Fragment() {
         binding.initBinding()
         contentRecyclerView = binding.contentsRecyclerView.also {
             adapter = DetailAdapter(null)
-            it.setHasFixedSize(true)
             it.adapter = adapter
         }
 

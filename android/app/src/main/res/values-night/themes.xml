@@ -16,6 +16,7 @@
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialogTheme</item>
         <item name="android:windowBackground">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/primaryColor20percentShade</item>
     </style>
 
     <style name="Theme.App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

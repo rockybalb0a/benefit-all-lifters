@@ -26,13 +26,14 @@
         <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/content_motion_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layoutDescription="@xml/detail_item_scene">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sets_info_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
                 android:nestedScrollingEnabled="false"
                 android:background="@color/primaryColor5percentOverlay"
                 android:padding="@dimen/padding_default" />
