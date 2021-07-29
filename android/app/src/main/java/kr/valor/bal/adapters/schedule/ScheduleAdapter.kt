@@ -13,6 +13,19 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
+    private val headerViewListener =
+        try {
+            listeners.single { it is ManualTimerSettingListener } as ManualTimerSettingListener
+        } catch (e: NoSuchElementException) {
+            null
+        }
+
+    private val footerViewListener =
+        listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
+
+    private val itemViewListeners =
+        listeners.filter { it !is CompleteWorkoutScheduleListener }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         return when(viewType) {
             ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.create(parent)
@@ -23,19 +36,6 @@ class ScheduleAdapter(private vararg val listeners: RecyclerviewItemClickListene
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-
-        val headerViewListener =
-            try {
-                listeners.single { it is ManualTimerSettingListener } as ManualTimerSettingListener
-            } catch (e: NoSuchElementException) {
-                null
-            }
-
-        val footerViewListener =
-            listeners.single { it is CompleteWorkoutScheduleListener } as CompleteWorkoutScheduleListener
-
-        val itemViewListeners =
-            listeners.filter { it !is CompleteWorkoutScheduleListener }
 
         when(holder) {
             is ItemViewHolder -> {
