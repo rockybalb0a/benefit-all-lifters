@@ -19,8 +19,8 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="@{() -> clickListener.onClick(Unit.INSTANCE)}"
-        app:cardCornerRadius="@dimen/cardview_corner_radius_default"
-        app:cardElevation="@dimen/cardview_elevation_default">
+        app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
+        app:cardElevation="@dimen/app_cardview_elevation_default">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

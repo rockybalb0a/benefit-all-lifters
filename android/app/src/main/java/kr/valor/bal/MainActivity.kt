@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar!!.hide()
                 }
 
+                R.id.home_dest -> {
+                    supportActionBar!!.hide()
+                }
+
                 R.id.edit_dest -> {
                     bottomNavigationView.visibility = View.GONE
                     supportActionBar!!.show()

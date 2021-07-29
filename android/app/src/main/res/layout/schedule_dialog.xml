@@ -29,7 +29,7 @@
             android:layout_height="0dp"
             android:backgroundTint="@color/primaryColor5percentOverlay"
             android:backgroundTintMode="src_over"
-            app:cardCornerRadius="@dimen/cardview_corner_radius_default"
+            app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"

@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/separator"
-            app:cardCornerRadius="@dimen/cardview_corner_radius_default"
+            app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
             app:cardElevation="@dimen/cardview_default_elevation">
 
             <androidx.constraintlayout.widget.ConstraintLayout
