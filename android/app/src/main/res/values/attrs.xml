@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="BigMuscleInfo">
+    <declare-styleable name="workoutInfo">
         <attr name="workoutImage" format="reference|integer" />
         <attr name="workoutName" format="reference|string" />
     </declare-styleable>

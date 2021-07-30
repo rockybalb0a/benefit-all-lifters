@@ -69,6 +69,11 @@ class ManualTimerSettingListener (val clickListener: () -> Unit): RecyclerviewIt
 
 }
 
+class ShowDetailInfoListener (val clickListener: () -> Unit): RecyclerviewItemClickListener<Unit> {
+
+    override fun onClick(item: Unit) = clickListener()
+
+}
 
 sealed class WorkoutDetailItem {
 

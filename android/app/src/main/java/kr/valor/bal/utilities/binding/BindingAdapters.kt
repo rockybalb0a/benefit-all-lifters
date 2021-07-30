@@ -42,10 +42,10 @@ fun ImageView.setTimerBackgroundImage(item: WorkoutOverview?) {
 }
 
 @BindingAdapter("headerImage")
-fun ImageView.setHeaderImage(item: WorkoutDetail?) {
+fun ImageView.setHeaderImage(workoutName: String?) {
     val workoutList = resources.getStringArray(R.array.exercise_list)
-    item?.let {
-        setImageResource(when (it.workoutName) {
+    workoutName?.let {
+        setImageResource(when (it) {
             workoutList[0] -> R.drawable.background_image_squat
             workoutList[1] -> R.drawable.background_image_front_squat
             workoutList[2] -> R.drawable.background_image_dead_lift

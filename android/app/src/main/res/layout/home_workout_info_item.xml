@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="kotlin.Unit" />
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="item"
+            type="kr.valor.bal.data.WorkoutSummaryInfo" />
+
+        <variable
+            name="clickListener"
+            type="kr.valor.bal.adapters.ShowDetailInfoListener" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.WorkoutHeaderInfoBindingParameterCreator" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="220dp"
+        android:layout_height="240dp"
+        android:layout_margin="@dimen/margin_medium"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
+        app:cardElevation="@dimen/app_cardview_elevation_default">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/workout_background_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:headerImage="@{item.workoutName}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/background_image_bench_press" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/backgroundShadowAlt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/workout_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_textview_medium"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
+                android:text="@{bindingCreator.getWorkoutName(item, context)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Bench press" />
+
+            <TextView
+                android:id="@+id/workout_1rm_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_textview_medium"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
+                android:drawablePadding="@dimen/padding_small"
+                android:text="1RM"
+                app:drawableTint="@color/app_yellow"
+                app:drawableStartCompat="@drawable/ic_1rm_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/workout_1rm_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_textview_small"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
+                android:text="@{bindingCreator.get1rmMaximum(item, context)}"
+                app:layout_constraintStart_toEndOf="@id/workout_1rm_title"
+                app:layout_constraintTop_toTopOf="@id/workout_1rm_title"
+                app:layout_constraintBottom_toBottomOf="@id/workout_1rm_title"
+                tools:text="100kg"/>
+
+            <ImageButton
+                android:id="@+id/workout_show_detail_button"
+                android:layout_width="@dimen/icon_button_width"
+                android:layout_height="@dimen/icon_button_height"
+                android:layout_marginEnd="@dimen/icon_button_margin_small"
+                android:layout_marginBottom="@dimen/icon_button_margin_medium"
+                android:onClick="@{() -> clickListener.onClick(Unit.INSTANCE)}"
+                android:background="@drawable/app_ripple_borderless"
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
+
