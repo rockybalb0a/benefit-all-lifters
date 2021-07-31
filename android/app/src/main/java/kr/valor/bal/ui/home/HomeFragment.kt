@@ -40,8 +40,19 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.initBinding()
+
+//        viewModel.todayWorkoutSchedule.observe(viewLifecycleOwner) {
+//            it?.let {
+//                binding.test.text = if (it.workoutDetails.isNotEmpty()) {
+//                    it.workoutDetails.size.toString()
+//                } else {
+//                    "NO WORKOUT INFO"
+//                }
+//            } ?: run {
+//                binding.test.text = "NO WORKOUT INFO"
+//            }
+//        }
 
         viewModel.eventsFlow
             .onEach {

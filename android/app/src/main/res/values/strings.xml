@@ -7,6 +7,10 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
+    <string name="home_nav_btn_title_text_if_not_exist">\" Demand Maximum \"</string>
+    <string name="home_nav_btn_sub_title_text_if_not_exist">Plan your training session of today</string>
+    <string name="home_nav_btn_title_text_if_exist">Пойдем !!</string>
+
 
     <string name="bottom_nav_item_title_home">Home</string>
     <string name="bottom_nav_item_title_overview">Overview</string>
@@ -17,7 +21,6 @@
     <string name="today_workout_overview_title">Today</string>
     <string name="yesterday_workout_overview_title">Yesterday</string>
 
-    <string name="new_workout_text">Пойдем !!</string>
     <string name="rest_today_text">I will rest today..</string>
     <string name="finish_recording_text">Save training records</string>
     <string name="edit_today_text">Change my schedule</string>

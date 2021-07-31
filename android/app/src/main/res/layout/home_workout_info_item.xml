@@ -22,9 +22,9 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="220dp"
-        android:layout_height="240dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:layout_margin="@dimen/margin_small"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
@@ -57,12 +57,14 @@
 
             <TextView
                 android:id="@+id/workout_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_textview_medium"
-                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
+                android:paddingVertical="@dimen/padding_medium"
+                android:paddingHorizontal="@dimen/padding_large"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
                 android:text="@{bindingCreator.getWorkoutName(item, context)}"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Bench press" />
 
@@ -71,7 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_textview_medium"
-                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis12"
+                android:gravity="center_vertical"
                 android:drawablePadding="@dimen/padding_small"
                 android:text="1RM"
                 app:drawableTint="@color/app_yellow"
@@ -84,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_textview_small"
-                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis12"
                 android:text="@{bindingCreator.get1rmMaximum(item, context)}"
                 app:layout_constraintStart_toEndOf="@id/workout_1rm_title"
                 app:layout_constraintTop_toTopOf="@id/workout_1rm_title"

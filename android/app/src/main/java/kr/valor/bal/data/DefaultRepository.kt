@@ -28,6 +28,12 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
         emit(workoutDao.getNoneNullWorkoutOverviewById(overviewId))
     }
 
+    fun getWorkoutOverviewOfToday() = liveData {
+        val today = LocalDate.now()
+        val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(today)
+        emit(currentWorkoutOverview)
+    }
+
     fun getWorkoutOverviewOfToday(init: ((WorkoutOverview) -> Unit)?) = liveData {
         val currentDate = LocalDate.now()
         val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(currentDate)
