@@ -17,6 +17,7 @@ import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.data.WorkoutSummaryInfo
 import kr.valor.bal.databinding.HomeFragmentBinding
+import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
 
@@ -27,9 +28,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var userRecordsRecyclerView: RecyclerView
 
-    private lateinit var adapter: HomeAdapter
+    private lateinit var userRecordsAdapter: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +43,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.initBinding()
 
-//        viewModel.todayWorkoutSchedule.observe(viewLifecycleOwner) {
-//            it?.let {
-//                binding.test.text = if (it.workoutDetails.isNotEmpty()) {
-//                    it.workoutDetails.size.toString()
-//                } else {
-//                    "NO WORKOUT INFO"
-//                }
-//            } ?: run {
-//                binding.test.text = "NO WORKOUT INFO"
-//            }
-//        }
 
         viewModel.eventsFlow
             .onEach {
@@ -70,18 +60,18 @@ class HomeFragment : Fragment() {
     private fun HomeFragmentBinding.initBinding() {
         viewModel = this@HomeFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
-        this@HomeFragment.recyclerView = recyclerView.also { it.initRecyclerView() }
+        userRecordsRecyclerView = userRecordsView.also { it.initRecyclerView() }
     }
 
     private fun RecyclerView.initRecyclerView() {
         layoutManager = LinearLayoutManager(this@HomeFragment.context, LinearLayoutManager.HORIZONTAL, false)
-        this@HomeFragment.adapter = HomeAdapter(
+        userRecordsAdapter = HomeAdapter(
             ShowDetailInfoListener { Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show() }
         ).also {
             adapter = it
         }
         val dummyList = createDummyData()
-        this@HomeFragment.adapter.submitList(dummyList)
+        userRecordsAdapter.submitList(dummyList)
     }
 
     private fun createDummyData(): List<WorkoutSummaryInfo> {

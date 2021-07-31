@@ -8,7 +8,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutDetail
 import kr.valor.bal.data.entities.WorkoutOverview
 
 @BindingAdapter("thumbnailImage")

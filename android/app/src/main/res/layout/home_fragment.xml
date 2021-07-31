@@ -14,10 +14,12 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- Header -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/total_workout_day_parent_view"
                 android:layout_width="match_parent"
@@ -26,7 +28,7 @@
                 android:layout_marginHorizontal="@dimen/margin_small"
                 app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
                 app:cardElevation="@dimen/app_cardview_elevation_default"
-                app:layout_constraintBottom_toTopOf="@id/recycler_view"
+                app:layout_constraintBottom_toTopOf="@id/training_records_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -81,15 +83,30 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <TextView
+                android:id="@+id/training_records_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
+                android:text="Your Barbell Training Journey"
+                app:layout_constraintTop_toBottomOf="@id/total_workout_day_parent_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/total_workout_day_parent_view" />
 
+                />
+
+            <!-- Record -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_records_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/training_records_title" />
+
+            <!-- Start new workout -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/plan_new_workout_button"
                 android:layout_width="0dp"
@@ -99,13 +116,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{() -> viewModel.onNavigateToScheduleDestButtonClicked()}"
-                android:visibility="@{viewModel.navigateButtonVisibility ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view"
+                app:layout_constraintTop_toBottomOf="@id/user_records_view"
                 app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
-                app:cardElevation="@dimen/app_cardview_elevation_default"
-                tools:visibility="gone">
+                app:cardElevation="@dimen/app_cardview_elevation_default">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -116,11 +131,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/new_workout_button_background_image"
+                        android:src="@{viewModel.navigateButtonBackgroundImage}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/home_nav_btn_on_record_or_not_exist_bg_img" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -135,29 +151,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding_small"
-                        android:text="@string/home_nav_btn_title_text_if_not_exist"
+                        android:text="@{viewModel.navigateButtonTitleText}"
                         android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
                         android:textStyle="italic|bold"
                         app:layout_constraintVertical_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/plan_new_workout_button_sub_title" />
+                        app:layout_constraintBottom_toTopOf="@id/plan_new_workout_button_sub_title"
+                        tools:text="@string/home_nav_btn_title_text_if_not_exist"/>
                     <TextView
                         android:id="@+id/plan_new_workout_button_sub_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_nav_btn_sub_title_text_if_not_exist"
+                        android:text="@{viewModel.navigateButtonSubTitleText}"
                         android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
                         app:layout_constraintStart_toStartOf="@id/plan_new_workout_button_title"
                         app:layout_constraintEnd_toEndOf="@id/plan_new_workout_button_title"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/plan_new_workout_button_title" />
+                        app:layout_constraintTop_toBottomOf="@id/plan_new_workout_button_title"
+                        tools:text="@string/home_nav_btn_sub_title_text_if_not_exist"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
