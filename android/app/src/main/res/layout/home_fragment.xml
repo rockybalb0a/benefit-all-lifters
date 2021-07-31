@@ -107,8 +107,33 @@
                 app:layout_constraintTop_toBottomOf="@id/training_records_title" />
 
             <!-- Start new workout -->
+            <TextView
+                android:id="@+id/nav_btn_header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
+                android:text="@{viewModel.navigateButtonHeaderTitleText}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_records_view"
+                tools:text="@string/home_nav_btn_header_title_if_not_exist" />
+
+            <TextView
+                android:id="@+id/nav_btn_header_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:paddingTop="@dimen/padding_small"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis12"
+                android:textSize="@dimen/text_size_default_dp"
+                android:text="@{viewModel.navigateButtonHeaderBodyText}"
+                app:layout_constraintStart_toStartOf="@id/nav_btn_header_title"
+                app:layout_constraintTop_toBottomOf="@id/nav_btn_header_title"
+                tools:text="@string/home_nav_btn_header_body_if_not_exist" />
+
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/plan_new_workout_button"
+                android:id="@+id/nav_btn"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/margin_small"
@@ -118,7 +143,7 @@
                 android:onClick="@{() -> viewModel.onNavigateToScheduleDestButtonClicked()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_records_view"
+                app:layout_constraintTop_toBottomOf="@id/nav_btn_header_body"
                 app:cardCornerRadius="@dimen/app_cardview_corner_radius_default"
                 app:cardElevation="@dimen/app_cardview_elevation_default">
 
@@ -136,7 +161,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@drawable/home_nav_btn_on_record_or_not_exist_bg_img" />
+                        tools:src="@drawable/home_nav_btn_bg_img_if_not_exist" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -147,7 +172,7 @@
                         app:layout_constraintBottom_toBottomOf="parent" />
 
                     <TextView
-                        android:id="@+id/plan_new_workout_button_title"
+                        android:id="@+id/nav_btn_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding_small"
@@ -158,19 +183,35 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/plan_new_workout_button_sub_title"
+                        app:layout_constraintBottom_toTopOf="@id/nav_btn_body"
                         tools:text="@string/home_nav_btn_title_text_if_not_exist"/>
                     <TextView
-                        android:id="@+id/plan_new_workout_button_sub_title"
+                        android:id="@+id/nav_btn_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.navigateButtonSubTitleText}"
+                        android:text="@{viewModel.navigateButtonBodyText}"
                         android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
-                        app:layout_constraintStart_toStartOf="@id/plan_new_workout_button_title"
-                        app:layout_constraintEnd_toEndOf="@id/plan_new_workout_button_title"
+                        app:layout_constraintStart_toStartOf="@id/nav_btn_title"
+                        app:layout_constraintEnd_toEndOf="@id/nav_btn_title"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/plan_new_workout_button_title"
-                        tools:text="@string/home_nav_btn_sub_title_text_if_not_exist"/>
+                        app:layout_constraintTop_toBottomOf="@id/nav_btn_title"
+                        tools:text="@string/home_nav_btn_body_text_if_not_exist"/>
+                    <TextView
+                        android:id="@+id/nav_btn_tail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_textview_small"
+                        android:layout_marginEnd="@dimen/margin_textview_medium"
+                        android:textColor="@color/app_blue_tints"
+                        android:textSize="@dimen/text_size_default_dp"
+                        android:textStyle="bold"
+                        android:text="@{viewModel.navigateButtonTailText}"
+                        android:drawablePadding="@dimen/padding_small"
+                        app:drawableStartCompat="@drawable/ic_baseline_open_in_new_16"
+                        app:drawableTint="@color/app_blue_tints"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:text="@string/home_nav_btn_tail_text_if_not_exist" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

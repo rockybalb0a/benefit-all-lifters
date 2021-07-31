@@ -7,14 +7,23 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
+    <string name="home_nav_btn_header_title_if_not_exist">The only easy day was yesterday</string>
+    <string name="home_nav_btn_header_body_if_not_exist">What\'s your plan of today?</string>
     <string name="home_nav_btn_title_text_if_not_exist">\" Demand Maximum \"</string>
-    <string name="home_nav_btn_sub_title_text_if_not_exist">Plan your training session of today</string>
+    <string name="home_nav_btn_body_text_if_not_exist">Plan your training session of today</string>
+    <string name="home_nav_btn_tail_text_if_not_exist">Click to start</string>
 
-    <string name="home_nav_btn_title_text_if_exist">\" Пойдем !! \"</string>
-    <string name="home_nav_btn_sub_title_text_if_exist">Demanding impossible maximum result</string>
+    <string name="home_nav_btn_header_title_if_exist">Are you ready to get more stronger?</string>
+    <string name="home_nav_btn_header_body_if_exist">Perfect your training</string>
+    <string name="home_nav_btn_title_text_if_exist">\" Блять Едем !! \"</string>
+    <string name="home_nav_btn_body_text_if_exist">Demanding impossible maximum result</string>
+    <string name="home_nav_btn_tail_text_if_exist">Click to continue</string>
 
+    <string name="home_nav_btn_header_title_if_done">Training was successful</string>
+    <string name="home_nav_btn_header_body_if_done">…been stronger than yesterday!</string>
     <string name="home_nav_btn_title_text_if_done">\" You\'ve proved yourself \"</string>
-    <string name="home_nav_btn_sub_title_if_done">It\'s time to take a break for tomorrow</string>
+    <string name="home_nav_btn_body_text_if_done">Eat, sleep, rest … and REPEAT!!!</string>
+    <string name="home_nav_btn_tail_text_if_done">Click to see details</string>
 
     <string name="bottom_nav_item_title_home">Home</string>
     <string name="bottom_nav_item_title_overview">Overview</string>

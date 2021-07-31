@@ -32,6 +32,7 @@
     <color name="app_yellow">#FDD835</color>
     <color name="app_green">#43A047</color>
     <color name="app_blue">#0D47A1</color>
+    <color name="app_blue_tints">#86A3D0</color>
     <color name="app_red">#B71C1C</color>
 
     <color name="backgroundShadow">#AA000000</color>

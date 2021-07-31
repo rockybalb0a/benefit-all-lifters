@@ -22,6 +22,7 @@ class HomeViewModel @Inject constructor(
     sealed class Event {
         object NavigateToScheduleDest: Event()
     }
+    private val res = application.resources
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventsFlow = eventChannel.receiveAsFlow()
@@ -39,54 +40,76 @@ class HomeViewModel @Inject constructor(
         it?.workoutDetails?.isEmpty() ?: false
     }
 
-    val navigateButtonTitleText = _todayWorkoutSchedule.map {
-        it?.let {
-            if (it.workoutDetails.isEmpty()) {
-                application.resources.getString(R.string.home_nav_btn_title_text_if_not_exist)
-            } else {
-                if (it.workoutOverview.trackingStatus == TrackingStatus.DONE) {
-                    application.resources.getString(R.string.home_nav_btn_title_text_if_done)
-                } else {
-                    application.resources.getString(R.string.home_nav_btn_title_text_if_exist)
-                }
-            }
-        } ?: application.resources.getString(R.string.home_nav_btn_title_text_if_not_exist)
+    val navigateButtonHeaderTitleText = _todayWorkoutSchedule.map {
+        it.getResourcesByState(
+            res.getString(R.string.home_nav_btn_header_title_if_exist),
+            res.getString(R.string.home_nav_btn_header_title_if_not_exist),
+            res.getString(R.string.home_nav_btn_header_title_if_done)
+        )
     }
 
-    val navigateButtonSubTitleText = _todayWorkoutSchedule.map {
-        it?.let {
-            if (it.workoutDetails.isEmpty()) {
-                application.resources.getString(R.string.home_nav_btn_sub_title_text_if_not_exist)
-            } else {
-                if (it.workoutOverview.trackingStatus == TrackingStatus.DONE) {
-                    application.resources.getString(R.string.home_nav_btn_sub_title_if_done)
-                } else {
-                    application.resources.getString(R.string.home_nav_btn_sub_title_text_if_exist)
-                }
-            }
-        } ?: application.resources.getString(R.string.home_nav_btn_sub_title_text_if_not_exist)
+    val navigateButtonHeaderBodyText = _todayWorkoutSchedule.map {
+        it.getResourcesByState(
+            res.getString(R.string.home_nav_btn_header_body_if_exist),
+            res.getString(R.string.home_nav_btn_header_body_if_not_exist),
+            res.getString(R.string.home_nav_btn_header_body_if_done)
+        )
+    }
+
+    val navigateButtonTitleText = _todayWorkoutSchedule.map {
+        it.getResourcesByState(
+            res.getString(R.string.home_nav_btn_title_text_if_exist),
+            res.getString(R.string.home_nav_btn_title_text_if_not_exist),
+            res.getString(R.string.home_nav_btn_title_text_if_done)
+        )
+    }
+
+    val navigateButtonBodyText = _todayWorkoutSchedule.map {
+        it.getResourcesByState(
+            res.getString(R.string.home_nav_btn_body_text_if_exist),
+            res.getString(R.string.home_nav_btn_body_text_if_not_exist),
+            res.getString(R.string.home_nav_btn_body_text_if_done)
+        )
+    }
+
+    val navigateButtonTailText = _todayWorkoutSchedule.map {
+        it.getResourcesByState(
+            res.getString(R.string.home_nav_btn_tail_text_if_exist),
+            res.getString(R.string.home_nav_btn_tail_text_if_not_exist),
+            res.getString(R.string.home_nav_btn_tail_text_if_done)
+        )
     }
 
     val navigateButtonBackgroundImage = _todayWorkoutSchedule.map {
-        it?.let {
-            if (it.workoutDetails.isEmpty()) {
-                ResourcesCompat.getDrawable(application.resources, R.drawable.home_nav_btn_on_record_or_not_exist_bg_img, null)
-            } else {
-                if (it.workoutOverview.trackingStatus == TrackingStatus.DONE) {
-                    ResourcesCompat.getDrawable(application.resources, R.drawable.home_nav_btn_on_done_bg_img, null)
-                } else {
-                    ResourcesCompat.getDrawable(application.resources, R.drawable.background_image_press, null)
-                }
-            }
-        } ?: ResourcesCompat.getDrawable(application.resources, R.drawable.home_nav_btn_on_record_or_not_exist_bg_img, null)!!
+        it.getResourcesByState(
+            ResourcesCompat.getDrawable(res, R.drawable.home_nav_btn_bg_img_if_exist, null),
+            ResourcesCompat.getDrawable(res, R.drawable.home_nav_btn_bg_img_if_not_exist, null),
+            ResourcesCompat.getDrawable(res, R.drawable.home_nav_btn_bg_img_if_done, null)
+        )
     }
-
-
 
     fun onNavigateToScheduleDestButtonClicked() {
         viewModelScope.launch {
             eventChannel.send(Event.NavigateToScheduleDest)
         }
+    }
+
+    private fun <T> WorkoutSchedule?.getResourcesByState(
+        existStateReturnVal: T,
+        notExistStateReturnVal: T,
+        doneStateReturnVal: T
+    ): T {
+        this?.let {
+            return if (it.workoutDetails.isEmpty()) {
+                notExistStateReturnVal
+            } else {
+                if (it.workoutOverview.trackingStatus == TrackingStatus.DONE) {
+                    doneStateReturnVal
+                } else {
+                    existStateReturnVal
+                }
+            }
+        } ?: return notExistStateReturnVal
     }
 
 }
