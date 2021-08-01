@@ -12,15 +12,15 @@ import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutOverview
 import kr.valor.bal.data.entities.WorkoutSet
-import kr.valor.bal.databinding.DetailCardviewItemBinding
-import kr.valor.bal.databinding.ScheduleDoneFooterItemBinding
-import kr.valor.bal.databinding.ScheduleDoneHeaderItemBinding
+import kr.valor.bal.databinding.ItemDetailWorkoutDetailWithSetsBinding
+import kr.valor.bal.databinding.ItemDoneFooterBinding
+import kr.valor.bal.databinding.ItemDoneHeaderBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 sealed class DetailViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
-class ItemViewHolder private constructor(private val binding: DetailCardviewItemBinding): DetailViewHolder(binding) {
+class ItemViewHolder private constructor(private val binding: ItemDetailWorkoutDetailWithSetsBinding): DetailViewHolder(binding) {
 
     fun bind(data: WorkoutDetailAndSets, viewPool: RecyclerView.RecycledViewPool) {
         with(binding) {
@@ -31,7 +31,7 @@ class ItemViewHolder private constructor(private val binding: DetailCardviewItem
         }
     }
 
-    private fun DetailCardviewItemBinding.bindChild(viewPool: RecyclerView.RecycledViewPool, item: List<WorkoutSet>) {
+    private fun ItemDetailWorkoutDetailWithSetsBinding.bindChild(viewPool: RecyclerView.RecycledViewPool, item: List<WorkoutSet>) {
 
         val childLayoutManager =
             GridLayoutManager(setsInfoRecyclerview.context, 4, GridLayoutManager.VERTICAL, false)
@@ -54,13 +54,13 @@ class ItemViewHolder private constructor(private val binding: DetailCardviewItem
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
-                inflate<DetailCardviewItemBinding>(parent, R.layout.detail_cardview_item)
+                inflate<ItemDetailWorkoutDetailWithSetsBinding>(parent, R.layout.item_detail_workout_detail_with_sets)
             return ItemViewHolder(binding)
         }
     }
 }
 
-class HeaderViewHolder private constructor(private val binding: ScheduleDoneHeaderItemBinding): DetailViewHolder(binding) {
+class HeaderViewHolder private constructor(private val binding: ItemDoneHeaderBinding): DetailViewHolder(binding) {
 
     fun bind(data: WorkoutOverview) {
         with(binding) {
@@ -73,14 +73,14 @@ class HeaderViewHolder private constructor(private val binding: ScheduleDoneHead
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
-                inflate<ScheduleDoneHeaderItemBinding>(parent, R.layout.schedule_done_header_item)
+                inflate<ItemDoneHeaderBinding>(parent, R.layout.item_done_header)
             return HeaderViewHolder(binding)
         }
     }
 }
 
 
-class FooterViewHolder private constructor(private val binding: ScheduleDoneFooterItemBinding): DetailViewHolder(binding) {
+class FooterViewHolder private constructor(private val binding: ItemDoneFooterBinding): DetailViewHolder(binding) {
 
     fun bind(listener: RecyclerviewItemClickListener<Unit>?) {
         with(binding) {
@@ -94,7 +94,7 @@ class FooterViewHolder private constructor(private val binding: ScheduleDoneFoot
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
-                inflate<ScheduleDoneFooterItemBinding>(parent, R.layout.schedule_done_footer_item)
+                inflate<ItemDoneFooterBinding>(parent, R.layout.item_done_footer)
             return FooterViewHolder(binding)
         }
     }

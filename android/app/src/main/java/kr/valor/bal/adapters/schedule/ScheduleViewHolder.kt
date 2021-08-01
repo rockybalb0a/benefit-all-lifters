@@ -9,15 +9,15 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutDetailAndSets
 import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.databinding.ScheduleCardviewItemBinding
-import kr.valor.bal.databinding.ScheduleFooterItemBinding
-import kr.valor.bal.databinding.ScheduleHeaderItemBinding
+import kr.valor.bal.databinding.ItemScheduleFooterBinding
+import kr.valor.bal.databinding.ItemScheduleHeaderBinding
+import kr.valor.bal.databinding.ItemScheduleWorkoutRecordingBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 sealed class ScheduleViewHolder(binding: ViewDataBinding): ViewHolder(binding)
 
-class ItemViewHolder private constructor(private val binding: ScheduleCardviewItemBinding): ScheduleViewHolder(binding) {
+class ItemViewHolder private constructor(private val binding: ItemScheduleWorkoutRecordingBinding): ScheduleViewHolder(binding) {
 
     fun bind(data: WorkoutDetailAndSets, listeners: List<RecyclerviewItemClickListener<*>>, viewPool: RecyclerView.RecycledViewPool) {
         with(binding) {
@@ -52,7 +52,7 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
     }
 
     @SuppressLint("SwitchIntDef")
-    private fun ScheduleCardviewItemBinding.refresh(visibility: Int) {
+    private fun ItemScheduleWorkoutRecordingBinding.refresh(visibility: Int) {
         emptyAddSetButton.visibility = visibility
         when (emptyAddSetButton.visibility) {
             View.VISIBLE -> {
@@ -69,13 +69,13 @@ class ItemViewHolder private constructor(private val binding: ScheduleCardviewIt
     companion object : ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
             val binding =
-                inflate<ScheduleCardviewItemBinding>(parent, R.layout.schedule_cardview_item)
+                inflate<ItemScheduleWorkoutRecordingBinding>(parent, R.layout.item_schedule_workout_recording)
             return ItemViewHolder(binding)
         }
     }
 }
 
-class FooterViewHolder private constructor(private val binding: ScheduleFooterItemBinding): ScheduleViewHolder(binding) {
+class FooterViewHolder private constructor(private val binding: ItemScheduleFooterBinding): ScheduleViewHolder(binding) {
 
     fun bind(listeners: RecyclerviewItemClickListener<Unit>) {
         with(binding) {
@@ -87,13 +87,13 @@ class FooterViewHolder private constructor(private val binding: ScheduleFooterIt
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
             val binding =
-                inflate<ScheduleFooterItemBinding>(parent, R.layout.schedule_footer_item)
+                inflate<ItemScheduleFooterBinding>(parent, R.layout.item_schedule_footer)
             return FooterViewHolder(binding)
         }
     }
 }
 
-class HeaderViewHolder private constructor(private val binding: ScheduleHeaderItemBinding): ScheduleViewHolder(binding) {
+class HeaderViewHolder private constructor(private val binding: ItemScheduleHeaderBinding): ScheduleViewHolder(binding) {
 
     fun bind(data: WorkoutOverview, listeners: RecyclerviewItemClickListener<Unit>) {
         with(binding) {
@@ -107,7 +107,7 @@ class HeaderViewHolder private constructor(private val binding: ScheduleHeaderIt
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ScheduleViewHolder {
             val binding =
-                inflate<ScheduleHeaderItemBinding>(parent, R.layout.schedule_header_item)
+                inflate<ItemScheduleHeaderBinding>(parent, R.layout.item_schedule_header)
             return HeaderViewHolder(binding)
         }
     }

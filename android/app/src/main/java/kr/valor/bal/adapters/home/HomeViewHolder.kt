@@ -7,10 +7,10 @@ import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
 import kr.valor.bal.data.WorkoutSummaryInfo
-import kr.valor.bal.databinding.HomeWorkoutInfoItemBinding
+import kr.valor.bal.databinding.ItemHomeUserPrBinding
 import kr.valor.bal.utilities.binding.WorkoutHeaderInfoBindingParameterCreator
 
-class HomeViewHolder(private val binding: HomeWorkoutInfoItemBinding): ViewHolder(binding) {
+class HomeViewHolder(private val binding: ItemHomeUserPrBinding): ViewHolder(binding) {
 
     fun bind(data: WorkoutSummaryInfo, listener: RecyclerviewItemClickListener<Unit>) {
         with(binding) {
@@ -24,7 +24,7 @@ class HomeViewHolder(private val binding: HomeWorkoutInfoItemBinding): ViewHolde
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
-                inflate<HomeWorkoutInfoItemBinding>(parent, R.layout.home_workout_info_item)
+                inflate<ItemHomeUserPrBinding>(parent, R.layout.item_home_user_pr)
             return HomeViewHolder(binding)
         }
     }

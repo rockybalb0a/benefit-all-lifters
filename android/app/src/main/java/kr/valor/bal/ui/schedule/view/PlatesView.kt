@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import kr.valor.bal.databinding.PlatesLayoutBinding
+import kr.valor.bal.databinding.LayoutPlatesBinding
 
 
 class PlatesView: ConstraintLayout {
@@ -17,7 +17,7 @@ class PlatesView: ConstraintLayout {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes)
 
-    private var binding: PlatesLayoutBinding
+    private var binding: LayoutPlatesBinding
     private var container: ConstraintLayout
     private val currentPlatesStack: MutableList<Plates> = mutableListOf()
     private var barbellLength = 0
@@ -106,8 +106,8 @@ class PlatesView: ConstraintLayout {
     }
 
 
-    private fun createLayoutBinding(): PlatesLayoutBinding {
-        return PlatesLayoutBinding
+    private fun createLayoutBinding(): LayoutPlatesBinding {
+        return LayoutPlatesBinding
             .inflate(LayoutInflater.from(context), this, false)
             .also {
                 it.root.id = generateViewId()

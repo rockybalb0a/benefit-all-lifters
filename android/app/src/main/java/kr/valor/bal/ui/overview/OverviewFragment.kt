@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.OverviewItemListener
-import kr.valor.bal.databinding.OverviewFragmentBinding
+import kr.valor.bal.databinding.FragmentOverviewBinding
 
 
 // TODO : Set state for rest / workout
@@ -21,7 +21,7 @@ class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
 
-    private lateinit var binding: OverviewFragmentBinding
+    private lateinit var binding: FragmentOverviewBinding
 
     private lateinit var overviewAdapter: OverviewAdapter
 
@@ -31,7 +31,7 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return OverviewFragmentBinding.inflate(inflater, container, false)
+        return FragmentOverviewBinding.inflate(inflater, container, false)
             .also { binding = it }.root
     }
 

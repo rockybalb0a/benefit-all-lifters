@@ -109,6 +109,6 @@
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/detail_cardview_item" />
+            tools:listitem="@layout/item_detail_workout_detail_with_sets" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

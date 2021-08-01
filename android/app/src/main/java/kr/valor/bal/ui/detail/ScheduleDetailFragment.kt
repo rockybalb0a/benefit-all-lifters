@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.adapters.WorkoutDetailItem
 import kr.valor.bal.adapters.detail.DetailAdapter
-import kr.valor.bal.databinding.ScheduleDetailFragmentBinding
+import kr.valor.bal.databinding.FragmentDetailBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
@@ -22,7 +22,7 @@ class ScheduleDetailFragment: Fragment() {
 
     private val viewModel: ScheduleDetailViewModel by viewModels()
 
-    private lateinit var binding: ScheduleDetailFragmentBinding
+    private lateinit var binding: FragmentDetailBinding
 
     private lateinit var contentRecyclerView: RecyclerView
 
@@ -33,7 +33,7 @@ class ScheduleDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ScheduleDetailFragmentBinding.inflate(inflater, container, false)
+        return FragmentDetailBinding.inflate(inflater, container, false)
             .also { binding = it }.root
     }
 
@@ -72,7 +72,7 @@ class ScheduleDetailFragment: Fragment() {
     }
 
 
-    private fun ScheduleDetailFragmentBinding.initBinding() {
+    private fun FragmentDetailBinding.initBinding() {
         with(this) {
             viewModel = this@ScheduleDetailFragment.viewModel
             lifecycleOwner = viewLifecycleOwner

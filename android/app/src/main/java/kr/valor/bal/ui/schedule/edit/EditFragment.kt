@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
-import kr.valor.bal.databinding.EditFragmentBinding
+import kr.valor.bal.databinding.FragmentEditBinding
 import kr.valor.bal.ui.schedule.DialogContainerFragment
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
@@ -26,7 +26,7 @@ class EditFragment : DialogContainerFragment() {
 
     private val navArgs by navArgs<EditFragmentArgs>()
 
-    private lateinit var binding: EditFragmentBinding
+    private lateinit var binding: FragmentEditBinding
 
     private lateinit var editAdapter: ScheduleAdapter
 
@@ -36,7 +36,7 @@ class EditFragment : DialogContainerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return EditFragmentBinding.inflate(inflater, container, false).also {
+        return FragmentEditBinding.inflate(inflater, container, false).also {
             binding = it
             binding.initBinding()
         }.root
@@ -106,7 +106,7 @@ class EditFragment : DialogContainerFragment() {
             .observeInLifecycle(viewLifecycleOwner)
     }
 
-    private fun EditFragmentBinding.initBinding() {
+    private fun FragmentEditBinding.initBinding() {
         setHasOptionsMenu(true)
 
         viewModel = this@EditFragment.viewModel

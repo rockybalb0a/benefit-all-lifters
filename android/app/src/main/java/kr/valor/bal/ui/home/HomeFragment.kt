@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
@@ -16,8 +15,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.data.WorkoutSummaryInfo
-import kr.valor.bal.databinding.HomeFragmentBinding
-import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
+import kr.valor.bal.databinding.FragmentHomeBinding
 import kr.valor.bal.utilities.observeInLifecycle
 
 
@@ -26,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: FragmentHomeBinding
 
     private lateinit var userRecordsRecyclerView: RecyclerView
 
@@ -36,7 +34,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return HomeFragmentBinding.inflate(inflater, container, false)
+        return FragmentHomeBinding.inflate(inflater, container, false)
             .also { binding = it }.root
     }
 
@@ -57,7 +55,7 @@ class HomeFragment : Fragment() {
             .observeInLifecycle(viewLifecycleOwner)
     }
 
-    private fun HomeFragmentBinding.initBinding() {
+    private fun FragmentHomeBinding.initBinding() {
         viewModel = this@HomeFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
         userRecordsRecyclerView = userRecordsView.also { it.initRecyclerView() }

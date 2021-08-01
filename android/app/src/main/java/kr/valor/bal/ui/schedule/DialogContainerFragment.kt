@@ -7,12 +7,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kr.valor.bal.R
-import kr.valor.bal.databinding.ScheduleFragmentBinding
+import kr.valor.bal.databinding.FragmentScheduleBinding
 
 open class DialogContainerFragment: Fragment(){
 
     protected inline fun <reified T: ViewDataBinding> Class<T>.initBinding() {
-        if (this.isAssignableFrom(ScheduleFragmentBinding::class.java)) {
+        if (this.isAssignableFrom(FragmentScheduleBinding::class.java)) {
             Toast.makeText(context, "Good", Toast.LENGTH_SHORT).show()
         }
 

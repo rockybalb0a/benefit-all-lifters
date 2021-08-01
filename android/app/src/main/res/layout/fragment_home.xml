@@ -105,7 +105,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/training_records_title"
-                tools:listitem="@layout/home_workout_info_item" />
+                tools:listitem="@layout/item_home_user_pr" />
 
             <!-- Start new workout -->
             <TextView

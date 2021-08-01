@@ -4,11 +4,11 @@ import android.view.ViewGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.databinding.OverviewCardviewItemBinding
+import kr.valor.bal.databinding.ItemOverviewWorkoutScheduleBinding
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 
 class OverviewViewHolder private constructor(
-    private  val binding: OverviewCardviewItemBinding
+    private  val binding: ItemOverviewWorkoutScheduleBinding
 ): ViewHolder(binding) {
 
     fun bind(data: WorkoutSchedule, listeners: RecyclerviewItemClickListener<WorkoutSchedule>) {
@@ -23,7 +23,7 @@ class OverviewViewHolder private constructor(
     companion object: ViewHolderFactory() {
         override fun create(parent: ViewGroup): ViewHolder {
             val binding =
-                inflate<OverviewCardviewItemBinding>(parent, R.layout.overview_cardview_item)
+                inflate<ItemOverviewWorkoutScheduleBinding>(parent, R.layout.item_overview_workout_schedule)
             return OverviewViewHolder(binding)
         }
     }

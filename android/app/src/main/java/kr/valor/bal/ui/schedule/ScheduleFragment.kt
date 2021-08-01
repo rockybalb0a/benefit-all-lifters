@@ -14,8 +14,8 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.detail.DetailAdapter
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
-import kr.valor.bal.databinding.ScheduleDoneFragmentBinding
-import kr.valor.bal.databinding.ScheduleFragmentBinding
+import kr.valor.bal.databinding.FragmentDoneBinding
+import kr.valor.bal.databinding.FragmentScheduleBinding
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 import kr.valor.bal.utilities.observeInLifecycle
 
@@ -40,21 +40,21 @@ class ScheduleFragment : DialogContainerFragment() {
         setHasOptionsMenu(true)
 
         return when(MainApplication.prefs.getWorkoutRecordingState()) {
-            false -> ScheduleFragmentBinding.inflate(inflater, container, false)
-            true -> ScheduleDoneFragmentBinding.inflate(inflater, container, false)
+            false -> FragmentScheduleBinding.inflate(inflater, container, false)
+            true -> FragmentDoneBinding.inflate(inflater, container, false)
         }.also {
             binding = it
             when(it) {
-                is ScheduleFragmentBinding -> it.initRecordLayoutBinding()
-                is ScheduleDoneFragmentBinding -> it.initDoneLayoutBinding()
+                is FragmentScheduleBinding -> it.initRecordLayoutBinding()
+                is FragmentDoneBinding -> it.initDoneLayoutBinding()
             }
         }.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         when(binding) {
-            is ScheduleDoneFragmentBinding -> inflater.inflate(R.menu.schedule_done_menu, menu)
-            is ScheduleFragmentBinding -> inflater.inflate(R.menu.schedule_recording_menu, menu)
+            is FragmentDoneBinding -> inflater.inflate(R.menu.schedule_done_menu, menu)
+            is FragmentScheduleBinding -> inflater.inflate(R.menu.schedule_recording_menu, menu)
         }
     }
 
@@ -80,11 +80,11 @@ class ScheduleFragment : DialogContainerFragment() {
     private fun setLiveDataObserver() {
         viewModel.currentWorkoutSchedule.observe(viewLifecycleOwner) { schedule ->
             when (binding) {
-                is ScheduleFragmentBinding -> {
+                is FragmentScheduleBinding -> {
                     val list = WorkoutDetailItem.convertToNoHeaderAdapterList(schedule)
                     scheduleAdapter.submitList(list)
                 }
-                is ScheduleDoneFragmentBinding -> {
+                is FragmentDoneBinding -> {
                     val list = WorkoutDetailItem.convertToRequireHeaderAdapterList(schedule)
                     detailAdapter.submitList(list)
                 }
@@ -126,7 +126,7 @@ class ScheduleFragment : DialogContainerFragment() {
             .observeInLifecycle(viewLifecycleOwner)
     }
 
-    private fun ScheduleFragmentBinding.initRecordLayoutBinding() {
+    private fun FragmentScheduleBinding.initRecordLayoutBinding() {
         bindingCreator = WorkoutSummaryInfoBindingParameterCreator
         viewModel = this@ScheduleFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
@@ -134,7 +134,7 @@ class ScheduleFragment : DialogContainerFragment() {
         recyclerView = scheduleRecyclerView.also { it.initRecyclerview(this) }
     }
 
-    private fun ScheduleDoneFragmentBinding.initDoneLayoutBinding() {
+    private fun FragmentDoneBinding.initDoneLayoutBinding() {
         viewModel = this@ScheduleFragment.viewModel
         lifecycleOwner = viewLifecycleOwner
         recyclerView = detailRecyclerView.also {
@@ -146,7 +146,7 @@ class ScheduleFragment : DialogContainerFragment() {
         }
     }
 
-    private fun RecyclerView.initRecyclerview(binding: ScheduleFragmentBinding) {
+    private fun RecyclerView.initRecyclerview(binding: FragmentScheduleBinding) {
 
         scheduleAdapter = ScheduleAdapter(*initializeRecyclerviewClickListeners())
             .also { adapter = it }
