@@ -7,6 +7,8 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
+    <string name="home_training_records_title_text">Your Barbell Training Journey</string>
+
     <string name="home_nav_btn_header_title_if_not_exist">The only easy day was yesterday</string>
     <string name="home_nav_btn_header_body_if_not_exist">What\'s your plan of today?</string>
     <string name="home_nav_btn_title_text_if_not_exist">\" Demand Maximum \"</string>

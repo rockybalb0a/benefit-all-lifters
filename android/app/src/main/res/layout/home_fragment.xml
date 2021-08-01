@@ -90,21 +90,22 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
-                android:text="Your Barbell Training Journey"
+                android:text="@string/home_training_records_title_text"
                 app:layout_constraintTop_toBottomOf="@id/total_workout_day_parent_view"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Record -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/user_records_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/training_records_title" />
+                app:layout_constraintTop_toBottomOf="@id/training_records_title"
+                tools:listitem="@layout/home_workout_info_item" />
 
             <!-- Start new workout -->
             <TextView

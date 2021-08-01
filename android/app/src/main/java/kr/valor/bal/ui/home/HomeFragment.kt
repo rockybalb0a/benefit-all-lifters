@@ -64,7 +64,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun RecyclerView.initRecyclerView() {
-        layoutManager = LinearLayoutManager(this@HomeFragment.context, LinearLayoutManager.HORIZONTAL, false)
         userRecordsAdapter = HomeAdapter(
             ShowDetailInfoListener { Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show() }
         ).also {
