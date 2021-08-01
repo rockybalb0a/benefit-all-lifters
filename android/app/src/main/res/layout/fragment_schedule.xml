@@ -138,7 +138,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_schedule_workout_recording"
+            tools:listitem="@layout/preview_schedule_recyclerview"
+            tools:itemCount="1"
             tools:visibility="visible"/>
 
         <TextView
