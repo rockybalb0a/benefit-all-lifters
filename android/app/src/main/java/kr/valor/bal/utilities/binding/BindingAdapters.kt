@@ -4,9 +4,13 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
+import kr.valor.bal.adapters.ViewHolder
+import kr.valor.bal.adapters.home.HomeAdapter
+import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutOverview
 
@@ -73,4 +77,11 @@ fun MaterialButtonToggleGroup.getChecked(): Int = indexOfChild(findViewById(chec
 @BindingAdapter("checkedToggleBtnIndexAttrChanged")
 fun MaterialButtonToggleGroup.setToggleGroupChangedListener(listener: InverseBindingListener) {
     addOnButtonCheckedListener { _, _, _ -> listener.onChange()}
+}
+
+@BindingAdapter("overviewBinding")
+fun RecyclerView.bindRecyclerView(data: List<WorkoutSchedule>?) {
+    val adapter = adapter as OverviewAdapter
+
+    adapter.submitList(data)
 }

@@ -18,7 +18,7 @@ import kr.valor.bal.data.WorkoutSummaryInfo
 import kr.valor.bal.databinding.FragmentHomeBinding
 import kr.valor.bal.utilities.observeInLifecycle
 
-
+// TODO : Issue #3
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 

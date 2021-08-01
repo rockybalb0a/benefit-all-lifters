@@ -7,53 +7,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.OverviewItemListener
 import kr.valor.bal.databinding.FragmentOverviewBinding
 
 
-// TODO : Set state for rest / workout
-// TODO : Different UI for each state
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
 
-    private lateinit var binding: FragmentOverviewBinding
-
-    private lateinit var overviewAdapter: OverviewAdapter
-
-    private lateinit var recyclerView: RecyclerView
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentOverviewBinding.inflate(inflater, container, false)
-            .also { binding = it }.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recyclerView = binding.recyclerView.also { it.initRecyclerView() }
-
-        viewModel.workoutSchedules.observe(viewLifecycleOwner) {
-            it?.let {
-                overviewAdapter.submitList(it)
-            }
-        }
-    }
-
-    private fun RecyclerView.initRecyclerView() {
-        setHasFixedSize(true)
-        overviewAdapter = OverviewAdapter(
-            OverviewItemListener {
+        val binding = FragmentOverviewBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        with(binding.recyclerView) {
+            setHasFixedSize(true)
+            adapter = OverviewAdapter(OverviewItemListener {
                 findNavController().navigate(OverviewFragmentDirections
                     .actionOverviewDestToScheduleDetailDest(it.workoutOverview.overviewId))
-            }
-        ).also { adapter = it }
+            })
+        }
+
+        return binding.root
     }
 
 }
