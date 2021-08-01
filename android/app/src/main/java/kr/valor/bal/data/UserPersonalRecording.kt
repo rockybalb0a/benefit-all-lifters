@@ -1,6 +1,6 @@
 package kr.valor.bal.data
 
-data class WorkoutSummaryInfo(
+data class UserPersonalRecording(
     val workoutName: String,
     val maximum1rm: Double
 )

@@ -6,17 +6,17 @@ import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.WorkoutSummaryInfo
+import kr.valor.bal.data.UserPersonalRecording
 import kr.valor.bal.databinding.ItemHomeUserPrBinding
-import kr.valor.bal.utilities.binding.WorkoutHeaderInfoBindingParameterCreator
+import kr.valor.bal.utilities.binding.UserPrBindingParameterCreator
 
 class HomeViewHolder(private val binding: ItemHomeUserPrBinding): ViewHolder(binding) {
 
-    fun bind(data: WorkoutSummaryInfo, listener: RecyclerviewItemClickListener<Unit>) {
+    fun bind(data: UserPersonalRecording, listener: RecyclerviewItemClickListener<Unit>) {
         with(binding) {
             item = data
             clickListener = listener as ShowDetailInfoListener
-            bindingCreator = WorkoutHeaderInfoBindingParameterCreator
+            bindingCreator = UserPrBindingParameterCreator
             executePendingBindings()
         }
     }

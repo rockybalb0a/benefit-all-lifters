@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/item_detail_workout_detail_with_sets"/>
+            tools:listitem="@layout/preview_done_recyclerview"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

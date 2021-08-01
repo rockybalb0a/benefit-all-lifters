@@ -32,7 +32,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_schedule_workout_recording"/>
+            tools:itemCount="1"
+            tools:listitem="@layout/preview_edit_recyclerview"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

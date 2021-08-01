@@ -11,6 +11,7 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.adapters.overview.OverviewAdapter
+import kr.valor.bal.data.UserPersonalRecording
 import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.data.entities.WorkoutOverview
 
@@ -79,9 +80,17 @@ fun MaterialButtonToggleGroup.setToggleGroupChangedListener(listener: InverseBin
     addOnButtonCheckedListener { _, _, _ -> listener.onChange()}
 }
 
+@JvmName("overviewBinding")
 @BindingAdapter("overviewBinding")
 fun RecyclerView.bindRecyclerView(data: List<WorkoutSchedule>?) {
     val adapter = adapter as OverviewAdapter
 
+    adapter.submitList(data)
+}
+
+@JvmName("userRecordBinding")
+@BindingAdapter("userRecordBinding")
+fun RecyclerView.bindRecyclerView(data: List<UserPersonalRecording>?) {
+    val adapter = adapter as HomeAdapter
     adapter.submitList(data)
 }

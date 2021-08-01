@@ -24,7 +24,7 @@
     <string name="home_nav_btn_header_title_if_done">Training was successful</string>
     <string name="home_nav_btn_header_body_if_done">…been stronger than yesterday!</string>
     <string name="home_nav_btn_title_text_if_done">\" You\'ve proved yourself \"</string>
-    <string name="home_nav_btn_body_text_if_done">Eat, sleep, rest … and REPEAT!!!</string>
+    <string name="home_nav_btn_body_text_if_done">eat, sleep, rest … and REPEAT!!!</string>
     <string name="home_nav_btn_tail_text_if_done">Click to see details</string>
 
     <string name="bottom_nav_item_title_home">Home</string>

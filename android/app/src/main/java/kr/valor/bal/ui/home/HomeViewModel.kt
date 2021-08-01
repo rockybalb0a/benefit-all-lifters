@@ -5,11 +5,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.DefaultRepository
 import kr.valor.bal.data.WorkoutSchedule
+import kr.valor.bal.data.UserPersonalRecording
 import kr.valor.bal.utilities.TrackingStatus
 import javax.inject.Inject
 
@@ -24,20 +26,21 @@ class HomeViewModel @Inject constructor(
     }
     private val res = application.resources
 
-    private val eventChannel = Channel<Event>(Channel.BUFFERED)
-    val eventsFlow = eventChannel.receiveAsFlow()
+    private val _eventChannel = Channel<Event>(Channel.BUFFERED)
+    val eventsFlow: Flow<Event>
+        get() = _eventChannel.receiveAsFlow()
 
-    private val _todayWorkoutOverview = workoutRepo.getWorkoutOverviewOfToday()
-
-    private val _todayWorkoutSchedule = _todayWorkoutOverview.switchMap {
+    private val _todayWorkoutSchedule = workoutRepo.getWorkoutOverviewOfToday().switchMap {
         it?.let { workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId) } ?: liveData { emit(null) }
     }
-    val todayWorkoutSchedule: LiveData<out WorkoutSchedule?>
-        get() = _todayWorkoutSchedule
 
+    private val _userPrRecords = MutableLiveData<List<UserPersonalRecording>>()
+    val userPrRecords: LiveData<List<UserPersonalRecording>>
+        get() = _userPrRecords
 
-    val navigateButtonVisibility = _todayWorkoutSchedule.map {
-        it?.workoutDetails?.isEmpty() ?: false
+    init {
+        // TODO : Real Implementation
+        _userPrRecords.value = createDummyData()
     }
 
     val navigateButtonHeaderTitleText = _todayWorkoutSchedule.map {
@@ -90,7 +93,7 @@ class HomeViewModel @Inject constructor(
 
     fun onNavigateToScheduleDestButtonClicked() {
         viewModelScope.launch {
-            eventChannel.send(Event.NavigateToScheduleDest)
+            _eventChannel.send(Event.NavigateToScheduleDest)
         }
     }
 
@@ -110,6 +113,18 @@ class HomeViewModel @Inject constructor(
                 }
             }
         } ?: return notExistStateReturnVal
+    }
+
+    // TODO : Real Implementation
+    private fun createDummyData(): List<UserPersonalRecording> {
+        val workoutList = res.getStringArray(R.array.exercise_list)
+        val workoutSummaryInfoList = mutableListOf<UserPersonalRecording>()
+        workoutList.forEach {
+            workoutSummaryInfoList.add(
+                UserPersonalRecording(it, 100.0)
+            )
+        }
+        return workoutSummaryInfoList.toList()
     }
 
 }

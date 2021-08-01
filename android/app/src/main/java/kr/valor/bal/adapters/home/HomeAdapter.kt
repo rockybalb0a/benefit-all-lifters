@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.data.WorkoutSummaryInfo
+import kr.valor.bal.data.UserPersonalRecording
 
-class HomeAdapter(private val clickListener: RecyclerviewItemClickListener<Unit>): ListAdapter<WorkoutSummaryInfo, ViewHolder>(DIFF_CALLBACK) {
+class HomeAdapter(private val clickListener: RecyclerviewItemClickListener<Unit>): ListAdapter<UserPersonalRecording, ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return HomeViewHolder.create(parent)
@@ -19,17 +19,17 @@ class HomeAdapter(private val clickListener: RecyclerviewItemClickListener<Unit>
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WorkoutSummaryInfo>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<UserPersonalRecording>() {
             override fun areItemsTheSame(
-                oldItem: WorkoutSummaryInfo,
-                newItem: WorkoutSummaryInfo
+                oldItem: UserPersonalRecording,
+                newItem: UserPersonalRecording
             ): Boolean {
                 return oldItem.workoutName == newItem.workoutName
             }
 
             override fun areContentsTheSame(
-                oldItem: WorkoutSummaryInfo,
-                newItem: WorkoutSummaryInfo
+                oldItem: UserPersonalRecording,
+                newItem: UserPersonalRecording
             ): Boolean {
                 return oldItem == newItem
             }

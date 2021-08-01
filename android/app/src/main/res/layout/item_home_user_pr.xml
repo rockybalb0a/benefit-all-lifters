@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="kr.valor.bal.data.WorkoutSummaryInfo" />
+            type="kr.valor.bal.data.UserPersonalRecording" />
 
         <variable
             name="clickListener"
@@ -18,7 +18,7 @@
 
         <variable
             name="bindingCreator"
-            type="kr.valor.bal.utilities.binding.WorkoutHeaderInfoBindingParameterCreator" />
+            type="kr.valor.bal.utilities.binding.UserPrBindingParameterCreator" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
