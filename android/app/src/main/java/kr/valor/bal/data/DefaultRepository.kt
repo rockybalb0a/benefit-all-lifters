@@ -11,12 +11,14 @@ import kr.valor.bal.data.local.WorkoutSchedule
 import kr.valor.bal.data.local.entities.WorkoutDetail
 import kr.valor.bal.data.local.entities.WorkoutOverview
 import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.remote.YoutubeApiService
+import kr.valor.bal.data.remote.YoutubeVideoContainer
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) {
+class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao, private val service: YoutubeApiService) {
 
     private val _workoutOverviewCached = MutableLiveData<WorkoutOverview>()
 
