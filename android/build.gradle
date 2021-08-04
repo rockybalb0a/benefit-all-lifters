@@ -40,6 +40,7 @@ ext {
     junitVersion = '4.13.2'
     roomVersion = '2.3.0'
     serializationVersion = '1.1.0'
+    retrofitVersion = '2.9.0'
     moshiVersion = '1.9.3'
     glideVersion = '4.12.0'
 }
