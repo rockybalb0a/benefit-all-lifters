@@ -10,19 +10,21 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.UserPersonalRecording
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.UserPersonalRecording
 import kr.valor.bal.utilities.TrackingStatus
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     application: Application,
-    private val workoutRepo: DefaultRepository
+    private val repository: DefaultRepository
 ): AndroidViewModel(application) {
 
     sealed class Event {
         object NavigateToScheduleDest: Event()
+        object EventNetworkError: Event()
     }
     private val res = application.resources
 
@@ -30,15 +32,18 @@ class HomeViewModel @Inject constructor(
     val eventsFlow: Flow<Event>
         get() = _eventChannel.receiveAsFlow()
 
-    private val _todayWorkoutSchedule = workoutRepo.getWorkoutOverviewOfToday().switchMap {
-        it?.let { workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId) } ?: liveData { emit(null) }
+    private val _todayWorkoutSchedule = repository.getWorkoutOverviewOfToday().switchMap {
+        it?.let { repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId) } ?: liveData { emit(null) }
     }
 
     private val _userPrRecords = MutableLiveData<List<UserPersonalRecording>>()
     val userPrRecords: LiveData<List<UserPersonalRecording>>
         get() = _userPrRecords
 
+    val videos = repository.youtubeVideos
+
     init {
+        refreshVideoFromRepository()
         // TODO : Real Implementation
         _userPrRecords.value = createDummyData()
     }
@@ -94,6 +99,18 @@ class HomeViewModel @Inject constructor(
     fun onNavigateToScheduleDestButtonClicked() {
         viewModelScope.launch {
             _eventChannel.send(Event.NavigateToScheduleDest)
+        }
+    }
+
+    private fun refreshVideoFromRepository() {
+        viewModelScope.launch {
+            try {
+                repository.refreshVideos()
+            } catch (e: IOException) {
+                if (videos.value.isNullOrEmpty()) {
+                    _eventChannel.send(Event.EventNetworkError)
+                }
+            }
         }
     }
 

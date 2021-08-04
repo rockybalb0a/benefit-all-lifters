@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import kr.valor.bal.databinding.ItemDetailWorkoutSetGridBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 

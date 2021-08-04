@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="kr.valor.bal.data.local.UserPersonalRecording" />
+            type="kr.valor.bal.data.local.workout.UserPersonalRecording" />
 
         <variable
             name="clickListener"

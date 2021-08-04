@@ -1,4 +1,4 @@
-package kr.valor.bal.data.local
+package kr.valor.bal.data.local.workout
 
 import androidx.room.TypeConverter
 import kr.valor.bal.utilities.TrackingStatus

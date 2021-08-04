@@ -2,8 +2,8 @@ package kr.valor.bal.utilities.binding
 
 import android.content.Context
 import kr.valor.bal.R
-import kr.valor.bal.data.local.WorkoutDetailAndSets
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.WorkoutDetailAndSets
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 
 object WorkoutDetailInfoBindingParameterCreator {
 

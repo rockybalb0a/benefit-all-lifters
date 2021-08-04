@@ -1,9 +1,9 @@
 package kr.valor.bal.adapters
 
-import kr.valor.bal.data.local.WorkoutDetailAndSets
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.WorkoutDetailAndSets
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 
 interface RecyclerviewItemClickListener<T> {
     fun onClick(item: T)

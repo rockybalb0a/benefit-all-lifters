@@ -1,6 +1,6 @@
 package kr.valor.bal.utilities
 
-import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
 import java.time.LocalDate
 import kotlin.random.Random
 

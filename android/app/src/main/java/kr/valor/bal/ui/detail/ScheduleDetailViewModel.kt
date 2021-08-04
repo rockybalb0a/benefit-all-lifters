@@ -6,13 +6,13 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.workout.WorkoutSchedule
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val workoutRepo: DefaultRepository
+    private val repository: DefaultRepository
 ) : ViewModel() {
 
     sealed class Event {
@@ -23,7 +23,7 @@ class ScheduleDetailViewModel @Inject constructor(
     private val overviewId: Long = savedStateHandle["overviewId"]!!
 
     private val _workoutSchedule = liveData {
-        emitSource(workoutRepo.getWorkoutScheduleByWorkoutOverviewId(overviewId))
+        emitSource(repository.getWorkoutScheduleByWorkoutOverviewId(overviewId))
     }
     val workoutSchedule: LiveData<WorkoutSchedule>
         get() = _workoutSchedule

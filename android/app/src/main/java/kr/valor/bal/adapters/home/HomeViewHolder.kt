@@ -6,7 +6,7 @@ import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.local.UserPersonalRecording
+import kr.valor.bal.data.local.workout.UserPersonalRecording
 import kr.valor.bal.databinding.ItemHomeUserPrBinding
 import kr.valor.bal.utilities.binding.UserPrBindingParameterCreator
 

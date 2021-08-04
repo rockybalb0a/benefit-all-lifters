@@ -8,9 +8,9 @@ import androidx.test.filters.SmallTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import kr.valor.bal.data.local.entities.WorkoutDetail
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import kr.valor.bal.getOrAwaitValue
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue

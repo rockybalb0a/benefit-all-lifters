@@ -3,7 +3,7 @@ package kr.valor.bal.adapters.overview
 import android.view.ViewGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
-import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.databinding.ItemOverviewWorkoutScheduleBinding
 import kr.valor.bal.utilities.binding.WorkoutSummaryInfoBindingParameterCreator
 

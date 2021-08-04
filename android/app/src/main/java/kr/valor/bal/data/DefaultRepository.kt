@@ -3,22 +3,26 @@ package kr.valor.bal.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kr.valor.bal.data.local.WorkoutDao
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.entities.WorkoutDetail
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import androidx.lifecycle.map
+import kotlinx.coroutines.*
+import kr.valor.bal.data.local.workout.WorkoutDao
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
+import kr.valor.bal.data.local.youtube.VideoDao
 import kr.valor.bal.data.remote.YoutubeApiService
 import kr.valor.bal.data.remote.YoutubeVideoContainer
+import kr.valor.bal.data.remote.asDatabaseModel
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao, private val service: YoutubeApiService) {
+class DefaultRepository @Inject constructor(
+    private val workoutDao: WorkoutDao,
+    private val videoDao: VideoDao,
+    private val service: YoutubeApiService) {
 
     private val _workoutOverviewCached = MutableLiveData<WorkoutOverview>()
 
@@ -26,6 +30,14 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao, 
     val workoutScheduleCached: LiveData<WorkoutSchedule>
         get() = _workoutScheduleCached
 
+    val youtubeVideos = videoDao.getVideos()
+
+    suspend fun refreshVideos() {
+        withContext(Dispatchers.IO) {
+            val videoList = service.requestVideo()
+            videoDao.insertAll(videoList.asDatabaseModel())
+        }
+    }
 
     fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>> = workoutDao.getAllWorkoutSchedule()
 

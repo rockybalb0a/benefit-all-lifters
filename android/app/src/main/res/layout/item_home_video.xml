@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="video"
+            type="kr.valor.bal.data.local.youtube.entity.DatabaseVideo" />
+
+        <variable
+            name="bindingCreator"
+            type="kr.valor.bal.utilities.binding.VideoBindingParameterCreator" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="@dimen/video_container_width"
+        android:layout_height="@dimen/video_container_height"
+        android:layout_margin="@dimen/margin_small"
+        app:cardElevation="@dimen/app_cardview_elevation_default"
+        app:cardCornerRadius="@dimen/app_cardview_corner_radius_default">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/primaryColor20percentShade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/thumbnail_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:thumbnailUrl="@{video.thumbnailUrl}"
+                tools:src="@drawable/background_image_squat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="@string/video_container_thumbnail_ratio" />
+
+            <TextView
+                android:id="@+id/video_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="@dimen/margin_textview_small"
+                android:text="@{bindingCreator.getTitleString(video)}"
+                android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail_image"
+                app:layout_constraintBottom_toTopOf="@id/channel_title"
+                tools:text="Dmitry klokov 200kg pause snatch" />
+
+            <TextView
+                android:id="@+id/channel_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bindingCreator.getChannelTitleString(video)}"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
+                android:textStyle="normal"
+                android:textSize="@dimen/text_size_small_dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="@id/video_title"
+                app:layout_constraintTop_toBottomOf="@id/video_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="All Things Gym" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

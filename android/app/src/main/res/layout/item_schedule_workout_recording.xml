@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="kr.valor.bal.data.local.WorkoutDetailAndSets" />
+            type="kr.valor.bal.data.local.workout.WorkoutDetailAndSets" />
 
         <variable
             name="bindingCreator"

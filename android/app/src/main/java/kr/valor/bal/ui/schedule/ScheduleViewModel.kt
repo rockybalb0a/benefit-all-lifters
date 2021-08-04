@@ -6,16 +6,16 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.entities.WorkoutDetail
-import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
 import kr.valor.bal.utilities.TrackingStatus
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val workoutRepo: DefaultRepository,
-) : BaseViewModel(workoutRepo) {
+    private val repository: DefaultRepository,
+) : BaseViewModel(repository) {
 
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
@@ -29,10 +29,10 @@ class ScheduleViewModel @Inject constructor(
     val eventsFlow = eventChannel.receiveAsFlow()
 
     private val _currentWorkoutOverview =
-        workoutRepo.getWorkoutOverviewOfToday { syncElapsedTimeWithDatabase(it) }
+        repository.getWorkoutOverviewOfToday { syncElapsedTimeWithDatabase(it) }
 
     private val _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
-        workoutRepo.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
+        repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId)
     }
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
         get() = _currentWorkoutSchedule
@@ -101,7 +101,7 @@ class ScheduleViewModel @Inject constructor(
         viewModelScope.launch {
             _currentWorkoutOverview.value?.let {
                 it.trackingStatus = TrackingStatus.PAUSE
-                workoutRepo.updateWorkoutOverview(it)
+                repository.updateWorkoutOverview(it)
             }
             eventChannel.send(Event.NavigateToScheduleEditDest)
         }

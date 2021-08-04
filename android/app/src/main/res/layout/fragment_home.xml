@@ -96,19 +96,21 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Record -->
+
+            <!-- Start new workout -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/user_records_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:userRecordBinding="@{viewModel.userPrRecords}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/training_records_title"
+                app:userRecordBinding="@{viewModel.userPrRecords}"
                 tools:listitem="@layout/item_home_user_pr" />
 
-            <!-- Start new workout -->
             <TextView
                 android:id="@+id/nav_btn_header_title"
                 android:layout_width="wrap_content"
@@ -219,6 +221,41 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/video_header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
+                android:text="@string/home_video_header_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nav_btn" />
+
+            <TextView
+                android:id="@+id/video_header_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:paddingTop="@dimen/padding_small"
+                android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis12"
+                android:textSize="@dimen/text_size_default_dp"
+                android:text="@string/home_video_header_body"
+                app:layout_constraintStart_toStartOf="@id/video_header_title"
+                app:layout_constraintTop_toBottomOf="@id/video_header_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/video_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:videoBinding="@{viewModel.videos}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/video_header_body"
+                tools:listitem="@layout/item_home_video" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

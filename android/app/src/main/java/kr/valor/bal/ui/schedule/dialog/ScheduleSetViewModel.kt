@@ -4,12 +4,12 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleSetViewModel @Inject constructor(
-    private val workoutRepo: DefaultRepository,
+    private val repository: DefaultRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -17,7 +17,7 @@ class ScheduleSetViewModel @Inject constructor(
 
     private val _currentWorkoutSet = liveData{
         setId?.let {
-            emitSource(workoutRepo.getWorkoutSetById(it))
+            emitSource(repository.getWorkoutSetById(it))
         }
     }
     val currentWorkoutSet: LiveData<WorkoutSet>
@@ -88,7 +88,7 @@ class ScheduleSetViewModel @Inject constructor(
 
     private fun update(workoutSet: WorkoutSet) {
         viewModelScope.launch {
-            workoutRepo.updateWorkoutSet(workoutSet)
+            repository.updateWorkoutSet(workoutSet)
             _candidatePlatesLiveData.value?.let { dequeuePlates() }
         }
     }

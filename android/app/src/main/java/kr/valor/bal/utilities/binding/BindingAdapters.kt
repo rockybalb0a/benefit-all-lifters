@@ -1,18 +1,22 @@
 package kr.valor.bal.utilities.binding
 
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.home.HomeAdapter
+import kr.valor.bal.adapters.home.VideoAdapter
 import kr.valor.bal.adapters.overview.OverviewAdapter
-import kr.valor.bal.data.local.UserPersonalRecording
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.UserPersonalRecording
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
@@ -92,4 +96,21 @@ fun RecyclerView.bindRecyclerView(data: List<WorkoutSchedule>?) {
 fun RecyclerView.bindRecyclerView(data: List<UserPersonalRecording>?) {
     val adapter = adapter as HomeAdapter
     adapter.submitList(data)
+}
+
+@JvmName("videoBinding")
+@BindingAdapter("videoBinding")
+fun RecyclerView.bindRecyclerView(data: List<DatabaseVideo>?) {
+    val adapter = adapter as VideoAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("thumbnailUrl")
+fun ImageView.bindImage(imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = it.toUri().buildUpon().scheme("https").build()
+        Glide.with(this.context)
+            .load(imgUri)
+            .into(this)
+    }
 }

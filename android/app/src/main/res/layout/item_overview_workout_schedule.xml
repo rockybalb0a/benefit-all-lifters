@@ -8,7 +8,7 @@
         
         <variable
             name="item"
-            type="kr.valor.bal.data.local.WorkoutSchedule" />
+            type="kr.valor.bal.data.local.workout.WorkoutSchedule" />
 
         <variable
             name="clickListener"

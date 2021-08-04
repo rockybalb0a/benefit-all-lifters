@@ -8,7 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kr.valor.bal.data.local.AppDatabase
-import kr.valor.bal.data.local.WorkoutDao
+import kr.valor.bal.data.local.workout.WorkoutDao
+import kr.valor.bal.data.local.youtube.VideoDao
 import kr.valor.bal.utilities.DATABASE_NAME
 import javax.inject.Singleton
 
@@ -30,6 +31,11 @@ class DatabaseModule {
     @Provides
     fun provideWorkoutDao(appDatabase: AppDatabase): WorkoutDao {
         return appDatabase.workoutDao()
+    }
+
+    @Provides
+    fun provideVideoDao(appDatabase: AppDatabase): VideoDao {
+        return appDatabase.videoDao()
     }
 
     //    @Singleton

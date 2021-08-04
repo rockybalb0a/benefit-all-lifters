@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="kr.valor.bal.data.local.entities.WorkoutOverview" />
+            type="kr.valor.bal.data.local.workout.entities.WorkoutOverview" />
 
         <variable
             name="bindingCreator"

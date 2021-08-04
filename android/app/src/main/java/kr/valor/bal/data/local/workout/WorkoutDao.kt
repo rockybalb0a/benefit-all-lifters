@@ -1,10 +1,10 @@
-package kr.valor.bal.data.local
+package kr.valor.bal.data.local.workout
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import kr.valor.bal.data.local.entities.WorkoutDetail
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import java.time.LocalDate
 
 @Dao

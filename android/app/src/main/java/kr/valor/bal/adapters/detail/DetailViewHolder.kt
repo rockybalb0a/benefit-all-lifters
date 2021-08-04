@@ -9,9 +9,9 @@ import kr.valor.bal.adapters.EditWorkoutScheduleListener
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.local.WorkoutDetailAndSets
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.WorkoutDetailAndSets
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import kr.valor.bal.databinding.ItemDetailWorkoutDetailWithSetsBinding
 import kr.valor.bal.databinding.ItemDoneFooterBinding
 import kr.valor.bal.databinding.ItemDoneHeaderBinding

@@ -27,6 +27,9 @@
     <string name="home_nav_btn_body_text_if_done">eat, sleep, rest … and REPEAT!!!</string>
     <string name="home_nav_btn_tail_text_if_done">Click to see details</string>
 
+    <string name="home_video_header_title">It\'s time to \"Dmitry Klokov\"</string>
+    <string name="home_video_header_body">Let\'s explore Dmitry Klokov\'s AMAZING lift !!!</string>
+
     <string name="bottom_nav_item_title_home">Home</string>
     <string name="bottom_nav_item_title_overview">Overview</string>
     <string name="bottom_nav_item_title_schedule">Today</string>

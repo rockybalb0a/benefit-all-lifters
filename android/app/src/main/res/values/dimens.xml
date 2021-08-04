@@ -2,6 +2,11 @@
 <resources>
     <string name="plates_view_ratio">90:83</string>
     <string name="plates_view_barbell_ratio">415:50</string>
+    <string name="video_container_thumbnail_ratio">16:9</string>
+
+    <dimen name="video_container_width">200dp</dimen>
+    <dimen name="video_container_height">240dp</dimen>
+
     
     <dimen name="margin_toolbar_start">32dp</dimen>
     <dimen name="margin_toolbar_bottom">12dp</dimen>

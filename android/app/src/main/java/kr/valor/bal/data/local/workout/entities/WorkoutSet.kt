@@ -1,4 +1,4 @@
-package kr.valor.bal.data.local.entities
+package kr.valor.bal.data.local.workout.entities
 
 import androidx.room.*
 

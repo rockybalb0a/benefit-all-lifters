@@ -6,16 +6,16 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.WorkoutSchedule
-import kr.valor.bal.data.local.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.WorkoutSchedule
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
 import kr.valor.bal.ui.schedule.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class EditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val workoutRepo: DefaultRepository
-): BaseViewModel(workoutRepo) {
+    private val repository: DefaultRepository
+): BaseViewModel(repository) {
 
     sealed class Event {
         object ShowAddNewWorkoutDialog: Event()
@@ -30,10 +30,10 @@ class EditViewModel @Inject constructor(
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventsFlow = eventChannel.receiveAsFlow()
 
-    private val _currentWorkoutOverview = workoutRepo.getWorkoutOverviewCachedById(overviewId)
+    private val _currentWorkoutOverview = repository.getWorkoutOverviewCachedById(overviewId)
 
     private var _currentWorkoutSchedule = _currentWorkoutOverview.switchMap {
-        workoutRepo.getWorkoutScheduleCachedByWorkoutOverviewId(it.overviewId)
+        repository.getWorkoutScheduleCachedByWorkoutOverviewId(it.overviewId)
     }
 
     val currentWorkoutSchedule: LiveData<WorkoutSchedule>
@@ -45,7 +45,7 @@ class EditViewModel @Inject constructor(
 
     fun onBackButtonClicked() {
         viewModelScope.launch {
-            if (workoutRepo.isChanged(overviewId, this)) {
+            if (repository.isChanged(overviewId, this)) {
                 eventChannel.send(Event.EditDetectedEvent)
             } else {
                 eventChannel.send(Event.EditRejectAndBackToDetailDest(overviewId))
@@ -75,7 +75,7 @@ class EditViewModel @Inject constructor(
     fun onEditRejectButtonClicked() {
         viewModelScope.launch {
             _recyclerViewVisibility.value = false
-            if(workoutRepo.restore(overviewId, viewModelScope)) {
+            if(repository.restore(overviewId, viewModelScope)) {
                 eventChannel.send(Event.EditRejectAndBackToDetailDest(overviewId))
             }
         }

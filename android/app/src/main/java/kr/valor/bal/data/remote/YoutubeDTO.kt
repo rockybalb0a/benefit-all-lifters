@@ -1,5 +1,7 @@
 package kr.valor.bal.data.remote
 
+import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+
 data class YoutubeVideoContainer(val items: List<YoutubeVideo>)
 
 data class YoutubeVideo(
@@ -36,3 +38,16 @@ data class ThumbnailInfo(
     val width: Int,
     val height: Int
 )
+
+fun YoutubeVideoContainer.asDatabaseModel(): List<DatabaseVideo> {
+    return items.map {
+        DatabaseVideo(
+            id = it.id.videoId,
+            thumbnailUrl = it.snippet.thumbnails.high.url,
+            thumbnailWidth = it.snippet.thumbnails.high.width,
+            thumbnailHeight = it.snippet.thumbnails.high.width,
+            title = it.snippet.title,
+            channelTitle = it.snippet.channelTitle
+        )
+    }
+}

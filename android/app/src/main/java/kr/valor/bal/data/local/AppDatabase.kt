@@ -3,14 +3,19 @@ package kr.valor.bal.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import kr.valor.bal.data.local.entities.WorkoutDetail
-import kr.valor.bal.data.local.entities.WorkoutOverview
-import kr.valor.bal.data.local.entities.WorkoutSet
+import kr.valor.bal.data.local.workout.Converters
+import kr.valor.bal.data.local.workout.WorkoutDao
+import kr.valor.bal.data.local.workout.entities.WorkoutDetail
+import kr.valor.bal.data.local.workout.entities.WorkoutOverview
+import kr.valor.bal.data.local.workout.entities.WorkoutSet
+import kr.valor.bal.data.local.youtube.VideoDao
+import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
 
-@Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class], version = 1, exportSchema = false)
+@Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class, DatabaseVideo::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun workoutDao(): WorkoutDao
+    abstract fun videoDao(): VideoDao
 }
 
 //val MIGRATION_1_2 = object : Migration(1,2) {

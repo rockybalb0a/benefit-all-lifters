@@ -1,4 +1,4 @@
-package kr.valor.bal.data.local
+package kr.valor.bal.data.local.workout
 
 data class UserPersonalRecording(
     val workoutName: String,
