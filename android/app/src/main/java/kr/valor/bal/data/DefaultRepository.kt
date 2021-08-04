@@ -6,9 +6,11 @@ import androidx.lifecycle.liveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.local.WorkoutDao
+import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.entities.WorkoutDetail
+import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.entities.WorkoutSet
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,6 +23,7 @@ class DefaultRepository @Inject constructor(private val workoutDao: WorkoutDao) 
     private var _workoutScheduleCached = MutableLiveData<WorkoutSchedule>()
     val workoutScheduleCached: LiveData<WorkoutSchedule>
         get() = _workoutScheduleCached
+
 
     fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>> = workoutDao.getAllWorkoutSchedule()
 

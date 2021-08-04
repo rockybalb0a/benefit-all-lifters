@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.WorkoutDetailItem
-import kr.valor.bal.data.WorkoutDetailAndSets
 
 class DetailAdapter(private val listener: RecyclerviewItemClickListener<Unit>?): ListAdapter<WorkoutDetailItem, ViewHolder>(DIFF_CALLBACK) {
 

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.UserPersonalRecording
+import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.UserPersonalRecording
 import kr.valor.bal.utilities.TrackingStatus
 import javax.inject.Inject
 

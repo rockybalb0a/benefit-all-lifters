@@ -6,7 +6,7 @@ import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.UpdateWorkoutSetListener
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.local.entities.WorkoutSet
 import kr.valor.bal.databinding.ItemScheduleWorkoutRecordingSetBinding
 import kr.valor.bal.utilities.binding.WorkoutDetailInfoBindingParameterCreator
 

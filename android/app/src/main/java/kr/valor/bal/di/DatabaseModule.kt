@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kr.valor.bal.data.AppDatabase
-import kr.valor.bal.data.WorkoutDao
+import kr.valor.bal.data.local.AppDatabase
+import kr.valor.bal.data.local.WorkoutDao
 import kr.valor.bal.utilities.DATABASE_NAME
 import javax.inject.Singleton
 

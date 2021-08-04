@@ -1,9 +1,9 @@
-package kr.valor.bal.data
+package kr.valor.bal.data.local
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.local.entities.WorkoutDetail
+import kr.valor.bal.data.local.entities.WorkoutOverview
 
 data class WorkoutSchedule(
     @Embedded val workoutOverview: WorkoutOverview,

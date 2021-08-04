@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="kr.valor.bal.data.entities.WorkoutSet" />
+            type="kr.valor.bal.data.local.entities.WorkoutSet" />
 
         <variable
             name="index"

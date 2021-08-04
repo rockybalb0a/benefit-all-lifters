@@ -1,14 +1,11 @@
-package kr.valor.bal.data
+package kr.valor.bal.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.data.entities.WorkoutSet
-import javax.inject.Singleton
+import kr.valor.bal.data.local.entities.WorkoutDetail
+import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.entities.WorkoutSet
 
 @Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

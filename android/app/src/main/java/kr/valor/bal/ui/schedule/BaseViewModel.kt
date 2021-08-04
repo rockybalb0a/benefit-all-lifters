@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.entities.WorkoutDetail
-import kr.valor.bal.data.entities.WorkoutOverview
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.local.entities.WorkoutDetail
+import kr.valor.bal.data.local.entities.WorkoutOverview
+import kr.valor.bal.data.local.entities.WorkoutSet
 import javax.inject.Inject
 
 abstract class BaseViewModel (private val workoutRepo: DefaultRepository): ViewModel(){

@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import kr.valor.bal.R
-import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.adapters.overview.OverviewAdapter
-import kr.valor.bal.data.UserPersonalRecording
-import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.local.UserPersonalRecording
+import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.entities.WorkoutOverview
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {

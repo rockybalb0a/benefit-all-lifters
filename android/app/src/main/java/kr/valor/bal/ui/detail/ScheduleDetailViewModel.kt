@@ -6,8 +6,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.WorkoutSchedule
-import java.time.LocalDate
+import kr.valor.bal.data.local.WorkoutSchedule
 import javax.inject.Inject
 
 @HiltViewModel

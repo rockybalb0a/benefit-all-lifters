@@ -4,8 +4,7 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.WorkoutDao
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.local.entities.WorkoutSet
 import javax.inject.Inject
 
 @HiltViewModel

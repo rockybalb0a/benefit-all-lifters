@@ -2,8 +2,8 @@ package kr.valor.bal.utilities.binding
 
 import android.content.Context
 import kr.valor.bal.R
-import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.entities.WorkoutOverview
 import kr.valor.bal.utilities.TrackingStatus
 import kr.valor.bal.utilities.elapsedTimeFormatter
 import java.time.LocalDate

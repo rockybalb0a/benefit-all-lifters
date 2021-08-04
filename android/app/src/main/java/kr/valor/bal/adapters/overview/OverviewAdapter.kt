@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.OverviewItemListener
-import kr.valor.bal.data.WorkoutSchedule
+import kr.valor.bal.data.local.WorkoutSchedule
 
 class OverviewAdapter(val clickListener: OverviewItemListener): ListAdapter<WorkoutSchedule, ViewHolder>(
     DIFF_CALLBACK

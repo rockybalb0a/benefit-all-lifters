@@ -7,8 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
-import kr.valor.bal.data.WorkoutDetailAndSets
-import kr.valor.bal.data.entities.WorkoutOverview
+import kr.valor.bal.data.local.WorkoutDetailAndSets
+import kr.valor.bal.data.local.entities.WorkoutOverview
 import kr.valor.bal.databinding.ItemScheduleFooterBinding
 import kr.valor.bal.databinding.ItemScheduleHeaderBinding
 import kr.valor.bal.databinding.ItemScheduleWorkoutRecordingBinding

@@ -1,4 +1,4 @@
-package kr.valor.bal.data.entities
+package kr.valor.bal.data.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

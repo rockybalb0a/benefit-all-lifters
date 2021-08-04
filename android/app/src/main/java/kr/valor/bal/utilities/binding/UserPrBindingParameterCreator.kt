@@ -2,7 +2,7 @@ package kr.valor.bal.utilities.binding
 
 import android.content.Context
 import kr.valor.bal.R
-import kr.valor.bal.data.UserPersonalRecording
+import kr.valor.bal.data.local.UserPersonalRecording
 
 object UserPrBindingParameterCreator {
 

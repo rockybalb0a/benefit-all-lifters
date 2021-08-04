@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.OverviewItemListener
-import kr.valor.bal.data.WorkoutSchedule
 import kr.valor.bal.databinding.FragmentOverviewBinding
 import kr.valor.bal.utilities.observeInLifecycle
 

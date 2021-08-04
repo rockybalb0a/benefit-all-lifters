@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.data.entities.WorkoutSet
+import kr.valor.bal.data.local.entities.WorkoutSet
 
 class ScheduleChildAdapter(private val listener: RecyclerviewItemClickListener<WorkoutSet>): ListAdapter<WorkoutSet, ViewHolder>(DIFF_CALLBACK) {
 

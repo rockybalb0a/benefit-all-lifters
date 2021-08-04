@@ -6,8 +6,8 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.WorkoutSchedule
-import kr.valor.bal.data.entities.WorkoutDetail
+import kr.valor.bal.data.local.WorkoutSchedule
+import kr.valor.bal.data.local.entities.WorkoutDetail
 import kr.valor.bal.ui.schedule.BaseViewModel
 import javax.inject.Inject
 
