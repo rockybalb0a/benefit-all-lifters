@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+import kr.valor.bal.data.local.youtube.DatabaseVideo
 
 class VideoAdapter(private val clickListener: VideoClickListener): ListAdapter<DatabaseVideo, ViewHolder>(DIFF_CALLBACK) {
 

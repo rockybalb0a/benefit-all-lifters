@@ -1,4 +1,4 @@
-package kr.valor.bal.data.local.youtube.entity
+package kr.valor.bal.data.local.youtube
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

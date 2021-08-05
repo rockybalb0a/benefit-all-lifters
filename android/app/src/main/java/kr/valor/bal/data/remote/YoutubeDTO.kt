@@ -1,6 +1,6 @@
 package kr.valor.bal.data.remote
 
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+import kr.valor.bal.data.local.youtube.DatabaseVideo
 
 data class YoutubeVideoContainer(val items: List<YoutubeVideo>)
 

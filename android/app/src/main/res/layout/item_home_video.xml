@@ -6,7 +6,7 @@
     <data>
         <variable
             name="video"
-            type="kr.valor.bal.data.local.youtube.entity.DatabaseVideo" />
+            type="kr.valor.bal.data.local.youtube.DatabaseVideo" />
 
         <variable
             name="bindingCreator"

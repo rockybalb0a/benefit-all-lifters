@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.DefaultRepository
+import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutSchedule
-import kr.valor.bal.data.local.workout.UserPersonalRecording
 import kr.valor.bal.utilities.TrackingStatus
 import java.io.IOException
 import javax.inject.Inject
@@ -138,7 +138,7 @@ class HomeViewModel @Inject constructor(
         val workoutSummaryInfoList = mutableListOf<UserPersonalRecording>()
         workoutList.forEach {
             workoutSummaryInfoList.add(
-                UserPersonalRecording(it, 100.0)
+                UserPersonalRecording(it, 100.0, 1)
             )
         }
         return workoutSummaryInfoList.toList()

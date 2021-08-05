@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import kr.valor.bal.R
 import kr.valor.bal.adapters.ViewHolder
 import kr.valor.bal.adapters.ViewHolderFactory
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+import kr.valor.bal.data.local.youtube.DatabaseVideo
 import kr.valor.bal.databinding.ItemHomeVideoBinding
 import kr.valor.bal.utilities.binding.VideoBindingParameterCreator
 

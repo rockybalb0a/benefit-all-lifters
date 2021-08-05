@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.valor.bal.adapters.RecyclerviewItemClickListener
 import kr.valor.bal.adapters.ViewHolder
-import kr.valor.bal.data.local.workout.UserPersonalRecording
+import kr.valor.bal.data.local.user.UserPersonalRecording
 
 class HomeAdapter(private val clickListener: RecyclerviewItemClickListener<Unit>): ListAdapter<UserPersonalRecording, ViewHolder>(DIFF_CALLBACK) {
 

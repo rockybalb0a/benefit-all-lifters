@@ -13,10 +13,10 @@ import kr.valor.bal.R
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.adapters.home.VideoAdapter
 import kr.valor.bal.adapters.overview.OverviewAdapter
-import kr.valor.bal.data.local.workout.UserPersonalRecording
+import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.data.local.workout.entities.WorkoutOverview
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+import kr.valor.bal.data.local.youtube.DatabaseVideo
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {

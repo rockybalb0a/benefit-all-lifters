@@ -1,6 +1,6 @@
 package kr.valor.bal.utilities.binding
 
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
+import kr.valor.bal.data.local.youtube.DatabaseVideo
 
 object VideoBindingParameterCreator {
 

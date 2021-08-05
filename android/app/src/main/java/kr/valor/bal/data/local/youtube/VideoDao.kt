@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kr.valor.bal.data.local.youtube.entity.DatabaseVideo
 
 @Dao
 interface VideoDao {
