@@ -19,6 +19,12 @@
         <item name="android:navigationBarColor">@color/primaryColor20percentShade</item>
     </style>
 
+    <style name="Theme.App.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/primaryColorAlt</item>
+        <item name="android:navigationBarColor">@color/primaryColor20percentShade</item>
+    </style>
+
     <style name="Theme.App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.App.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
