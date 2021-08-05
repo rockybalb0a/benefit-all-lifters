@@ -8,8 +8,8 @@ import androidx.room.Query
 @Dao
 interface UserDao {
     @Insert
-    fun insertUserInfo(item: UserInfo)
+    suspend fun insertUserInfo(item: UserInfo)
 
-    @Query("SELECT * FROM user_info")
+    @Query("SELECT * FROM user_info LIMIT 1")
     fun getUserInfo(): LiveData<UserInfo?>
 }

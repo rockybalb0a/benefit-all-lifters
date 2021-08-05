@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import kotlinx.coroutines.*
+import kr.valor.bal.data.local.user.UserDao
+import kr.valor.bal.data.local.user.UserInfo
 import kr.valor.bal.data.local.workout.WorkoutDao
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.data.local.workout.entities.WorkoutDetail
@@ -22,6 +24,7 @@ import javax.inject.Singleton
 class DefaultRepository @Inject constructor(
     private val workoutDao: WorkoutDao,
     private val videoDao: VideoDao,
+    private val userDao: UserDao,
     private val service: YoutubeApiService) {
 
     private val _workoutOverviewCached = MutableLiveData<WorkoutOverview>()
@@ -37,6 +40,12 @@ class DefaultRepository @Inject constructor(
         workoutDao.getAllWorkoutSchedule()
 
     val youtubeVideos = videoDao.getVideos()
+
+    val userInfo = userDao.getUserInfo()
+
+    suspend fun insertUserInfo(userInfo: UserInfo) {
+        userDao.insertUserInfo(userInfo)
+    }
 
     suspend fun refreshVideos() {
         withContext(Dispatchers.IO) {
