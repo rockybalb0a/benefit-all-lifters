@@ -24,7 +24,7 @@ class OverviewViewModel @Inject constructor(
     val eventsFlow: Flow<Event>
         get() = _eventChannel.receiveAsFlow()
 
-    val workoutSchedules = repository.getAllWorkoutSchedule().map {
+    val workoutSchedules = repository.workoutSchedules.map {
         it.filter { each ->
             each.workoutOverview.trackingStatus == TrackingStatus.DONE && each.workoutOverview.date != LocalDate.now()
         }

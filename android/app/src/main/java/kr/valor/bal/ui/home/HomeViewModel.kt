@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
     val eventsFlow: Flow<Event>
         get() = _eventChannel.receiveAsFlow()
 
-    private val _todayWorkoutSchedule = repository.getWorkoutOverviewOfToday().switchMap {
+    private val _todayWorkoutSchedule = repository.workoutOverview.switchMap {
         it?.let { repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId) } ?: liveData { emit(null) }
     }
 

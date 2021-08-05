@@ -30,6 +30,12 @@ class DefaultRepository @Inject constructor(
     val workoutScheduleCached: LiveData<WorkoutSchedule>
         get() = _workoutScheduleCached
 
+    val workoutOverview: LiveData<WorkoutOverview?> =
+        workoutDao.getWorkoutOverviewByDateLiveData(LocalDate.now())
+
+    val workoutSchedules: LiveData<List<WorkoutSchedule>> =
+        workoutDao.getAllWorkoutSchedule()
+
     val youtubeVideos = videoDao.getVideos()
 
     suspend fun refreshVideos() {
@@ -37,18 +43,6 @@ class DefaultRepository @Inject constructor(
             val videoList = service.requestVideo()
             videoDao.insertAll(videoList.asDatabaseModel())
         }
-    }
-
-    fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>> = workoutDao.getAllWorkoutSchedule()
-
-    fun getExistWorkoutOverviewById(overviewId: Long) = liveData<WorkoutOverview> {
-        emit(workoutDao.getNoneNullWorkoutOverviewById(overviewId))
-    }
-
-    fun getWorkoutOverviewOfToday() = liveData {
-        val today = LocalDate.now()
-        val currentWorkoutOverview = workoutDao.getWorkoutOverviewByDate(today)
-        emit(currentWorkoutOverview)
     }
 
     fun getWorkoutOverviewOfToday(init: ((WorkoutOverview) -> Unit)?) = liveData {

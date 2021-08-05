@@ -45,14 +45,14 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC")
     fun getAllWorkoutSchedule(): LiveData<List<WorkoutSchedule>>
 
-    @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC")
-    fun getAllWorkouts(): LiveData<List<WorkoutOverview>>
-
     @Query("SELECT * FROM workout_overview ORDER BY overview_id DESC LIMIT 1")
     suspend fun getLatestWorkoutOverview(): WorkoutOverview
 
     @Query("SELECT * FROM workout_overview WHERE date is :date")
     suspend fun getWorkoutOverviewByDate(date: LocalDate): WorkoutOverview?
+
+    @Query("SELECT * FROM workout_overview WHERE date is :date")
+    fun getWorkoutOverviewByDateLiveData(date: LocalDate): LiveData<WorkoutOverview?>
 
     @Query("SELECT * FROM workout_overview WHERE overview_id is :overviewId")
     suspend fun getNoneNullWorkoutOverviewById(overviewId: Long): WorkoutOverview
