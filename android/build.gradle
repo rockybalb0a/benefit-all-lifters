@@ -43,4 +43,5 @@ ext {
     retrofitVersion = '2.9.0'
     moshiVersion = '1.9.3'
     glideVersion = '4.12.0'
+    viewPagerVersion = '1.0.0'
 }
