@@ -7,6 +7,8 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
+    <string name="initial_setup_title_text">Step %d</string>
+
     <string name="home_training_records_title_text">Your Barbell Training Journey</string>
 
     <string name="home_nav_btn_header_title_if_not_exist">The only easy day was yesterday</string>
@@ -50,11 +52,9 @@
     <string-array name="exercise_list">
         <item name="back_squat">Back Squat</item>
         <item name="front_squat">Front Squat</item>
+        <item name="bench_press">Bench press</item>
         <item name="deadlift">Conventional Deadlift</item>
         <item name="overhead_press">Overhead press</item>
-        <item name="bench_press">Bench press</item>
-        <item name="barbell_row">Barbell Row</item>
-        <item name="pull_up">Pull up</item>
     </string-array>
 
     <string name="default_weights_unit">Kg</string>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="initial_setting_title">
+        What is Lorem Ipsum
+    </string>
+
+    <string name="initial_setting_body">
+        Contrary to popular belief, Lorem Ipsum is not simply random text.
+    </string>
+
+</resources>

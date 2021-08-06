@@ -11,9 +11,6 @@ data class UserInfo(
     @PrimaryKey
     val userId: String = UUID.randomUUID().toString(),
 
-    @ColumnInfo(name = "nick_name")
-    var nickName: String,
-
     @ColumnInfo(name = "beginning_date")
     var beginningOfWorkout: LocalDate,
 
@@ -23,6 +20,6 @@ data class UserInfo(
 
 data class UserPersonalRecording(
     val workoutName: String,
-    val weights: Double,
-    val reps: Int
+    var weights: Double = 0.0,
+    var reps: Int = 0
 )

@@ -55,10 +55,9 @@ fun ImageView.setHeaderImage(workoutName: String?) {
         setImageResource(when (it) {
             workoutList[0] -> R.drawable.background_image_squat
             workoutList[1] -> R.drawable.background_image_front_squat
-            workoutList[2] -> R.drawable.background_image_dead_lift
-            workoutList[3] -> R.drawable.background_image_press
-            workoutList[4] -> R.drawable.background_image_bench_press
-            workoutList[5] -> R.drawable.background_image_barbell_row
+            workoutList[2] -> R.drawable.background_image_bench_press
+            workoutList[3] -> R.drawable.background_image_dead_lift
+            workoutList[4] -> R.drawable.background_image_press
             else -> R.drawable.background_image_default
         })
     }
