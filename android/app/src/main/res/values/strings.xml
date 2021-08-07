@@ -20,8 +20,15 @@
     <string name="on_boarding_instruction_body">How much weight, and how many reps can you lift %s?\n\nPlease fill your GOAT<sup><small>*</small></sup> records in the form below.</string>
     <string name="on_boarding_instruction_terminology_goat"><sup><small>*</small></sup>Greatest of all time</string>
 
+    <string name="on_boarding_last_step_title">Final Step</string>
+    <string name="on_boarding_last_step_body">Please check the items you have written.</string>
+    <string name="on_boarding_last_step_date_label">Start date</string>
+    <string name="on_boarding_last_step_final_check_label">Have you checked this all?</string>
+
     <string name="on_boarding_next_btn_label">next step</string>
+    <string name="on_boarding_skip_btn_label">skip</string>
     <string name="on_boarding_prev_btn_label">previous step</string>
+    <string name="on_boarding_done_btn_label">start our greatest journey</string>
 
     <string name="home_training_records_title_text">Your Barbell Training Journey</string>
 
@@ -92,7 +99,8 @@
 
     <string name="add_new_workout">add workout</string>
 
-    <string name="weights_text">%d kg</string>
+    <string name="weights_integer_text">%d kg</string>
+    <string name="weights_floating_text">%.1f kg</string>
 
     <string name="sets_text_simplified_template"># %d</string>
     <string name="sets_text_full_template">Set #%d</string>

@@ -14,9 +14,11 @@ import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.adapters.home.VideoAdapter
 import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.data.local.user.UserPersonalRecording
+import kr.valor.bal.data.local.user.UserRecordData
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.data.local.workout.entities.WorkoutOverview
 import kr.valor.bal.data.local.youtube.DatabaseVideo
+import kr.valor.bal.onboarding.viewpager.LastPageAdapter
 
 @BindingAdapter("thumbnailImage")
 fun ImageView.setThumbnailImage(item: WorkoutSchedule?) {
@@ -102,6 +104,17 @@ fun RecyclerView.bindRecyclerView(data: List<UserPersonalRecording>?) {
 fun RecyclerView.bindRecyclerView(data: List<DatabaseVideo>?) {
     val adapter = adapter as VideoAdapter
     adapter.submitList(data)
+}
+
+@JvmName("onBoardingBinding")
+@BindingAdapter("onBoardingBinding")
+fun RecyclerView.bind(data: List<UserPersonalRecording>?) {
+    val adapter = adapter as LastPageAdapter
+    val converted = data?.let {
+        UserRecordData.convertToFooterAdapterList(it)
+    }
+
+    adapter.submitList(converted)
 }
 
 @BindingAdapter("thumbnailUrl")

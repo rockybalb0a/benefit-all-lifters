@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavDeepLinkBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kr.valor.bal.MainActivity
+import kr.valor.bal.R
 import kr.valor.bal.onboarding.OnBoardingActivity
 
 @AndroidEntryPoint
@@ -18,21 +21,15 @@ class SplashActivity : AppCompatActivity() {
 
         viewModel.userInfo.observe(this) {
             if (it == null) {
-                Toast.makeText(this, "Value is null", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
             } else {
-                Toast.makeText(this, "Value is not null", Toast.LENGTH_SHORT).show()
+                NavDeepLinkBuilder(this@SplashActivity).apply {
+                    setComponentName(MainActivity::class.java)
+                    setGraph(R.navigation.nav_graph)
+                    setDestination(R.id.home_dest)
+                    createPendingIntent().send()
+                }
             }
-            startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
-            finish()
-//            lifecycleScope.launch {
-//                delay(1000L)
-//                NavDeepLinkBuilder(this@SplashActivity).apply {
-//                    setComponentName(MainActivity::class.java)
-//                    setGraph(R.navigation.nav_graph)
-//                    setDestination(R.id.home_dest)
-//                    createPendingIntent().send()
-//                }
-//            }
         }
     }
 

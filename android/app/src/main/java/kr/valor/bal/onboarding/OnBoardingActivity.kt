@@ -1,5 +1,6 @@
 package kr.valor.bal.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.onEach
 import kr.valor.bal.R
 import kr.valor.bal.databinding.ActivitySettingsBinding
 import kr.valor.bal.onboarding.viewpager.OnBoardingViewPagerAdapter
+import kr.valor.bal.splash.SplashActivity
 import kr.valor.bal.utilities.observeInLifecycle
 
 @AndroidEntryPoint
@@ -40,6 +42,7 @@ class OnBoardingActivity: AppCompatActivity() {
 
         with(viewPager) {
             adapter = OnBoardingViewPagerAdapter(this@OnBoardingActivity)
+            isUserInputEnabled = false
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -65,6 +68,12 @@ class OnBoardingActivity: AppCompatActivity() {
                 }
                 OnBoardingViewModel.Request.PreviousStep -> {
                     viewPager.pageDown()
+                }
+                OnBoardingViewModel.Request.Finish -> {
+                    sharedViewModel.finishOnBoardingProcess()
+                }
+                OnBoardingViewModel.Request.NavigateToHome -> {
+                    startActivity(Intent(this, SplashActivity::class.java))
                 }
             }
         }

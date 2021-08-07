@@ -27,6 +27,8 @@ class OnBoardingViewModel @Inject constructor(
         object ShowDatePicker: Request()
         object NextStep: Request()
         object PreviousStep: Request()
+        object Finish: Request()
+        object NavigateToHome: Request()
     }
 
     private val _eventChannel = Channel<Request>(Channel.BUFFERED)
@@ -41,6 +43,10 @@ class OnBoardingViewModel @Inject constructor(
     private val _onBoardingContentListLiveData = MutableLiveData<List<OnBoardingContent>>()
     val onBoardingContentListLiveData: LiveData<List<OnBoardingContent>>
         get() = _onBoardingContentListLiveData
+
+    private val _userPrRecordingListLiveData= MutableLiveData<List<UserPersonalRecording>>()
+    val userPrRecordingListLiveData: LiveData<List<UserPersonalRecording>>
+        get() = _userPrRecordingListLiveData
 
     private val _onBoardingContent = MutableLiveData<OnBoardingContent>()
     val onBoardingContent: LiveData<OnBoardingContent>
@@ -59,6 +65,17 @@ class OnBoardingViewModel @Inject constructor(
                 localDate.format(DateTimeFormatter.ISO_DATE)
             } ?: "Not Chosen"
         }
+    val headerNextStepButtonEnabled = _datePicked.map {
+        it != null
+    }
+
+    val contentNextStepButtonText = _onBoardingContent.map {
+        if (it.prInfo.weights == 0.0 || it.prInfo.reps == 0) {
+            app.getString(R.string.on_boarding_skip_btn_label)
+        } else {
+            app.getString(R.string.on_boarding_next_btn_label)
+        }
+    }
 
     val inputText = MutableLiveData<String>()
 
@@ -97,6 +114,12 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
+    fun onFinishTutorialButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(Request.Finish)
+        }
+    }
+
     fun onDateSelected(milli: Long?) {
         _datePicked.value = milli
     }
@@ -132,21 +155,33 @@ class OnBoardingViewModel @Inject constructor(
     fun gatheringUserPrInfo() {
         _onBoardingContentListLiveData.value =
             onBoardingContentList.toList()
+
+        _userPrRecordingListLiveData.value =
+            onBoardingContentList.map {
+                it.prInfo
+            }
     }
 
-    fun createUserInfo() {
-
-    }
-
-    fun doneInitialSetting() {
-        insertUserInfo()
-    }
-
-    private fun insertUserInfo() {
+    fun finishOnBoardingProcess() {
         viewModelScope.launch {
-            userDao.insertUserInfo(_userInfo)
+            val userPrList = mutableListOf<UserPersonalRecording>()
+            _userPrRecordingListLiveData.value!!.forEach {
+                userPrList.add(it)
+            }
+            val date = _datePicked.value!!.let {
+                val localDate = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                localDate
+            }
+
+            val newUserInfo = UserInfo(
+                beginningOfWorkout = date,
+                userPRList = userPrList
+            )
+            userDao.insertUserInfo(newUserInfo)
+            _eventChannel.send(Request.NavigateToHome)
         }
     }
+
 
     private fun initOnBoardingInfo() {
         val workoutList = app.resources.getStringArray(R.array.exercise_list)

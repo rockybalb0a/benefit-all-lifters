@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_textview_small"
                 android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis12"
-                android:text="@{bindingCreator.get1rmMaximum(item, context)}"
+                android:text="@{bindingCreator.getWeights(item, context)}"
                 app:layout_constraintStart_toEndOf="@id/workout_1rm_title"
                 app:layout_constraintTop_toTopOf="@id/workout_1rm_title"
                 app:layout_constraintBottom_toBottomOf="@id/workout_1rm_title"

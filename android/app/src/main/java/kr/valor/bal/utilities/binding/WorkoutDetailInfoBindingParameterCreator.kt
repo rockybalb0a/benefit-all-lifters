@@ -16,7 +16,7 @@ object WorkoutDetailInfoBindingParameterCreator {
 
     fun getWeightsWithWeightUnitString(item: WorkoutSet?, context: Context): String {
         val weights = item?.weights?.toInt() ?: 20
-        return context.resources.getString(R.string.weights_text, weights)
+        return context.resources.getString(R.string.weights_integer_text, weights)
     }
 
     fun getWeightsWithoutWeightUnit(item: WorkoutSet?): String =

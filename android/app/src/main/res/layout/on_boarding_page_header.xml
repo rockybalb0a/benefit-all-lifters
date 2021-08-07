@@ -45,13 +45,11 @@
             android:id="@+id/welcome_sub_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis18"
+            android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
             android:text="@string/on_boarding_welcome_sub_title"
-            app:layout_constraintVertical_chainStyle="spread"
-            app:layout_constraintTop_toBottomOf="@id/welcome_title"
+            app:layout_constraintTop_toTopOf="@id/title_separator"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintBottom_toTopOf="@id/welcome_body" />
+            app:layout_constraintStart_toStartOf="@id/start_guideline" />
 
         <TextView
             android:id="@+id/welcome_body"
@@ -169,6 +167,7 @@
             android:backgroundTint="@android:color/holo_red_light"
             android:text="@string/on_boarding_next_btn_label"
             android:onClick="@{() -> viewModel.onNextStepButtonClicked()}"
+            android:enabled="@{viewModel.headerNextStepButtonEnabled}"
             app:icon="@drawable/ic_baseline_arrow_forward_24"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -194,6 +193,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/title_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/instruction_form_separator"
