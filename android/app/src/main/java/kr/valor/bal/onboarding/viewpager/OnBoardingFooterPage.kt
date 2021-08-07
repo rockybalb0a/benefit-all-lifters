@@ -21,9 +21,12 @@ class OnBoardingFooterPage(): Fragment() {
         binding.viewModel = sharedViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        sharedViewModel.userPrRecordingListLiveData.observe(viewLifecycleOwner) {
+        sharedViewModel.onBoardingContentListLiveData.observe(viewLifecycleOwner) {
+            val list = it.map { content ->
+                content.prInfo
+            }
             var result = 0.0
-            it.forEach { pr ->
+            list.forEach { pr ->
                 result += pr.weights
             }
             binding.footerTitle.text = result.toString()

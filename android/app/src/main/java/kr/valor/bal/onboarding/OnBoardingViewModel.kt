@@ -11,6 +11,7 @@ import kr.valor.bal.R
 import kr.valor.bal.data.local.user.UserDao
 import kr.valor.bal.data.local.user.UserInfo
 import kr.valor.bal.data.local.user.UserPersonalRecording
+import kr.valor.bal.utilities.convertToSimpleNumericString
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,64 +21,67 @@ class OnBoardingViewModel @Inject constructor(
 ): AndroidViewModel(app) {
     private lateinit var _userInfo: UserInfo
 
-    private var _currentViewPosition: Int = Int.MAX_VALUE
+    private var currentViewPosition: Int = Int.MAX_VALUE
 
-    private val _userPrRecordingList = mutableListOf<UserPersonalRecording>()
-    private val _userPrRecordingListLiveData = MutableLiveData<List<UserPersonalRecording>>()
-    val userPrRecordingListLiveData: LiveData<List<UserPersonalRecording>>
-        get() = _userPrRecordingListLiveData
+    private val onBoardingContentList = mutableListOf<OnBoardingContent>()
+    private val _onBoardingContentListLiveData = MutableLiveData<List<OnBoardingContent>>()
+    val onBoardingContentListLiveData: LiveData<List<OnBoardingContent>>
+        get() = _onBoardingContentListLiveData
 
-    private val _userPrRecording = MutableLiveData<UserPersonalRecording>()
-    val userPrRecording: LiveData<UserPersonalRecording>
-        get() = _userPrRecording
+    private val _onBoardingContent = MutableLiveData<OnBoardingContent>()
+    val onBoardingContent: LiveData<OnBoardingContent>
+        get() = _onBoardingContent
 
     val inputText = MutableLiveData<String>()
 
     init {
-        initUserPrRecordingContainer()
+        initOnBoardingInfo()
     }
 
     fun onViewChanged(position: Int) {
-        _userPrRecording.value = _userPrRecordingList[position]
-        _currentViewPosition = position
+        _onBoardingContent.value = onBoardingContentList[position]
+        currentViewPosition = position
         inputText.value =
-            if (_userPrRecording.value!!.weights % 1.0 == 0.0)
-                _userPrRecording.value!!.weights.toInt().toString()
-            else
-                _userPrRecording.value!!.weights.toString()
+            _onBoardingContent.value?.prInfo?.weights.convertToSimpleNumericString()
     }
 
     fun storeWeightsInput() {
         val inputWeights = if (inputText.value.isNullOrEmpty()) 0.0 else inputText.value!!.toDouble()
-        _userPrRecordingList[_currentViewPosition].weights = inputWeights
-        _userPrRecording.value = _userPrRecordingList[_currentViewPosition]
+        onBoardingContentList[currentViewPosition].prInfo.weights = inputWeights
+        _onBoardingContent.value = onBoardingContentList[currentViewPosition]
     }
 
     fun onPlusWeightsButtonClicked() {
         val inputWeights = inputText.value!!.toDouble() + 0.5
-        inputText.value = if (inputWeights % 1.0 == 0.0) inputWeights.toInt().toString() else inputWeights.toString()
+        inputText.value = inputWeights.convertToSimpleNumericString()
     }
 
     fun onMinusWeightsButtonClicked() {
         val inputWeights = inputText.value!!.toDouble() - 0.5
         if (inputWeights < 0.0) return
-        inputText.value = if (inputWeights % 1.0 == 0.0) inputWeights.toInt().toString() else inputWeights.toString()
+        inputText.value = inputWeights.convertToSimpleNumericString()
     }
 
     fun onPlusRepsButtonClicked() {
-        _userPrRecordingList[_currentViewPosition].reps += 1
-        _userPrRecording.value = _userPrRecordingList[_currentViewPosition]
+        onBoardingContentList[currentViewPosition].prInfo.reps += 1
+        _onBoardingContent.value = onBoardingContentList[currentViewPosition]
     }
 
     fun onMinusRepsButtonClicked() {
-        if (_userPrRecordingList[_currentViewPosition].reps == 0) return
-        _userPrRecordingList[_currentViewPosition].reps -= 1
-        _userPrRecording.value = _userPrRecordingList[_currentViewPosition]
+        onBoardingContentList[currentViewPosition].prInfo.apply {
+            if (this.reps == 0) {
+                return@apply
+            } else {
+                this.reps -= 1
+                _onBoardingContent.value = onBoardingContentList[currentViewPosition]
+            }
+        }
+
     }
 
     fun gatheringUserPrInfo() {
-        _userPrRecordingListLiveData.value =
-            _userPrRecordingList.toList()
+        _onBoardingContentListLiveData.value =
+            onBoardingContentList.toList()
     }
 
     fun createUserInfo() {
@@ -94,15 +98,31 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    private fun initUserPrRecordingContainer() {
+    private fun initOnBoardingInfo() {
         val workoutList = app.resources.getStringArray(R.array.exercise_list)
-        val initialDataList = listOf(
-            UserPersonalRecording(workoutName = workoutList[0]),
-            UserPersonalRecording(workoutName = workoutList[1]),
-            UserPersonalRecording(workoutName = workoutList[2]),
-            UserPersonalRecording(workoutName = workoutList[3]),
-            UserPersonalRecording(workoutName = workoutList[4])
-        )
-        _userPrRecordingList.addAll(initialDataList)
+        val contentList: MutableList<OnBoardingContent> = mutableListOf()
+
+        workoutList.forEachIndexed { idx, workoutName ->
+            OnBoardingContent(
+                contentTitle = app.getString(
+                    R.string.on_boarding_instruction_title,
+                    idx + 1,
+                    workoutName.lowercase().replaceFirstChar { it.uppercase() }
+                ),
+                contentSubTitle = app.getString(R.string.on_boarding_instruction_sub_title, workoutName.lowercase()),
+                contentDescription = app.getString(R.string.on_boarding_instruction_body, workoutName.lowercase()),
+                UserPersonalRecording(workoutName = workoutName)
+            )
+                .also { contentList.add(it) }
+        }
+
+        onBoardingContentList.addAll(contentList)
     }
+
+    data class OnBoardingContent(
+        val contentTitle: String,
+        val contentSubTitle: String,
+        val contentDescription: String,
+        val prInfo: UserPersonalRecording
+    )
 }

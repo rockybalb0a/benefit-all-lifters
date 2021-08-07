@@ -7,3 +7,13 @@ fun Long.elapsedTimeFormatter(): String {
 
     return String.format("%02d:%02d:%02d", hour, min, sec)
 }
+
+fun Double?.convertToSimpleNumericString(): String {
+    return this?.let {
+        if (it % 1.0 == 0.0) {
+            this.toInt().toString()
+        } else {
+            this.toString()
+        }
+    } ?: "0"
+}

@@ -7,7 +7,10 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
-    <string name="initial_setup_title_text">Step %d</string>
+    <string name="on_boarding_instruction_title">Step %d - %s</string>
+    <string name="on_boarding_instruction_sub_title">What is your best record for \n%s?</string>
+    <string name="on_boarding_instruction_body">How much weight, and how many reps can you lift %s?\n\nPlease fill your GOAT<sup><small>*</small></sup> records in the form below.</string>
+    <string name="on_boarding_instruction_terminology_goat"><sup><small>*</small></sup>Greatest of all time</string>
 
     <string name="home_training_records_title_text">Your Barbell Training Journey</string>
 

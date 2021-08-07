@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/initial_settings_background"
+            android:src="@drawable/on_boarding_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,39 +38,51 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/step_title"
+            android:id="@+id/instruction_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
-            android:text="Step #1"
+            android:text="@{viewModel.onBoardingContent.contentTitle}"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toTopOf="@id/top_guideline" />
+            app:layout_constraintTop_toTopOf="@id/top_guideline"
+            tools:text="@string/on_boarding_guide_title"/>
 
         <TextView
-            android:id="@+id/instruction_title"
+            android:id="@+id/instruction_sub_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis18"
-            android:text="@{viewModel.userPrRecording.workoutName}"
-            android:paddingVertical="@dimen/padding_default"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toBottomOf="@id/step_title"
+            android:text="@{viewModel.onBoardingContent.contentSubTitle}"
+            android:paddingVertical="@dimen/padding_small"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintTop_toBottomOf="@id/instruction_title"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintBottom_toTopOf="@id/instruction_body"
-            tools:text="@string/initial_setting_title"/>
+            tools:text="@string/on_boarding_guide_sub_title"/>
 
         <TextView
             android:id="@+id/instruction_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
-            android:text="@string/initial_setting_body"
+            android:text="@{viewModel.onBoardingContent.contentDescription}"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintTop_toBottomOf="@id/instruction_title"
-            app:layout_constraintBottom_toBottomOf="@id/separator"/>
+            app:layout_constraintTop_toBottomOf="@id/instruction_sub_title"
+            app:layout_constraintBottom_toBottomOf="@id/separator"
+            tools:text="@string/on_boarding_guide_body"/>
 
+        <TextView
+            android:id="@+id/instruction_terminology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/on_boarding_instruction_terminology_goat"
+            android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
+            android:textSize="@dimen/text_size_small_dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintTop_toTopOf="@id/separator"
+            app:layout_constraintBottom_toBottomOf="@id/cardview_top" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/weights_selection_view"
@@ -188,7 +200,7 @@
                     android:textColorHint="@color/primaryTextColorMediumEmphasis"
                     android:textColor="@color/primaryTextColorHighEmphasis"
                     android:textSize="@dimen/text_size_large_dp"
-                    android:text="@{String.valueOf(viewModel.userPrRecording.reps)}"
+                    android:text="@{String.valueOf(viewModel.onBoardingContent.prInfo.reps)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -243,35 +255,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.05" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.35" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/cardview_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
+            app:layout_constraintGuide_percent="0.40" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/cardview_separator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.55" />
+            app:layout_constraintGuide_percent="0.60" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/cardview_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.75" />
+            app:layout_constraintGuide_percent="0.80" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

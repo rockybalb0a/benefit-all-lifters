@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="initial_setting_title">
-        What is Lorem Ipsum
+    <string name="on_boarding_guide_title">
+        Step 4 - Conventional Deadlift
     </string>
 
-    <string name="initial_setting_body">
-        Contrary to popular belief, Lorem Ipsum is not simply random text.
+    <string name="on_boarding_guide_sub_title">
+        What is your best record for\nconventional deadlift?
+    </string>
+
+    <string name="on_boarding_guide_body">
+        How much weight, and how many reps can you lift Conventional Deadlift?\n\nPlease fill your GOAT<sup><small>*</small></sup> records in the form below.
     </string>
 
 </resources>
