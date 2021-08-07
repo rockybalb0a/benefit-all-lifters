@@ -106,14 +106,15 @@ fun RecyclerView.bindRecyclerView(data: List<DatabaseVideo>?) {
     adapter.submitList(data)
 }
 
+// See More : https://stackoverflow.com/questions/49726385/listadapter-not-updating-item-in-recyclerview#comment118559455_50062174
 @JvmName("onBoardingBinding")
 @BindingAdapter("onBoardingBinding")
 fun RecyclerView.bind(data: List<UserPersonalRecording>?) {
     val adapter = adapter as LastPageAdapter
     val converted = data?.let {
-        UserRecordData.convertToFooterAdapterList(it)
+        UserRecordData.convertToFooterAdapterList(data)
     }
-
+    adapter.submitList(null)
     adapter.submitList(converted)
 }
 

@@ -89,8 +89,30 @@ class ScheduleSetViewModel @Inject constructor(
     private fun update(workoutSet: WorkoutSet) {
         viewModelScope.launch {
             repository.updateWorkoutSet(workoutSet)
+            adjustUserPR(workoutSet)
             _candidatePlatesLiveData.value?.let { dequeuePlates() }
         }
+    }
+
+    private suspend fun adjustUserPR(workoutSet: WorkoutSet) {
+        val workoutName = repository.getWorkoutNameByWorkoutSetId(workoutSet.setId)
+        val userRecordOfThisWorkout = repository.getPrInfoOfThisWorkout(workoutName)
+
+        // Weight PR
+        if (userRecordOfThisWorkout.weights < workoutSet.weights && workoutSet.reps > 0) {
+            userRecordOfThisWorkout.weights = workoutSet.weights
+            userRecordOfThisWorkout.reps = workoutSet.reps
+            repository.updateUserPersonalRecording(userRecordOfThisWorkout)
+            return
+        }
+
+        // Reps PR
+        if (userRecordOfThisWorkout.weights == workoutSet.weights && userRecordOfThisWorkout.reps < workoutSet.reps) {
+            userRecordOfThisWorkout.reps = workoutSet.reps
+            repository.updateUserPersonalRecording(userRecordOfThisWorkout)
+            return
+        }
+
     }
 
     private fun enqueuePlates(weight: Double) {

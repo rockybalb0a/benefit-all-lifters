@@ -69,4 +69,16 @@ interface WorkoutDao {
         delete(target)
     }
 
+    @Query("SELECT workout_name FROM workout_detail WHERE detail_id is :detailId")
+    suspend fun getWorkoutNameByWorkoutDetailId(detailId: Long): String
+
+    @Query("SELECT container_id FROM workout_set WHERE set_id is :setId")
+    suspend fun getWorkoutDetailIdByWorkoutSetId(setId: Long): Long
+
+    @Transaction
+    suspend fun getWorkoutNameByWorkoutSetId(setId: Long): String {
+        val detailId = getWorkoutDetailIdByWorkoutSetId(setId)
+        return getWorkoutNameByWorkoutDetailId(detailId)
+    }
+
 }

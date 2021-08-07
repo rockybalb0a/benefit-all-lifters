@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.utilities.TrackingStatus
 import java.io.IOException
@@ -53,9 +52,7 @@ class HomeViewModel @Inject constructor(
             application.getString(R.string.home_dDay_sub_title, it.beginningOfWorkout.format(DateTimeFormatter.ISO_DATE))
         }
     }
-    val userPrRecords = _userInfo.map {
-        it?.userPRList?.toList()
-    }
+    val userPrRecords = repository.userPrRecords
 
     val videos = repository.youtubeVideos
 
@@ -128,6 +125,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
 
     private fun <T> WorkoutSchedule?.getResourcesByState(
         existStateReturnVal: T,

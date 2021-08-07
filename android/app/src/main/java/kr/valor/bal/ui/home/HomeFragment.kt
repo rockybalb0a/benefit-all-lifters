@@ -38,7 +38,8 @@ class HomeFragment : Fragment() {
         binding.userRecordsView.adapter = HomeAdapter(
             ShowDetailInfoListener { Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show() }
         )
-        binding.userRecordsView.setHasFixedSize(true)
+        // See More : https://stackoverflow.com/questions/54133757/recyclerview-not-showing-data-on-first-load
+//        binding.userRecordsView.setHasFixedSize(true)
 
         binding.videoListView.adapter = VideoAdapter(
             VideoClickListener {

@@ -1,12 +1,9 @@
 package kr.valor.bal.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kr.valor.bal.data.local.user.UserDao
-import kr.valor.bal.data.local.user.UserInfo
+import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutDao
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.data.local.workout.entities.WorkoutDetail
@@ -14,7 +11,6 @@ import kr.valor.bal.data.local.workout.entities.WorkoutOverview
 import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import kr.valor.bal.data.local.youtube.VideoDao
 import kr.valor.bal.data.remote.YoutubeApiService
-import kr.valor.bal.data.remote.YoutubeVideoContainer
 import kr.valor.bal.data.remote.asDatabaseModel
 import java.time.LocalDate
 import javax.inject.Inject
@@ -43,9 +39,7 @@ class DefaultRepository @Inject constructor(
 
     val userInfo = userDao.getUserInfo()
 
-    suspend fun insertUserInfo(userInfo: UserInfo) {
-        userDao.insertUserInfo(userInfo)
-    }
+    val userPrRecords = userDao.getAllUserPersonalRecord()
 
     suspend fun refreshVideos() {
         withContext(Dispatchers.IO) {
@@ -124,6 +118,10 @@ class DefaultRepository @Inject constructor(
         return true
     }
 
+    suspend fun getWorkoutNameByWorkoutSetId(setId: Long): String {
+        return workoutDao.getWorkoutNameByWorkoutSetId(setId)
+    }
+
     fun getWorkoutSetById(id: Long): LiveData<WorkoutSet> {
         return workoutDao.getWorkoutSet(id)
     }
@@ -154,6 +152,14 @@ class DefaultRepository @Inject constructor(
 
     suspend fun updateWorkoutOverview(workoutOverview: WorkoutOverview) {
         workoutDao.update(workoutOverview)
+    }
+
+    suspend fun getPrInfoOfThisWorkout(workoutName: String): UserPersonalRecording {
+        return userDao.getPersonalRecordOfThisWorkout(workoutName)
+    }
+
+    suspend fun updateUserPersonalRecording(pr: UserPersonalRecording) {
+        userDao.updateUserPrRecording(pr)
     }
 
     private suspend fun createWorkoutOverviewIfNotExist(): WorkoutOverview {

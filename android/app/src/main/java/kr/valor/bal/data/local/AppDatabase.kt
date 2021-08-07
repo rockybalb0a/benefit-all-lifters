@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import kr.valor.bal.data.local.user.UserDao
 import kr.valor.bal.data.local.user.UserInfo
+import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutDao
 import kr.valor.bal.data.local.workout.entities.WorkoutDetail
 import kr.valor.bal.data.local.workout.entities.WorkoutOverview
@@ -12,7 +13,17 @@ import kr.valor.bal.data.local.workout.entities.WorkoutSet
 import kr.valor.bal.data.local.youtube.VideoDao
 import kr.valor.bal.data.local.youtube.DatabaseVideo
 
-@Database(entities = [WorkoutOverview::class, WorkoutDetail::class, WorkoutSet::class, DatabaseVideo::class, UserInfo::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        WorkoutOverview::class,
+        WorkoutDetail::class,
+        WorkoutSet::class,
+        DatabaseVideo::class,
+        UserInfo::class,
+        UserPersonalRecording::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(AppDatabaseConverters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun workoutDao(): WorkoutDao

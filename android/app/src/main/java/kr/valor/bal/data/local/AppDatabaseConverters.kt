@@ -49,36 +49,36 @@ class AppDatabaseConverters {
         }
     }
 
-    @TypeConverter
-    fun userPrRecordingListToColumn(value: MutableList<UserPersonalRecording>): String {
-        return value.let {
-            val result = StringBuilder()
-
-            it.forEachIndexed { index, item ->
-                result.append(if (index == it.size - 1) {
-                    item.workoutName + PR_ITEM_DELIMITER + item.weights + PR_ITEM_DELIMITER + item.reps
-                } else {
-                    item.workoutName + PR_ITEM_DELIMITER + item.weights + PR_ITEM_DELIMITER + item.reps  + PR_DELIMITER
-                })
-            }
-
-            result.toString()
-        }
-    }
-
-    @TypeConverter
-    fun columnToUserPrRecordingList(data: String): MutableList<UserPersonalRecording> {
-        return if (data.isEmpty()) mutableListOf() else {
-            data.let {
-                val returnList = mutableListOf<UserPersonalRecording>()
-                it.split(PR_DELIMITER).forEach { eachItem ->
-                    val item = eachItem.split(PR_ITEM_DELIMITER)
-                    returnList.add(UserPersonalRecording(item[0], item[1].toDouble(), item[2].toInt()))
-                }
-                returnList
-            }
-        }
-    }
+//    @TypeConverter
+//    fun userPrRecordingListToColumn(value: MutableList<UserPersonalRecording>): String {
+//        return value.let {
+//            val result = StringBuilder()
+//
+//            it.forEachIndexed { index, item ->
+//                result.append(if (index == it.size - 1) {
+//                    item.workoutName + PR_ITEM_DELIMITER + item.weights + PR_ITEM_DELIMITER + item.reps
+//                } else {
+//                    item.workoutName + PR_ITEM_DELIMITER + item.weights + PR_ITEM_DELIMITER + item.reps  + PR_DELIMITER
+//                })
+//            }
+//
+//            result.toString()
+//        }
+//    }
+//
+//    @TypeConverter
+//    fun columnToUserPrRecordingList(data: String): MutableList<UserPersonalRecording> {
+//        return if (data.isEmpty()) mutableListOf() else {
+//            data.let {
+//                val returnList = mutableListOf<UserPersonalRecording>()
+//                it.split(PR_DELIMITER).forEach { eachItem ->
+//                    val item = eachItem.split(PR_ITEM_DELIMITER)
+//                    returnList.add(UserPersonalRecording(item[0], item[1].toDouble(), item[2].toInt()))
+//                }
+//                returnList
+//            }
+//        }
+//    }
 
     @TypeConverter
     fun columnToTrackingStatus(data: Int): TrackingStatus {

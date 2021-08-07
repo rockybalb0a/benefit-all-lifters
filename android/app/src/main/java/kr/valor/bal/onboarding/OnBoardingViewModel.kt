@@ -13,6 +13,7 @@ import kr.valor.bal.data.local.user.UserInfo
 import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.utilities.convertToSimpleNumericString
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -77,6 +78,8 @@ class OnBoardingViewModel @Inject constructor(
 
     val inputText = MutableLiveData<String>()
 
+    private lateinit var userInfo: UserInfo
+
     init {
         initOnBoardingInfo()
     }
@@ -102,12 +105,14 @@ class OnBoardingViewModel @Inject constructor(
 
     fun onNextStepButtonClicked() {
         viewModelScope.launch {
+            if (currentViewPosition != Int.MAX_VALUE) storeWeightsInput()
             _eventChannel.send(Request.NextStep)
         }
     }
 
     fun onPreviousStepButtonClicked() {
         viewModelScope.launch {
+            storeWeightsInput()
             _eventChannel.send(Request.PreviousStep)
         }
     }
@@ -125,12 +130,14 @@ class OnBoardingViewModel @Inject constructor(
     fun onPlusWeightsButtonClicked() {
         val inputWeights = inputText.value!!.toDouble() + 0.5
         inputText.value = inputWeights.convertToSimpleNumericString()
+        storeWeightsInput()
     }
 
     fun onMinusWeightsButtonClicked() {
         val inputWeights = inputText.value!!.toDouble() - 0.5
         if (inputWeights < 0.0) return
         inputText.value = inputWeights.convertToSimpleNumericString()
+        storeWeightsInput()
     }
 
     fun onPlusRepsButtonClicked() {
@@ -166,16 +173,18 @@ class OnBoardingViewModel @Inject constructor(
             _userPrRecordingListLiveData.value!!.forEach {
                 userPrList.add(it)
             }
+
             val date = _datePicked.value!!.let {
                 val localDate = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
                 localDate
             }
+            userInfo.beginningOfWorkout = date
 
-            val newUserInfo = UserInfo(
-                beginningOfWorkout = date,
-                userPRList = userPrList
-            )
-            userDao.insertUserInfo(newUserInfo)
+            userDao.insertUserInfo(userInfo)
+            userPrList.forEach {
+                userDao.insertUserPrRecording(it)
+            }
+
             _eventChannel.send(Request.NavigateToHome)
         }
     }
@@ -184,6 +193,8 @@ class OnBoardingViewModel @Inject constructor(
     private fun initOnBoardingInfo() {
         val workoutList = app.resources.getStringArray(R.array.exercise_list)
         val contentList: MutableList<OnBoardingContent> = mutableListOf()
+
+        userInfo = UserInfo(beginningOfWorkout = LocalDate.now())
 
         workoutList.forEachIndexed { idx, workoutName ->
             OnBoardingContent(
@@ -194,7 +205,7 @@ class OnBoardingViewModel @Inject constructor(
                 ),
                 contentSubTitle = app.getString(R.string.on_boarding_instruction_sub_title, workoutName.lowercase()),
                 contentDescription = app.getString(R.string.on_boarding_instruction_body, workoutName.lowercase()),
-                UserPersonalRecording(workoutName = workoutName)
+                UserPersonalRecording(workoutName = workoutName, userKey = userInfo.userId)
             )
                 .also { contentList.add(it) }
         }
