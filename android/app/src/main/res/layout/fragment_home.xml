@@ -64,11 +64,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_textview_medium"
                         android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
-                        android:textSize="24dp"
-                        android:text="D +1632"
+                        android:text="@{viewModel.totalDate}"
                         app:layout_constraintBottom_toTopOf="@id/total_workout_day_text_body"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="D +1632" />
 
                     <TextView
                         android:id="@+id/total_workout_day_text_body"
@@ -76,10 +76,12 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis"
                         android:textSize="24dp"
-                        android:text="From 2017.02.16"
+                        android:text="@{viewModel.fromDate}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@id/total_workout_day_text_title"
-                        app:layout_constraintTop_toBottomOf="@id/total_workout_day_text_title" />
+                        app:layout_constraintTop_toBottomOf="@id/total_workout_day_text_title"
+                        tools:text="From 2017.02.16"
+                        tools:ignore="SpUsage" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

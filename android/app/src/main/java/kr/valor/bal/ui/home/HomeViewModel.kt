@@ -14,6 +14,9 @@ import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.data.local.workout.WorkoutSchedule
 import kr.valor.bal.utilities.TrackingStatus
 import java.io.IOException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +37,21 @@ class HomeViewModel @Inject constructor(
 
     private val _todayWorkoutSchedule = repository.workoutOverview.switchMap {
         it?.let { repository.getWorkoutScheduleByWorkoutOverviewId(it.overviewId) } ?: liveData { emit(null) }
+    }
+
+    private val _userInfo = repository.userInfo
+    val totalDate = _userInfo.map {
+        it?.let {
+            val startDay = it.beginningOfWorkout
+            val today = LocalDate.now()
+            val dDayCount = ChronoUnit.DAYS.between(startDay, today) + 1
+            application.getString(R.string.home_dDay_title, dDayCount)
+        }
+    }
+    val fromDate = _userInfo.map {
+        it?.let {
+            application.getString(R.string.home_dDay_sub_title, it.beginningOfWorkout.format(DateTimeFormatter.ISO_DATE))
+        }
     }
 
     private val _userPrRecords = MutableLiveData<List<UserPersonalRecording>>()

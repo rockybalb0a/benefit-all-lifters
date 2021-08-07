@@ -1,7 +1,7 @@
 package kr.valor.bal.data
 
 import kr.valor.bal.data.local.AppDatabaseConverters
-import kr.valor.bal.data.local.user.entity.UserPersonalRecording
+import kr.valor.bal.data.local.user.UserPersonalRecording
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

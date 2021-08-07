@@ -30,6 +30,8 @@
     <string name="on_boarding_prev_btn_label">previous step</string>
     <string name="on_boarding_done_btn_label">start our greatest journey</string>
 
+    <string name="home_dDay_title">D + %d</string>
+    <string name="home_dDay_sub_title">From %s</string>
     <string name="home_training_records_title_text">Your Barbell Training Journey</string>
 
     <string name="home_nav_btn_header_title_if_not_exist">The only easy day was yesterday</string>
