@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="kr.valor.bal.SettingsViewModel" />
+            type="kr.valor.bal.onboarding.OnBoardingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
