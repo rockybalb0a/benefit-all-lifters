@@ -7,10 +7,21 @@
     <string name="overview_title">Overview</string>
     <string name="schedule_title">Today\'s plan</string>
 
+    <string name="on_boarding_welcome_title">Welcome !</string>
+    <string name="on_boarding_welcome_sub_title">Me, Mr.Klokov, is very happy to meet you.</string>
+    <string name="on_boarding_welcome_body">Before starting our training journey, can you tell me when you started the weight lifting?</string>
+    <string name="on_boarding_welcome_date_picker_label">Click here to choose date</string>
+    <string name="on_boarding_welcome_date_picker_view_title">Select date</string>
+    <string name="on_boarding_welcome_date_label">Chosen date</string>
+    <string name="on_boarding_welcome_date_initial">Not chosen</string>
+
     <string name="on_boarding_instruction_title">Step %d - %s</string>
     <string name="on_boarding_instruction_sub_title">What is your best record for \n%s?</string>
     <string name="on_boarding_instruction_body">How much weight, and how many reps can you lift %s?\n\nPlease fill your GOAT<sup><small>*</small></sup> records in the form below.</string>
     <string name="on_boarding_instruction_terminology_goat"><sup><small>*</small></sup>Greatest of all time</string>
+
+    <string name="on_boarding_next_btn_label">next step</string>
+    <string name="on_boarding_prev_btn_label">previous step</string>
 
     <string name="home_training_records_title_text">Your Barbell Training Journey</string>
 

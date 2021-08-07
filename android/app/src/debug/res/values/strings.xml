@@ -12,4 +12,12 @@
         How much weight, and how many reps can you lift Conventional Deadlift?\n\nPlease fill your GOAT<sup><small>*</small></sup> records in the form below.
     </string>
 
+    <string name="on_boarding_sub_title_stub">
+        What is Lorem Ipsum
+    </string>
+
+    <string name="on_boarding_body_stub">
+        Contrary to popular belief, Lorem Ipsum is not simply random text.
+    </string>
+
 </resources>

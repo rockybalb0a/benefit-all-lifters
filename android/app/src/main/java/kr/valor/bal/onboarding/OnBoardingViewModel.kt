@@ -1,17 +1,21 @@
 package kr.valor.bal.onboarding
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.data.local.user.UserDao
 import kr.valor.bal.data.local.user.UserInfo
 import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.utilities.convertToSimpleNumericString
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +23,15 @@ class OnBoardingViewModel @Inject constructor(
     private val app: Application,
     private val userDao: UserDao
 ): AndroidViewModel(app) {
+
+    sealed class Event {
+        object ShowDatePickerEvent: Event()
+    }
+
+    private val _eventChannel = Channel<Event>(Channel.BUFFERED)
+    val eventFlow: Flow<Event>
+        get() = _eventChannel.receiveAsFlow()
+
     private lateinit var _userInfo: UserInfo
 
     private var currentViewPosition: Int = Int.MAX_VALUE
@@ -31,6 +44,20 @@ class OnBoardingViewModel @Inject constructor(
     private val _onBoardingContent = MutableLiveData<OnBoardingContent>()
     val onBoardingContent: LiveData<OnBoardingContent>
         get() = _onBoardingContent
+
+    private val _datePicked = MutableLiveData<Long?>()
+    private val _datePickedToLocalDate = _datePicked.map {
+        it?.let {
+            Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+        }
+    }
+    val datePicked: LiveData<String>
+        get() = _datePicked.map {
+            it?.let {
+                val localDate = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                localDate.format(DateTimeFormatter.ISO_DATE)
+            } ?: "Not Chosen"
+        }
 
     val inputText = MutableLiveData<String>()
 
@@ -49,6 +76,16 @@ class OnBoardingViewModel @Inject constructor(
         val inputWeights = if (inputText.value.isNullOrEmpty()) 0.0 else inputText.value!!.toDouble()
         onBoardingContentList[currentViewPosition].prInfo.weights = inputWeights
         _onBoardingContent.value = onBoardingContentList[currentViewPosition]
+    }
+
+    fun onDateChooseButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(Event.ShowDatePickerEvent)
+        }
+    }
+
+    fun onDateSelected(milli: Long?) {
+        _datePicked.value = milli
     }
 
     fun onPlusWeightsButtonClicked() {

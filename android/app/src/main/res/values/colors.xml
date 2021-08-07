@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryColor5percentOverlay">#F218202B</color>
-    <color name="primaryColor12percentOverlay">#E018202B</color>
-    <color name="primaryColor80percentOverlay">#3318202B</color>
+    <color name="primaryColorAlpha88">#E018202B</color>
+    <color name="primaryColorAlpha20">#3318202B</color>
     <color name="primaryColor20percentShade">#131A22</color>
     <color name="primaryColor">#040d2c</color>
     <color name="primaryColorAlt">#18202B</color>
