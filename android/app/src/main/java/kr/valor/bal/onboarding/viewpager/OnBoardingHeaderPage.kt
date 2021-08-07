@@ -29,41 +29,5 @@ class OnBoardingHeaderPage: Fragment() {
 
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setUpEventObserver()
-    }
-
-    private fun setUpEventObserver() {
-        sharedViewModel.eventFlow.onEach {
-            when(it) {
-                is OnBoardingViewModel.Event.ShowDatePickerEvent -> {
-                    showDatePicker()
-                }
-            }
-        }
-            .observeInLifecycle(viewLifecycleOwner)
-    }
-
-    private fun showDatePicker() {
-        val constraints = CalendarConstraints.Builder()
-            .setValidator(DateValidatorPointBackward.now())
-            .build()
-
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setCalendarConstraints(constraints)
-                .setTitleText(R.string.on_boarding_welcome_date_picker_view_title)
-                .build()
-                .also {
-                    it.addOnPositiveButtonClickListener { timeInMilli ->
-                        sharedViewModel.onDateSelected(timeInMilli)
-                    }
-                    it.addOnNegativeButtonClickListener {
-                        sharedViewModel.onDateSelected(null)
-                    }
-                }
-        datePicker.show(parentFragmentManager, null)
-    }
-
+    
 }

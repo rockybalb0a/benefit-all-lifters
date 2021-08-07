@@ -13,7 +13,6 @@ import kr.valor.bal.data.local.user.UserInfo
 import kr.valor.bal.data.local.user.UserPersonalRecording
 import kr.valor.bal.utilities.convertToSimpleNumericString
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -24,12 +23,14 @@ class OnBoardingViewModel @Inject constructor(
     private val userDao: UserDao
 ): AndroidViewModel(app) {
 
-    sealed class Event {
-        object ShowDatePickerEvent: Event()
+    sealed class Request {
+        object ShowDatePicker: Request()
+        object NextStep: Request()
+        object PreviousStep: Request()
     }
 
-    private val _eventChannel = Channel<Event>(Channel.BUFFERED)
-    val eventFlow: Flow<Event>
+    private val _eventChannel = Channel<Request>(Channel.BUFFERED)
+    val eventFlow: Flow<Request>
         get() = _eventChannel.receiveAsFlow()
 
     private lateinit var _userInfo: UserInfo
@@ -65,7 +66,7 @@ class OnBoardingViewModel @Inject constructor(
         initOnBoardingInfo()
     }
 
-    fun onViewChanged(position: Int) {
+    fun onPageChanged(position: Int) {
         _onBoardingContent.value = onBoardingContentList[position]
         currentViewPosition = position
         inputText.value =
@@ -80,7 +81,19 @@ class OnBoardingViewModel @Inject constructor(
 
     fun onDateChooseButtonClicked() {
         viewModelScope.launch {
-            _eventChannel.send(Event.ShowDatePickerEvent)
+            _eventChannel.send(Request.ShowDatePicker)
+        }
+    }
+
+    fun onNextStepButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(Request.NextStep)
+        }
+    }
+
+    fun onPreviousStepButtonClicked() {
+        viewModelScope.launch {
+            _eventChannel.send(Request.PreviousStep)
         }
     }
 
