@@ -35,8 +35,6 @@ class OnBoardingViewModel @Inject constructor(
     val eventFlow: Flow<Request>
         get() = _eventChannel.receiveAsFlow()
 
-    private lateinit var _userInfo: UserInfo
-
     private var currentViewPosition: Int = Int.MAX_VALUE
 
     private val onBoardingContentList = mutableListOf<OnBoardingContent>()

@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import kr.valor.bal.databinding.OnBoardingPageFooterBinding
 import kr.valor.bal.onboarding.OnBoardingViewModel
 
-class OnBoardingFooterPage(): Fragment() {
+class OnBoardingFooterPage: Fragment() {
     private val sharedViewModel: OnBoardingViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -19,25 +19,6 @@ class OnBoardingFooterPage(): Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.userPrRecyclerView.adapter = LastPageAdapter()
 
-//        sharedViewModel.onBoardingContentListLiveData.observe(viewLifecycleOwner) {
-//            val list = it.map { content ->
-//                content.prInfo
-//            }
-//            var result = 0.0
-//            list.forEach { pr ->
-//                result += pr.weights
-//            }
-//            binding.footerTitle.text = result.toString()
-//        }
-//
-//        binding.footerTitle.setOnClickListener {
-//            NavDeepLinkBuilder(requireActivity()).apply {
-//                setComponentName(MainActivity::class.java)
-//                setGraph(R.navigation.nav_graph)
-//                setDestination(R.id.home_dest)
-//                createPendingIntent().send()
-//            }
-//        }
         return binding.root
     }
 

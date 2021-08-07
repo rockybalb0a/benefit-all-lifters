@@ -24,11 +24,18 @@
     <string name="on_boarding_last_step_body">Please check the items you have written.</string>
     <string name="on_boarding_last_step_date_label">Start date</string>
     <string name="on_boarding_last_step_final_check_label">Have you checked this all?</string>
+    <string name="on_boarding_last_step_weight_label">Weight</string>
+    <string name="on_boarding_last_step_reps_label">Reps</string>
 
     <string name="on_boarding_next_btn_label">next step</string>
     <string name="on_boarding_skip_btn_label">skip</string>
     <string name="on_boarding_prev_btn_label">previous step</string>
     <string name="on_boarding_done_btn_label">start our greatest journey</string>
+
+    <string name="estimated_1rm_label">Estimated 1RM</string>
+    <string name="max_lift_label">Max Lift</string>
+    <string name="max_lift_body_weight_decimal">%dkg x %d</string>
+    <string name="max_lift_body_weight_float">%.1fkg x %d</string>
 
     <string name="home_dDay_title">D + %d</string>
     <string name="home_dDay_sub_title">From %s</string>
@@ -136,5 +143,6 @@
     </string>
     <string name="save_changes_action_choice_dialog_positive_action_btn_label">SAVE</string>
     <string name="save_changes_action_choice_dialog_negative_action_btn_label">DISCARD</string>
+
 
 </resources>

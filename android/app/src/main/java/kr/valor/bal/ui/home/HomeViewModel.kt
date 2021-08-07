@@ -53,17 +53,14 @@ class HomeViewModel @Inject constructor(
             application.getString(R.string.home_dDay_sub_title, it.beginningOfWorkout.format(DateTimeFormatter.ISO_DATE))
         }
     }
-
-    private val _userPrRecords = MutableLiveData<List<UserPersonalRecording>>()
-    val userPrRecords: LiveData<List<UserPersonalRecording>>
-        get() = _userPrRecords
+    val userPrRecords = _userInfo.map {
+        it?.userPRList?.toList()
+    }
 
     val videos = repository.youtubeVideos
 
     init {
         refreshVideoFromRepository()
-        // TODO : Real Implementation
-        _userPrRecords.value = createDummyData()
     }
 
     val navigateButtonHeaderTitleText = _todayWorkoutSchedule.map {
@@ -148,18 +145,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
         } ?: return notExistStateReturnVal
-    }
-
-    // TODO : Real Implementation
-    private fun createDummyData(): List<UserPersonalRecording> {
-        val workoutList = res.getStringArray(R.array.exercise_list)
-        val workoutSummaryInfoList = mutableListOf<UserPersonalRecording>()
-        workoutList.forEach {
-            workoutSummaryInfoList.add(
-                UserPersonalRecording(it, 100.0, 1)
-            )
-        }
-        return workoutSummaryInfoList.toList()
     }
 
 }

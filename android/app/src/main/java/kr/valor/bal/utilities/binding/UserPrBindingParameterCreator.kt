@@ -11,9 +11,17 @@ object UserPrBindingParameterCreator {
     }
 
     fun getWeights(item: UserPersonalRecording?, context: Context): String? {
-//        val weights = item?.weights ?: 20
-//        return context.resources.getString(R.string.weights_text, weights)
         return item?.weights?.getString(context)
+    }
+
+    fun getMaxLift(item: UserPersonalRecording?, context: Context): String? {
+        return item?.let {
+            if (it.weights.isSimplifiable()) {
+                context.resources.getString(R.string.max_lift_body_weight_decimal, it.weights.toInt(), it.reps)
+            } else {
+                context.resources.getString(R.string.max_lift_body_weight_float, it.weights, it.reps)
+            }
+        }
     }
 
 
@@ -32,10 +40,14 @@ object UserPrBindingParameterCreator {
     }
 
     private fun Double.getString(context: Context): String {
-        return if (this % 1.0 == 0.0) {
+        return if (this.isSimplifiable()) {
             context.resources.getString(R.string.weights_integer_text, this.toInt())
         } else {
             context.resources.getString(R.string.weights_floating_text, this)
         }
+    }
+
+    private fun Double.isSimplifiable(): Boolean {
+        return this % 1.0 == 0.0
     }
 }

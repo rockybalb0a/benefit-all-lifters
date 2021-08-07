@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis12"
-                android:text="Weight"
+                android:text="@string/on_boarding_last_step_weight_label"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintTop_toTopOf="@id/content_top_guideline" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_textview_medium"
                 android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis12"
-                android:text="Reps"
+                android:text="@string/on_boarding_last_step_reps_label"
                 app:layout_constraintStart_toStartOf="@id/start_guideline"
                 app:layout_constraintTop_toBottomOf="@id/weights_value" />
 
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Theme.App.TextAppearance.MediumEmphasis12"
-                android:text="Estimated 1RM"
+                android:text="@string/estimated_1rm_label"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline"
                 app:layout_constraintBottom_toTopOf="@id/estimated_1rm_value" />
 
