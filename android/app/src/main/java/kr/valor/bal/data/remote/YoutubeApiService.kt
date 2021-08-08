@@ -13,7 +13,7 @@ interface YoutubeApiService {
     suspend fun requestVideo(
         @Query("key") developerKey: String = API_KEY,
         @Query("part") part: String = "snippet",
-        @Query("maxResults") maxResults: Int = 50,
+        @Query("maxResults") maxResults: Int = 10,
         @Query("type") type: String = "video",
         @Query("q") query: String = "klokov squat"
     ): YoutubeVideoContainer
