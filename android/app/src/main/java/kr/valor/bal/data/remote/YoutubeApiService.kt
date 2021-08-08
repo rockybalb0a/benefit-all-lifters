@@ -1,11 +1,12 @@
 package kr.valor.bal.data.remote
 
+import kr.valor.bal.BuildConfig
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface YoutubeApiService {
     companion object {
-        const val API_KEY = "AIzaSyA9rBS5kM-jqkFnafmBNVrMUyMMJVVLm3o"
+        const val API_KEY = BuildConfig.YOUTUBE_API_KEY
         const val BASE_URL = "https://www.googleapis.com"
     }
 

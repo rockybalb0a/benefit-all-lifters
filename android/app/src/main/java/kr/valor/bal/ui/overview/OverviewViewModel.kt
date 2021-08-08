@@ -26,7 +26,7 @@ class OverviewViewModel @Inject constructor(
 
     val workoutSchedules = repository.workoutSchedules.map {
         it.filter { each ->
-            each.workoutOverview.trackingStatus == TrackingStatus.DONE && each.workoutOverview.date != LocalDate.now()
+            each.workoutOverview.trackingStatus == TrackingStatus.DONE //&& each.workoutOverview.date != LocalDate.now()
         }
     }
 
