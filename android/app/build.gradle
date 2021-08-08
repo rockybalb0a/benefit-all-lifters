@@ -7,6 +7,9 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -17,6 +20,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "YOUTUBE_API_KEY", properties['youtube_api_key']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
