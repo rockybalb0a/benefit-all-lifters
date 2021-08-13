@@ -13,7 +13,7 @@ import androidx.fragment.app.activityViewModels
 import kr.valor.bal.databinding.OnBoardingPageContentBinding
 import kr.valor.bal.onboarding.OnBoardingViewModel
 
-class OnBoardingContentPage(private val position: Int): Fragment() {
+class OnBoardingContentPage(): Fragment() {
 
     private val sharedViewModel: OnBoardingViewModel by activityViewModels()
 

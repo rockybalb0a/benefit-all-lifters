@@ -9,9 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kr.valor.bal.adapters.ShowDetailInfoListener
 import kr.valor.bal.adapters.home.HomeAdapter
 import kr.valor.bal.adapters.home.VideoAdapter
@@ -61,19 +66,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupEventObserver() {
-        viewModel.eventsFlow
-            .onEach {
-                when (it) {
-                    HomeViewModel.Event.NavigateToScheduleDest -> {
-                        findNavController().navigate(
-                            HomeFragmentDirections.actionHomeDestToScheduleDest()
-                        )
+//        viewModel.eventsFlow
+//            .onEach {
+//                when (it) {
+//                    HomeViewModel.Event.NavigateToScheduleDest -> {
+//                        findNavController().navigate(
+//                            HomeFragmentDirections.actionHomeDestToScheduleDest()
+//                        )
+//                    }
+//                    HomeViewModel.Event.EventNetworkError -> {
+//                        Toast.makeText(context, "Network Error !", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//            .observeInLifecycle(viewLifecycleOwner)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventsFlow.onEach {
+                    when(it) {
+                        HomeViewModel.Event.NavigateToScheduleDest -> {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeDestToScheduleDest()
+                            )
+                        }
+                        HomeViewModel.Event.EventNetworkError -> {
+                            Toast.makeText(context, "Network Error !", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                    HomeViewModel.Event.EventNetworkError -> {
-                        Toast.makeText(context, "Network Error !", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                }.collect {  }
             }
-            .observeInLifecycle(viewLifecycleOwner)
+        }
     }
 }

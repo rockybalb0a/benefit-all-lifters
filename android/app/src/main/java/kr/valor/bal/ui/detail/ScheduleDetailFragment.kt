@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kr.valor.bal.adapters.WorkoutDetailItem
 import kr.valor.bal.adapters.detail.DetailAdapter
 import kr.valor.bal.databinding.FragmentDetailBinding
@@ -52,22 +57,42 @@ class ScheduleDetailFragment: Fragment() {
             adapter.submitList(items)
         }
 
-        viewModel.eventFlow
-            .onEach {
-                when (it) {
-                    ScheduleDetailViewModel.Event.NavigateToOverviewDest -> {
-                        findNavController().navigate(
-                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToOverviewDest()
-                        )
+//        viewModel.eventFlow
+//            .onEach {
+//                when (it) {
+//                    ScheduleDetailViewModel.Event.NavigateToOverviewDest -> {
+//                        findNavController().navigate(
+//                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToOverviewDest()
+//                        )
+//                    }
+//                    is ScheduleDetailViewModel.Event.NavigateToEditDest -> {
+//                        findNavController().navigate(
+//                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToEditDest(it.overviewId, it.date)
+//                        )
+//                    }
+//                }
+//            }
+//            .observeInLifecycle(viewLifecycleOwner)
+
+        
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventFlow.onEach {
+                    when(it) {
+                        ScheduleDetailViewModel.Event.NavigateToOverviewDest -> {
+                            findNavController().navigate(
+                                ScheduleDetailFragmentDirections.actionScheduleDetailDestToOverviewDest()
+                            )
+                        }
+                        is ScheduleDetailViewModel.Event.NavigateToEditDest -> {
+                            findNavController().navigate(
+                                ScheduleDetailFragmentDirections.actionScheduleDetailDestToEditDest(it.overviewId, it.date)
+                            )
+                        }
                     }
-                    is ScheduleDetailViewModel.Event.NavigateToEditDest -> {
-                        findNavController().navigate(
-                            ScheduleDetailFragmentDirections.actionScheduleDetailDestToEditDest(it.overviewId, it.date)
-                        )
-                    }
-                }
+                }.collect {  }
             }
-            .observeInLifecycle(viewLifecycleOwner)
+        }
 
     }
 

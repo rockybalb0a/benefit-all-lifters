@@ -19,7 +19,7 @@ class OnBoardingViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentSt
         return when(position) {
             HEADER -> OnBoardingHeaderPage()
             FOOTER -> OnBoardingFooterPage()
-            else -> OnBoardingContentPage(position)
+            else -> OnBoardingContentPage()
         }
     }
 }

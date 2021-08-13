@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kr.valor.bal.adapters.overview.OverviewAdapter
 import kr.valor.bal.adapters.OverviewItemListener
 import kr.valor.bal.databinding.FragmentOverviewBinding
@@ -39,16 +44,30 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.eventsFlow.onEach {
-            when(it) {
-                is OverviewViewModel.Event.NavigateToDetailDest -> {
-                    findNavController().navigate(
-                        OverviewFragmentDirections.actionOverviewDestToScheduleDetailDest(
-                            it.overviewId
-                        )
-                    )
-                }
+//        viewModel.eventsFlow.onEach {
+//            when(it) {
+//                is OverviewViewModel.Event.NavigateToDetailDest -> {
+//                    findNavController().navigate(
+//                        OverviewFragmentDirections.actionOverviewDestToScheduleDetailDest(
+//                            it.overviewId
+//                        )
+//                    )
+//                }
+//            }
+//        }.observeInLifecycle(viewLifecycleOwner)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventsFlow.onEach {
+                    when(it) {
+                        is OverviewViewModel.Event.NavigateToDetailDest -> {
+                            findNavController().navigate(
+                                OverviewFragmentDirections.actionOverviewDestToScheduleDetailDest(it.overviewId)
+                            )
+                        }
+                    }
+                }.collect {  }
             }
-        }.observeInLifecycle(viewLifecycleOwner)
+        }
     }
 }

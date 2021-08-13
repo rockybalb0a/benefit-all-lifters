@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kr.valor.bal.MainApplication
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
@@ -93,37 +99,72 @@ class ScheduleFragment : DialogContainerFragment() {
     }
 
     private fun setEventObserver() {
-        viewModel.eventsFlow
-            .onEach {
-                when (it) {
-                    ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
-                        showWorkoutSelectionDialog(viewModel)
-                    }
-                    ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
-                        showTimerResetActionChoiceDialog {
-                            viewModel.onTimerResetActionSelected()
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventsFlow
+                    .onEach {
+                        when (it) {
+                            ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
+                                showWorkoutSelectionDialog(viewModel)
+                            }
+                            ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
+                                showTimerResetActionChoiceDialog {
+                                    viewModel.onTimerResetActionSelected()
+                                }
+                            }
+                            ScheduleViewModel.Event.ShowEditActionChoiceDialog -> {
+                                showEditActionChoiceDialog {
+                                    viewModel.onEditWorkoutAcceptClicked()
+                                }
+                            }
+                            ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
+                                MainApplication.prefs.setWorkoutRecordingState(isCompleted = true)
+                                findNavController().navigate(
+                                    ScheduleFragmentDirections.actionScheduleDestSelf()
+                                )
+                            }
+                            ScheduleViewModel.Event.NavigateToScheduleEditDest -> {
+                                MainApplication.prefs.setWorkoutRecordingState(isCompleted = false)
+                                findNavController().navigate(
+                                    ScheduleFragmentDirections.actionScheduleDestSelf()
+                                )
+                            }
                         }
                     }
-                    ScheduleViewModel.Event.ShowEditActionChoiceDialog -> {
-                        showEditActionChoiceDialog {
-                            viewModel.onEditWorkoutAcceptClicked()
-                        }
-                    }
-                    ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
-                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = true)
-                        findNavController().navigate(
-                            ScheduleFragmentDirections.actionScheduleDestSelf()
-                        )
-                    }
-                    ScheduleViewModel.Event.NavigateToScheduleEditDest -> {
-                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = false)
-                        findNavController().navigate(
-                            ScheduleFragmentDirections.actionScheduleDestSelf()
-                        )
-                    }
-                }
+                    .collect {  }
             }
-            .observeInLifecycle(viewLifecycleOwner)
+        }
+//        viewModel.eventsFlow
+//            .onEach {
+//                when (it) {
+//                    ScheduleViewModel.Event.ShowAddNewWorkoutDialog -> {
+//                        showWorkoutSelectionDialog(viewModel)
+//                    }
+//                    ScheduleViewModel.Event.ShowTimerStopActionChoiceDialog -> {
+//                        showTimerResetActionChoiceDialog {
+//                            viewModel.onTimerResetActionSelected()
+//                        }
+//                    }
+//                    ScheduleViewModel.Event.ShowEditActionChoiceDialog -> {
+//                        showEditActionChoiceDialog {
+//                            viewModel.onEditWorkoutAcceptClicked()
+//                        }
+//                    }
+//                    ScheduleViewModel.Event.NavigateToScheduleDoneDest -> {
+//                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = true)
+//                        findNavController().navigate(
+//                            ScheduleFragmentDirections.actionScheduleDestSelf()
+//                        )
+//                    }
+//                    ScheduleViewModel.Event.NavigateToScheduleEditDest -> {
+//                        MainApplication.prefs.setWorkoutRecordingState(isCompleted = false)
+//                        findNavController().navigate(
+//                            ScheduleFragmentDirections.actionScheduleDestSelf()
+//                        )
+//                    }
+//                }
+//            }
+//            .observeInLifecycle(viewLifecycleOwner)
     }
 
     private fun FragmentScheduleBinding.initRecordLayoutBinding() {

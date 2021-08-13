@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kr.valor.bal.R
 import kr.valor.bal.adapters.*
 import kr.valor.bal.adapters.schedule.ScheduleAdapter
@@ -71,39 +76,76 @@ class EditFragment : DialogContainerFragment() {
     }
 
     private fun setEventObserver() {
-        viewModel.eventsFlow
-            .onEach { event ->
-                when (event) {
-                    is EditViewModel.Event.EditDoneAndBackToDetailDest ->
-                        findNavController().navigate(
-                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
-                                event.overviewId
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventsFlow
+                    .onEach { event ->
+                        when (event) {
+                            is EditViewModel.Event.EditDoneAndBackToDetailDest ->
+                                findNavController().navigate(
+                                    EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                        event.overviewId
+                                    )
+                                )
+                            is EditViewModel.Event.EditRejectAndBackToDetailDest ->
+                                findNavController().navigate(
+                                    EditFragmentDirections.actionEditDestToScheduleDetailDest(
+                                        event.overviewId
+                                    )
+                                )
+                            is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog(
+                                positiveAction = {
+                                    findNavController().navigate(
+                                        EditFragmentDirections
+                                            .actionEditDestToScheduleDetailDest(navArgs.overviewId)
+                                    )
+                                },
+                                negativeAction = {
+                                    viewModel.onEditRejectButtonClicked()
+                                }
                             )
-                        )
-                    is EditViewModel.Event.EditRejectAndBackToDetailDest ->
-                        findNavController().navigate(
-                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
-                                event.overviewId
-                            )
-                        )
-                    is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog(
-                        positiveAction = {
-                            findNavController().navigate(
-                                EditFragmentDirections
-                                    .actionEditDestToScheduleDetailDest(navArgs.overviewId)
-                            )
-                        },
-                        negativeAction = {
-                            viewModel.onEditRejectButtonClicked()
+                            is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog(viewModel)
+                            is EditViewModel.Event.ShowTimerSettingDialog -> {
+                                //                        showTimerManualSettingDialog()
+                            }
                         }
-                    )
-                    is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog(viewModel)
-                    is EditViewModel.Event.ShowTimerSettingDialog -> {
-                        //                        showTimerManualSettingDialog()
                     }
-                }
+                    .collect {  }
             }
-            .observeInLifecycle(viewLifecycleOwner)
+        }
+//        viewModel.eventsFlow
+//            .onEach { event ->
+//                when (event) {
+//                    is EditViewModel.Event.EditDoneAndBackToDetailDest ->
+//                        findNavController().navigate(
+//                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+//                                event.overviewId
+//                            )
+//                        )
+//                    is EditViewModel.Event.EditRejectAndBackToDetailDest ->
+//                        findNavController().navigate(
+//                            EditFragmentDirections.actionEditDestToScheduleDetailDest(
+//                                event.overviewId
+//                            )
+//                        )
+//                    is EditViewModel.Event.EditDetectedEvent -> showApplyChangeChoiceActionDialog(
+//                        positiveAction = {
+//                            findNavController().navigate(
+//                                EditFragmentDirections
+//                                    .actionEditDestToScheduleDetailDest(navArgs.overviewId)
+//                            )
+//                        },
+//                        negativeAction = {
+//                            viewModel.onEditRejectButtonClicked()
+//                        }
+//                    )
+//                    is EditViewModel.Event.ShowAddNewWorkoutDialog -> showWorkoutSelectionDialog(viewModel)
+//                    is EditViewModel.Event.ShowTimerSettingDialog -> {
+//                        //                        showTimerManualSettingDialog()
+//                    }
+//                }
+//            }
+//            .observeInLifecycle(viewLifecycleOwner)
     }
 
     private fun FragmentEditBinding.initBinding() {
