@@ -6,7 +6,5 @@
 
     <item
         android:drawable="@drawable/ic_launcher_foreground"
-        android:gravity="center"
-        android:top="10dp"
-        android:left="10dp" />
+        android:gravity="center" />
 </layer-list>
