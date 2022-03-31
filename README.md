@@ -13,9 +13,6 @@
     - Back squat, Slow eccentric 등으로 세분화.
 
 
-**(develop branch에서 활발히 개발 진행 중!)**
-
-
 ## 시작하기
 
 YouTube Api Key 발급
