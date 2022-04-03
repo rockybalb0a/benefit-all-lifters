@@ -1,4 +1,4 @@
-# Benefit All Lifetrs (Demo)
+# Benefit All Lifetrs
 운동 기록들을 생성/조회/수정/삭제할 수 있는 앱. 기본 구현은 모두 끝난 상태. 
 
 기본적으로 SBD, FS, OHP 이 다섯가지 종목을 다루며,  단관절 운동은 물론, 기타 다관절 운동(로우 등)들을 추가할 계획은 **전혀**없음.  
@@ -11,9 +11,6 @@
     - Back squat, ATG
     - Back squat, Pause
     - Back squat, Slow eccentric 등으로 세분화.
-
-
-**(develop branch에서 활발히 개발 진행 중!)**
 
 
 ## 시작하기
