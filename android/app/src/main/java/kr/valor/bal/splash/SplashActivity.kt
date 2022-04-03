@@ -2,13 +2,14 @@ package kr.valor.bal.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavDeepLinkBuilder
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kr.valor.bal.MainActivity
-import kr.valor.bal.R
 import kr.valor.bal.onboarding.OnBoardingActivity
 
 @AndroidEntryPoint
@@ -19,17 +20,24 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.userInfo.observe(this) {
-            if (it == null) {
-                startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
-            } else {
-                NavDeepLinkBuilder(this@SplashActivity).apply {
-                    setComponentName(MainActivity::class.java)
-                    setGraph(R.navigation.nav_graph)
-                    setDestination(R.id.home_dest)
-                    createPendingIntent().send()
+        lifecycleScope.launch {
+            viewModel.userInfoState.flowWithLifecycle(lifecycle)
+                .collect { navigationDirection ->
+                    when(navigationDirection) {
+                        NavigationDirection.NavigateMain -> {
+                            startActivity(
+                                Intent(this@SplashActivity, MainActivity::class.java)
+                            )
+                        }
+
+                        NavigationDirection.NavigateOnboarding -> {
+                            startActivity(
+                                Intent(this@SplashActivity, OnBoardingActivity::class.java)
+                            )
+                        }
+                    }
+                    finish()
                 }
-            }
         }
     }
 

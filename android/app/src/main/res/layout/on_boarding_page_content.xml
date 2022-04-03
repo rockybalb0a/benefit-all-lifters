@@ -39,13 +39,15 @@
 
         <TextView
             android:id="@+id/instruction_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Theme.App.TextAppearance.HighEmphasis24"
             android:text="@{viewModel.onBoardingContent.contentTitle}"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
-            tools:text="@string/on_boarding_guide_title"/>
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            tools:text="@string/on_boarding_guide_title" />
 
         <TextView
             android:id="@+id/instruction_sub_title"
@@ -57,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@id/title_separator"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            tools:text="@string/on_boarding_guide_sub_title"/>
+            tools:text="@string/on_boarding_guide_sub_title" />
 
         <TextView
             android:id="@+id/instruction_body"

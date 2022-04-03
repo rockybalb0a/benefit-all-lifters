@@ -10,7 +10,7 @@
     <string name="on_boarding_welcome_title">Welcome !</string>
     <string name="on_boarding_welcome_sub_title">Me, Mr.Klokov, is very happy to meet you.</string>
     <string name="on_boarding_welcome_body">Before starting our training journey, can you tell me when you started the weight lifting?</string>
-    <string name="on_boarding_welcome_date_picker_label">Click here to choose date</string>
+    <string name="on_boarding_welcome_date_picker_label">Choose date</string>
     <string name="on_boarding_welcome_date_picker_view_title">Select date</string>
     <string name="on_boarding_welcome_date_label">Chosen date</string>
     <string name="on_boarding_welcome_date_initial">Not chosen</string>
@@ -83,7 +83,7 @@
         <item name="back_squat">Back Squat</item>
         <item name="front_squat">Front Squat</item>
         <item name="bench_press">Bench press</item>
-        <item name="deadlift">Conventional Deadlift</item>
+        <item name="deadlift">Deadlift</item>
         <item name="overhead_press">Overhead press</item>
     </string-array>
 

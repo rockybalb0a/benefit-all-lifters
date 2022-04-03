@@ -1,17 +1,24 @@
 package kr.valor.bal.splash
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
 import kr.valor.bal.data.DefaultRepository
-import kr.valor.bal.data.local.user.UserInfo
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(repository: DefaultRepository): ViewModel() {
+class SplashViewModel @Inject constructor(repository: DefaultRepository) : ViewModel() {
 
-    private val _userInfo = repository.userInfo
-    val userInfo: LiveData<UserInfo?>
-        get() = _userInfo
+    val userInfoState = repository.userInfo.asFlow().map {
+        it?.let {
+            NavigationDirection.NavigateMain
+        } ?: NavigationDirection.NavigateOnboarding
+    }
 
+}
+
+sealed class NavigationDirection {
+    object NavigateMain : NavigationDirection()
+    object NavigateOnboarding : NavigationDirection()
 }
