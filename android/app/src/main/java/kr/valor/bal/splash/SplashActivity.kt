@@ -28,15 +28,16 @@ class SplashActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(this@SplashActivity, MainActivity::class.java)
                             )
+                            finish()
                         }
 
                         NavigationDirection.NavigateOnboarding -> {
                             startActivity(
                                 Intent(this@SplashActivity, OnBoardingActivity::class.java)
                             )
+                            finish()
                         }
                     }
-                    finish()
                 }
         }
     }

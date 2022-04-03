@@ -2,21 +2,23 @@ package kr.valor.bal.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kr.valor.bal.MainActivity
 import kr.valor.bal.R
 import kr.valor.bal.databinding.ActivitySettingsBinding
 import kr.valor.bal.onboarding.viewpager.OnBoardingViewPagerAdapter
-import kr.valor.bal.splash.SplashActivity
-import kr.valor.bal.utilities.observeInLifecycle
 
 @AndroidEntryPoint
 class OnBoardingActivity: AppCompatActivity() {
@@ -58,26 +60,28 @@ class OnBoardingActivity: AppCompatActivity() {
     }
 
     private fun setUpEventObserver() {
-        sharedViewModel.eventFlow.onEach {
-            when(it) {
-                OnBoardingViewModel.Request.ShowDatePicker -> {
-                    showDatePicker()
-                }
-                OnBoardingViewModel.Request.NextStep -> {
-                    viewPager.pageUp()
-                }
-                OnBoardingViewModel.Request.PreviousStep -> {
-                    viewPager.pageDown()
-                }
-                OnBoardingViewModel.Request.Finish -> {
-                    sharedViewModel.finishOnBoardingProcess()
-                }
-                OnBoardingViewModel.Request.NavigateToHome -> {
-                    startActivity(Intent(this, SplashActivity::class.java))
+        lifecycleScope.launch {
+            sharedViewModel.eventFlow.flowWithLifecycle(lifecycle).collect { event ->
+                when(event) {
+                    OnBoardingViewModel.Request.ShowDatePicker -> {
+                        showDatePicker()
+                    }
+                    OnBoardingViewModel.Request.NextStep -> {
+                        viewPager.pageUp()
+                    }
+                    OnBoardingViewModel.Request.PreviousStep -> {
+                        viewPager.pageDown()
+                    }
+                    OnBoardingViewModel.Request.Finish -> {
+                        sharedViewModel.finishOnBoardingProcess()
+                    }
+                    OnBoardingViewModel.Request.NavigateToHome -> {
+                        startActivity(Intent(this@OnBoardingActivity, MainActivity::class.java))
+                        finish()
+                    }
                 }
             }
         }
-            .observeInLifecycle(this)
     }
 
     private fun showDatePicker() {
